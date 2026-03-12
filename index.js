@@ -20,7 +20,6 @@ const APTS = [
         {author:'Bruno Monteiro',stars:5,date:'nov. 2025',text:'Ótima acomodação como no anúncio! Super recomendo!'},
       ],
       photos:[
-          {src:'https://lh3.googleusercontent.com/d/1wm5PyoIG14RsN0OUe1XLWsBujGdOrb3w',label:'Entrada'},
           {src:'https://lh3.googleusercontent.com/d/1J2fksoRVLdmcTlwnUolyRSDgzvvg2QQb',label:'Sala de Estar'},
           {src:'https://lh3.googleusercontent.com/d/1ERj9neTPsuXXihR5RG-khc-HParKWjDR',label:'Sala de Jantar'},
           {src:'https://lh3.googleusercontent.com/d/1cti87HBRp__k5wt-osBL9fL_fFfW0P1F',label:'Sala de Estar'},
@@ -54,7 +53,6 @@ const APTS = [
         {author:'Daniela Regina',stars:5,date:'fev. 2026',text:'A estadia foi ótima! Fabiano foi super flexível para o check-in. O apartamento é ótimo, de fácil acesso e boa localização.'},
       ],
       photos:[
-          {src:'https://lh3.googleusercontent.com/d/10l5ynjbYJiD0DJw0dls8G8sy6aeOqhFP',label:'Entrada'},
           {src:'https://lh3.googleusercontent.com/d/1v5Jg9NWLXfUa7n80R8lp2CxQmOTCHeHc',label:'Corredor'},
           {src:'https://lh3.googleusercontent.com/d/1bbNR8iGRMrIniqq3tbqLxBBmy1hzRiHK',label:'Quarto 2'},
           {src:'https://lh3.googleusercontent.com/d/1MIhyaWVIoS-O7NPZxkjP5xvNkwid2k-7',label:'Sala de Estar'},
@@ -178,7 +176,6 @@ const APTS = [
           {src:'https://lh3.googleusercontent.com/d/1kKVA28qv9UsQUFJpcflueHab6YlAY52l',label:'Quarto 1'},
           {src:'https://lh3.googleusercontent.com/d/1rCr87wLs4rpYaXaS9L_0M-ZR81MtIHF-',label:'Quarto 1'},
           {src:'https://lh3.googleusercontent.com/d/1S8KHT67SNOiWLPCUeT9Oz9otY4Skj00Y',label:'Banheiro'},
-          {src:'https://lh3.googleusercontent.com/d/1WFoCgGoKit88B8hej4bpIj6Xkt3GbSHb',label:'Entrada'}
         ],
     },
     {
@@ -199,7 +196,6 @@ const APTS = [
         {author:'Andrea',stars:5,date:'mar. 2026',text:'Muito bom o custo-benefício.'},
       ],
       photos:[
-          {src:'https://lh3.googleusercontent.com/d/1hu3a1CWySdwfZ-XIxcCgjQoqgcntam4q',label:'Entrada'},
           {src:'https://lh3.googleusercontent.com/d/1dJT3Ewy6k5uzcBHQt6_1lYfz0iCZtMng',label:'Sala de Estar'},
           {src:'https://lh3.googleusercontent.com/d/1uVHUi2q51FJoKTLiJh7QstFGoD2s6UPV',label:'Sala de Estar'},
           {src:'https://lh3.googleusercontent.com/d/13UMi6qP3o8des-Ew2sRUZnV_hYPa4_zJ',label:'Sala de Jantar'},
@@ -232,7 +228,6 @@ const APTS = [
         {author:'Flavio',stars:5,date:'out. 2025',text:'Tudo bem limpo, fácil acesso e Fabiano foi muito atencioso.'},
       ],
       photos:[
-          {src:'https://lh3.googleusercontent.com/d/1ygs6cNHPEYmCLtMvFwQBCNBHYD_QYRJ4',label:'Entrada'},
           {src:'https://lh3.googleusercontent.com/d/1ZqmKNVR1dZLoDdUc03TOMZekTTYdpV9B',label:'Sala de Jantar'},
           {src:'https://lh3.googleusercontent.com/d/1Bx85FPgjFvMLL5mns_uVM7MXpcTg7TeQ',label:'Sala de Estar'},
           {src:'https://lh3.googleusercontent.com/d/1A-pRW0bAWI7p-NaPgZV8NwHTeTH5Qlfq',label:'Sala de Estar'},
@@ -269,7 +264,6 @@ const APTS = [
         {author:'Moni Praconi',stars:5,date:'nov. 2025',text:'Hospedagem confortável e funcional, com uma experiência bastante prática e eficiente. Com certeza recomendo.'},
       ],
       photos:[
-          {src:'https://lh3.googleusercontent.com/d/1mmL1M1hATD5dSIO3psuDJnrWQxALnkdd',label:'Entrada'},
           {src:'https://lh3.googleusercontent.com/d/1Bk6zJZzDFY0nVu4gTnntphzMROn6dppm',label:'Sala de Jantar'},
           {src:'https://lh3.googleusercontent.com/d/1_YcZxxLM__eL4_z3iYipSu2traPJRyPp',label:'Sala de Estar'},
           {src:'https://lh3.googleusercontent.com/d/1ycFuWbS_eK56XNCRQzlNbLhKxx2F4QVk',label:'Sala de Estar'},
@@ -304,7 +298,6 @@ const APTS = [
         {author:'Alexandre',stars:5,date:'set. 2025',text:'Sempre fico nessa acomodação, super vale a pena!'},
       ],
       photos:[
-          {src:'https://lh3.googleusercontent.com/d/1kJooJ-VRiGA6ivW39gkjL3NRaSL7EpPI',label:'Entrada'},
           {src:'https://lh3.googleusercontent.com/d/1G8M61F44PRHsQTqAmVwKM2QTOp-DjuW-',label:'Sala de Estar'},
           {src:'https://lh3.googleusercontent.com/d/1rAi6JNPYkzJXm4DkffogJfpF2Tn73My6',label:'Sala de Jantar'},
           {src:'https://lh3.googleusercontent.com/d/16IBRjcSMchYsbDwh_rYYrtiAI3hu46MV',label:'Sala de Estar'},
@@ -340,7 +333,6 @@ const APTS = [
         {author:'Joao',stars:5,date:'dez. 2025',text:'O espaço é exatamente como descrito. A comunicação com o anfitrião foi rápida e eficiente. Tive uma ótima experiência.'},
       ],
       photos:[
-          {src:'https://lh3.googleusercontent.com/d/160lUc4A6xV9uUsJr1pOvg5c5VJ_sEI6y',label:'Entrada'},
           {src:'https://lh3.googleusercontent.com/d/1AJGkIva4Pzel5LjaBebxOIDOooAD_x86',label:'Sala de Estar'},
           {src:'https://lh3.googleusercontent.com/d/1LuTIpGpEIToFJSkHTM2DxH3Bx4kkUI4_',label:'Sala de Estar'},
           {src:'https://lh3.googleusercontent.com/d/1oV3cXJF5QiFgEFKwoCgQ9ixaXmUDQ8pQ',label:'Sala de Jantar'},
@@ -376,7 +368,6 @@ const APTS = [
         {author:'Suely',stars:5,date:'jan. 2026',text:'Apartamento muito espaçoso com tudo que precisávamos. Localização privilegiada com ônibus e metrô muito perto. Adoramos tudo.'},
       ],
       photos:[
-          {src:'https://lh3.googleusercontent.com/d/1Xo3mLMhCUyDRQNK9QEQbtZEm0XVPVCbu',label:'Entrada'},
           {src:'https://lh3.googleusercontent.com/d/1Tte1EHfEivYeBBGRCCLAS9hHw3Lby9uU',label:'Sala de Estar'},
           {src:'https://lh3.googleusercontent.com/d/1D9Ma8QKce_orSdWHXtzm3Ld6anAGxjCf',label:'Sala de Estar'},
           {src:'https://lh3.googleusercontent.com/d/1w_wBFjyycc33mch9FBV6Z5JN8B_sMoe0',label:'Sala de Jantar'},
@@ -418,7 +409,6 @@ const APTS = [
         {author:'Vera',stars:5,date:'out. 2025',text:'Nossa estadia foi excelente!!! Fabiano foi atencioso. O apartamento é muito fiel às fotos, tudo funcionando. Todos saímos muito satisfeitos!'},
       ],
       photos:[
-          {src:'https://lh3.googleusercontent.com/d/1aKsR4zJOnmAUX2WfWydwlME8DQIjRx2w',label:'Entrada'},
           {src:'https://lh3.googleusercontent.com/d/1UsLYw5zUBTIMHYKWqfI1FeobMBSSgRXj',label:'Sala de Estar'},
           {src:'https://lh3.googleusercontent.com/d/1BVmvGlJczk5cmBOOBmhhtMEnDLKzhD2O',label:'Sala de Jantar'},
           {src:'https://lh3.googleusercontent.com/d/1JrdLwRvAPh2_48ksaufWKIuKg1jO0X-f',label:'Quarto 1'},
