@@ -498,7 +498,9 @@ const APTS = [
       div.dataset.type = a.type;
       div.dataset.guests = a.guests;
       div.onclick = () => openApt(a.id);
-      const firstPhoto = a.photos && a.photos.length > 0 ? a.photos.find(p => p && p.src) : null;
+      const firstPhoto = a.photos && a.photos.length > 0
+        ? (a.photos.find(p => p && p.src && p.label === 'Sala de Estar') || a.photos.find(p => p && p.src))
+        : null;
       const hasPhoto = !!firstPhoto;
       const cardBg = hasPhoto
         ? `background-image:url(${firstPhoto.src});background-size:cover;background-position:center;`
@@ -532,19 +534,20 @@ const APTS = [
   ];
   
   function renderGallery(apt) {
-    currentGalleryIdx = 0;
     const photos = apt.photos && apt.photos.length
       ? apt.photos.map((p, i) => p || { src:null, label: PHOTO_LABELS[i % PHOTO_LABELS.length] })
       : Array.from({length:6}, (_,i) => ({ src:null, label: PHOTO_LABELS[i % PHOTO_LABELS.length] }));
     const total = photos.length;
-    updateGallerySlide(apt, 0, photos);
+    const salaIdx = photos.findIndex(p => p && p.label === 'Sala de Estar' && p.src);
+    currentGalleryIdx = salaIdx >= 0 ? salaIdx : 0;
+    updateGallerySlide(apt, currentGalleryIdx, photos);
   
     // thumbs
     const thumbsEl = document.getElementById('gallery-thumbs');
     thumbsEl.innerHTML = '';
     photos.forEach((p, t) => {
       const th = document.createElement('div');
-      th.className = `g-thumb ${t === 0 ? 'active' : ''}`;
+      th.className = `g-thumb ${t === currentGalleryIdx ? 'active' : ''}`;
       if (p.src) {
         th.style.backgroundImage = `url(${p.src})`;
         th.style.backgroundSize = 'cover';
