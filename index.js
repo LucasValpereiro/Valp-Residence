@@ -855,6 +855,13 @@ window.addEventListener('load', () => {
     renderCards();
     goHome();
   }
+  // fechar o menu mobile ao clicar em qualquer link dentro do navbar
+  const nav = document.getElementById('navbar');
+  if (nav) {
+    nav.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => nav.classList.remove('open'));
+    });
+  }
 });
 
 window.addEventListener('popstate', () => {
@@ -866,6 +873,15 @@ window.addEventListener('popstate', () => {
     goHome();
   }
 });
+
+// ═══════════════════════════════════════
+// NAVBAR MOBILE MENU
+// ═══════════════════════════════════════
+function toggleNavMenu() {
+  const nav = document.getElementById('navbar');
+  if (!nav) return;
+  nav.classList.toggle('open');
+}
 
 // ═══════════════════════════════════════
 // SEARCH
