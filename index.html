@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valps Residence</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- WA FLOAT -->
+<a href="https://wa.me/5585999696377?text=Olá! Vim pelo site e gostaria de tirar dúvidas sobre o Valps Residence." class="wa-float" target="_blank">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a class="logo" onclick="goHome()">Valps <span>Residence</span></a>
+  <ul>
+    <li><a onclick="goHome();scrollToSection('ofertas')">Ofertas</a></li>
+    <li><a onclick="goHome();scrollToSection('acomodacoes')">Acomodações</a></li>
+    <li><a onclick="goHome();scrollToSection('calendario')">Calendário</a></li>
+    <li><a onclick="goHome();scrollToSection('faq')">FAQ</a></li>
+    <li><a onclick="goHome();scrollToSection('contato')" class="btn-nav">Reservar</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════════════════════════════════
+     HOME PAGE
+═══════════════════════════════════ -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-badge">✦ Reserva direta · Sem taxas de intermediários</div>
+      <h1 class="hero-title">Valps<br><em>Residence</em></h1>
+      <p class="hero-sub">13 apartamentos modernos com conforto e privacidade. Reserve diretamente e economize nas taxas.</p>
+    </div>
+    <div class="search-bar">
+      <div class="search-field">
+        <span class="search-label">Check-in</span>
+        <input type="date" id="s-checkin">
+      </div>
+      <div class="search-field">
+        <span class="search-label">Check-out</span>
+        <input type="date" id="s-checkout">
+      </div>
+      <div class="search-field" style="border-right:none">
+        <span class="search-label">Hóspedes</span>
+        <select id="s-guests">
+          <option value="">Qualquer quantidade</option>
+          <option value="1">1 hóspede</option>
+          <option value="2">2 hóspedes</option>
+          <option value="3">3 hóspedes</option>
+          <option value="4">4+ hóspedes</option>
+        </select>
+      </div>
+      <button class="search-btn" onclick="doSearch()">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Buscar
+      </button>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">13</div><div class="stat-label">Acomodações</div></div>
+      <div><div class="stat-num">4.9★</div><div class="stat-label">Avaliação</div></div>
+      <div><div class="stat-num">100%</div><div class="stat-label">Taxa de resposta</div></div>
+      <div><div class="stat-num">2h</div><div class="stat-label">Resposta</div></div>
+    </div>
+  </section>
+
+  <div id="resultados">
+    <span class="result-text">Exibindo <strong id="result-count">13</strong> acomodações disponíveis <span id="result-dates"></span></span>
+    <span class="result-clear" onclick="clearSearch()">✕ Limpar filtros</span>
+  </div>
+
+  <!-- OFERTAS -->
+  <section id="ofertas">
+    <div class="reveal">
+      <div class="sec-tag">Promoções exclusivas</div>
+      <h2 class="sec-title">Aproveite nossas<br><em>ofertas especiais</em></h2>
+      <p class="sec-sub">Preços especiais para estadias longas, fins de semana e reservas antecipadas.</p>
+    </div>
+    <div class="ofertas-grid reveal">
+      <div class="oferta-card">
+        <div class="oferta-bg oferta-bg-1"></div>
+        <span class="oferta-tag">✦ Mais popular</span>
+        <div class="oferta-content">
+          <h3 class="oferta-title">Estadia Longa</h3>
+          <p class="oferta-desc">Reserve 7 diárias ou mais e ganhe desconto especial.</p>
+          <div class="oferta-price"><span class="from">A partir de</span><span class="amount">R$ 149</span><span class="period">/ diária</span><span class="old-price">R$ 180</span></div>
+          <span class="oferta-btn" onclick="scrollToSection('contato')">Reservar agora →</span>
+        </div>
+      </div>
+      <div class="oferta-card">
+        <div class="oferta-bg oferta-bg-2"></div>
+        <span class="oferta-tag">Final de semana</span>
+        <div class="oferta-content">
+          <h3 class="oferta-title">Pacote Weekend</h3>
+          <p class="oferta-desc">Sex, sáb e dom com café da manhã incluso.</p>
+          <div class="oferta-price"><span class="amount">R$ 520</span><span class="period">/ pacote</span><span class="old-price">R$ 640</span></div>
+          <span class="oferta-btn" onclick="scrollToSection('contato')">Reservar →</span>
+        </div>
+      </div>
+      <div class="oferta-card">
+        <div class="oferta-bg oferta-bg-3"></div>
+        <span class="oferta-tag">Antecipada</span>
+        <div class="oferta-content">
+          <h3 class="oferta-title">Reserva Antecipada</h3>
+          <p class="oferta-desc">Reserve com 30+ dias de antecedência.</p>
+          <div class="oferta-price"><span class="amount">–15%</span><span class="period">no total</span></div>
+          <span class="oferta-btn" onclick="scrollToSection('contato')">Reservar →</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACOMODAÇÕES -->
+  <section id="acomodacoes">
+    <div class="sec-header reveal">
+      <div>
+        <div class="sec-tag">Nossas unidades</div>
+        <h2 class="sec-title">Escolha sua<br><em>acomodação</em></h2>
+      </div>
+      <p class="sec-sub">Zona Sul · São Paulo. Cozinha completa e Wi-Fi.</p>
+    </div>
+    <div class="filter-row reveal">
+      <button class="filter-btn active" onclick="filterApts('all',this)">Todos</button>
+      <button class="filter-btn" onclick="filterApts('2q',this)">2 Quartos</button>
+      <button class="filter-btn" onclick="filterApts('3q',this)">3 Quartos</button>
+      <button class="filter-btn" onclick="filterApts('duplex',this)">Duplex ✦</button>
+    </div>
+    <div class="apt-grid" id="apt-grid"></div>
+  </section>
+
+  <!-- CALENDÁRIO -->
+  <section id="calendario">
+    <div class="reveal" style="text-align:center;margin-bottom:52px;">
+      <div class="sec-tag" style="justify-content:center;gap:12px;">
+        <span style="width:28px;height:1px;background:var(--gold);display:inline-block"></span>
+        Disponibilidade
+        <span style="width:28px;height:1px;background:var(--gold);display:inline-block"></span>
+      </div>
+      <h2 class="sec-title">Datas<br><em>disponíveis</em></h2>
+      <p class="sec-sub" style="margin:0 auto;">Entre em contato com o proprietário para verificar as datas disponíveis e confirmar sua reserva.</p>
+    </div>
+    <div style="max-width:700px;margin:0 auto;">
+      <div class="cal-card cal-airbnb reveal" style="max-width:100%;">
+        <div class="cal-header"><div class="cal-logo cal-logo-airbnb">A.</div><div class="cal-title">Airbnb</div></div>
+        <div class="cal-visual" id="cal-airbnb"></div>
+        <p style="font-size:0.78rem;color:var(--text-muted);margin-top:20px;margin-bottom:28px;text-align:center;border:1px solid var(--border-soft);padding:12px 16px;line-height:1.6;">
+          ⚠️ Este calendário é meramente ilustrativo e não reflete as datas reais de ocupação.<br>Para verificar disponibilidade, fale com o proprietário.
+        </p>
+        <div style="text-align:center;">
+          <a href="https://wa.me/5585999696377?text=Olá! Gostaria de verificar a disponibilidade de datas para reserva no Valps Residence." target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#fff;padding:16px 36px;font-family:'Jost',sans-serif;font-size:0.8rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#1ebe5d'" onmouseout="this.style.background='#25D366'">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Verificar disponibilidade pelo WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCALIZAÇÃO -->
+  <section id="localizacao">
+    <div class="local-grid">
+      <div class="reveal">
+        <div class="map-container">
+          <iframe
+            src="https://www.google.com/maps?q=-23.616923,-46.679839&z=17&output=embed"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Localização Valps Residence">
+          </iframe>
+        </div>
+        <div class="map-actions">
+          <a href="https://maps.app.goo.gl/XikVgN2Us3NKyxiA8" target="_blank" class="map-action-btn primary">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            Ver em 360°
+          </a>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=-23.616923,-46.679839" target="_blank" class="map-action-btn">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+            Como chegar
+          </a>
+          <a href="https://maps.app.goo.gl/XikVgN2Us3NKyxiA8" target="_blank" class="map-action-btn">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Abrir no Maps
+          </a>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="sec-tag">Localização</div>
+        <h2 class="sec-title">Tudo perto,<br><em>nada faltando</em></h2>
+        <p class="sec-sub">Localização privilegiada com fácil acesso ao melhor que a cidade tem a oferecer.</p>
+        <ul class="features-list">
+          <li><div class="feat-icon">✈️</div> Aeroporto de Congonhas a 10 minutos</li>
+          <li><div class="feat-icon">🚇</div> Metrô — estação próxima com fácil acesso</li>
+          <li><div class="feat-icon">💊</div> Farmácias no entorno imediato</li>
+          <li><div class="feat-icon">🍽️</div> Restaurantes e bares a poucos passos</li>
+          <li><div class="feat-icon">🛒</div> Supermercados a menos de 5 minutos</li>
+        </ul>
+        <p style="font-size:0.8rem;color:var(--text-muted);margin-top:20px;border-left:2px solid var(--gold);padding-left:14px;line-height:1.7;">
+          Precisa de indicações de restaurantes, farmácias ou pontos turísticos? 
+          <a href="https://wa.me/5585999696377?text=Olá! Gostaria de indicações sobre a região." target="_blank" style="color:var(--gold);text-decoration:none;">Fale com o proprietário →</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="reveal" style="text-align:center">
+      <div class="sec-tag" style="justify-content:center;gap:12px">
+        <span style="width:28px;height:1px;background:var(--gold);display:inline-block"></span>
+        Dúvidas frequentes
+        <span style="width:28px;height:1px;background:var(--gold);display:inline-block"></span>
+      </div>
+      <h2 class="sec-title">Perguntas<br><em>frequentes</em></h2>
+      <p class="sec-sub" style="margin:0 auto 52px">Não encontrou o que procura? Fale direto pelo WhatsApp.</p>
+    </div>
+    <div class="faq-grid reveal">
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Como faço para reservar diretamente? <span class="faq-icon">+</span></div>
+        <div class="faq-a">Preencha o formulário de reserva nesta página ou entre em contato pelo WhatsApp. Respondemos em até 2 horas para confirmar a disponibilidade e enviar as instruções de pagamento.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Quais formas de pagamento são aceitas? <span class="faq-icon">+</span></div>
+        <div class="faq-a">Aceitamos Pix, transferência bancária e cartão de crédito em até 6x sem juros. Reservas diretas não têm taxas de serviço adicionais.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Qual é a política de cancelamento? <span class="faq-icon">+</span></div>
+        <div class="faq-a">Cancelamentos com mais de 7 dias: reembolso integral. Entre 3 e 7 dias: reembolso de 50%. Menos de 72h: sem reembolso. Casos de força maior são analisados individualmente.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Os apartamentos são mobiliados? <span class="faq-icon">+</span></div>
+        <div class="faq-a">Sim! Todas as unidades são completamente mobiliadas com cozinha equipada, utensílios, roupa de cama, toalhas, Wi-Fi e TV. Você só precisa chegar com a mala.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Qual é o horário de check-in e check-out? <span class="faq-icon">+</span></div>
+        <div class="faq-a">Check-in a partir das 14h e check-out até as 12h. Early check-in e late check-out podem ser solicitados mediante disponibilidade.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">É permitido pets? <span class="faq-icon">+</span></div>
+        <div class="faq-a">Aceitamos pets de pequeno porte (até 10kg) com consulta prévia e taxa de limpeza de R$ 80. Informe na solicitação de reserva.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Por que reservar direto ao invés da Booking ou Airbnb? <span class="faq-icon">+</span></div>
+        <div class="faq-a">Reservando diretamente você economiza entre 10% e 20% em taxas de serviço. Além disso, tem atendimento personalizado e direto com o anfitrião.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Tem estacionamento disponível? <span class="faq-icon">+</span></div>
+        <div class="faq-a">Sim, cada apartamento tem uma vaga privativa inclusa. Para dois veículos, há vagas adicionais por R$ 20/dia, sujeito à disponibilidade.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHATSAPP SECTION -->
+  <div id="whatsapp">
+    <div class="wa-left reveal">
+      <div class="sec-tag">Atendimento direto</div>
+      <h2 class="sec-title">Ainda tem <em>dúvidas?</em></h2>
+      <p>Fale diretamente com o anfitrião pelo WhatsApp. Respondemos em até 2 horas. Sem robôs, sem espera.</p>
+    </div>
+    <a href="https://wa.me/5585999696377?text=Olá! Vim pelo site e gostaria de tirar dúvidas sobre o Valps Residence." class="wa-btn reveal reveal-delay-2" target="_blank">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Chamar no WhatsApp
+    </a>
+  </div>
+
+  <!-- CONTATO -->
+  <section id="contato">
+    <div style="text-align:center;margin-bottom:48px">
+      <div class="sec-tag reveal" style="justify-content:center;gap:12px">
+        <span style="width:28px;height:1px;background:var(--gold);display:inline-block"></span>Reserve agora<span style="width:28px;height:1px;background:var(--gold);display:inline-block"></span>
+      </div>
+      <h2 class="sec-title reveal">Sem taxas de<br><em>intermediários</em></h2>
+      <p class="sec-sub reveal" style="margin:0 auto">Preencha o formulário e entraremos em contato em até 2 horas.</p>
+    </div>
+    <form class="contato-form reveal" onsubmit="handleContactSubmit(event)">
+      <div class="form-group"><label>Nome completo</label><input type="text" id="c-nome" placeholder="Seu nome" required></div>
+      <div class="form-group"><label>Telefone / WhatsApp</label><input type="tel" id="c-tel" placeholder="(00) 00000-0000"></div>
+      <div class="form-group"><label>Check-in</label><input type="date" id="c-checkin"></div>
+      <div class="form-group"><label>Check-out</label><input type="date" id="c-checkout"></div>
+      <div class="form-group"><label>Acomodação</label>
+        <select id="contato-apt">
+          <option value="">Selecione uma unidade</option>
+          <option>Apto 21</option>
+          <option>Apto 101</option><option>Apto 102</option><option>Apto 103</option>
+          <option>Apto 202</option><option>Apto 203</option><option>Apto 204</option>
+          <option>Apto 301</option><option>Apto 302</option><option>Apto 303</option>
+          <option>Apto 304</option><option>Apto 401</option><option>Apto 402</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Hóspedes</label>
+        <select id="c-guests"><option>1 hóspede</option><option>2 hóspedes</option><option>3 hóspedes</option><option>4 hóspedes</option><option>5 hóspedes</option><option>6 hóspedes</option><option>7 hóspedes</option></select>
+      </div>
+      <div class="form-group full"><label>Mensagem (opcional)</label><textarea id="c-msg" placeholder="Dúvidas, pedidos especiais..."></textarea></div>
+      <button type="submit" class="form-submit">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Enviar pelo WhatsApp
+      </button>
+    </form>
+  </section>
+
+  <footer>
+    <a class="logo" onclick="goHome()" style="cursor:pointer">Valps <span>Residence</span></a>
+    <span>© 2025 Valps Residence · Todos os direitos reservados</span>
+    <div class="footer-links">
+      <a href="#">Privacidade</a>
+      <a href="#">Termos</a>
+      <a href="https://wa.me/5585999696377" target="_blank">WhatsApp</a>
+    </div>
+  </footer>
+</div><!-- /page-home -->
+
+<!-- ═══════════════════════════════════
+     APARTMENT DETAIL PAGE
+═══════════════════════════════════ -->
+<div id="page-apt" class="page">
+  <div class="apt-detail-hero">
+    <div id="apt-gallery-main" style="width:100%;height:100%;background-size:cover;background-position:center;background-color:var(--surface);display:flex;align-items:center;justify-content:center;cursor:zoom-in;transition:opacity 0.3s ease;" onclick="openLightbox(currentGalleryIdx)">
+      <svg id="apt-gallery-placeholder" width="64" height="64" fill="none" viewBox="0 0 24 24" stroke="rgba(201,168,76,0.3)" stroke-width="1"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+      <p id="apt-gallery-label" style="font-family:'Playfair Display',serif;font-style:italic;color:var(--text-muted);">Foto do apartamento</p>
+    </div>
+    <div class="gallery-overlay"></div>
+    <div class="gallery-arrow prev" onclick="galleryPrev();">‹</div>
+    <div class="gallery-arrow next" onclick="galleryNext(); stopAutoplay(); setTimeout(startAutoplay, 8000);">›</div>
+    <div id="gallery-thumbs" class="gallery-thumbs"></div>
+    <div id="gallery-counter" class="gallery-counter">1 / 6</div>
+  </div>
+
+  <div class="apt-breadcrumb">
+    <a onclick="goHome()">Início</a>
+    <span class="sep">›</span>
+    <a onclick="goHome();scrollToSection('acomodacoes')">Acomodações</a>
+    <span class="sep">›</span>
+    <span class="current" id="apt-breadcrumb-name">Apartamento</span>
+  </div>
+
+  <div class="apt-detail-body">
+    <!-- LEFT COLUMN -->
+    <div class="apt-detail-left">
+      <div class="apt-detail-header">
+        <div class="apt-detail-tag">Valps Residence</div>
+        <h1 class="apt-detail-name" id="apt-detail-name">Nome do Apartamento</h1>
+        <div class="apt-detail-badges" id="apt-detail-badges"></div>
+        <p class="apt-detail-desc" id="apt-detail-desc"></p>
+      </div>
+
+      <!-- HIGHLIGHTS -->
+      <div class="apt-highlights" id="apt-highlights" style="display:none">
+        <div class="sec-tag" style="font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:0;display:flex;align-items:center;gap:8px;"><span style="width:20px;height:1px;background:var(--gold);display:inline-block"></span>Destaques</div>
+        <div class="highlights-list" id="apt-highlights-list"></div>
+      </div>
+
+      <!-- BEDS -->
+      <div class="apt-beds" id="apt-beds" style="display:none">
+        <h3>Onde você vai dormir</h3>
+        <div class="beds-grid" id="apt-beds-grid"></div>
+      </div>
+
+      <div class="apt-amenities">
+        <h3>Comodidades</h3>
+        <div class="amenities-grid" id="apt-amenities-grid"></div>
+      </div>
+
+      <!-- RATINGS -->
+      <div id="apt-ratings-section" style="display:none;margin-bottom:40px;padding-bottom:40px;border-bottom:1px solid var(--border-soft);">
+        <div class="apt-rating-summary">
+          <span class="apt-rating-big" id="apt-rating-big">4.75</span>
+          <div>
+            <div class="apt-rating-stars" id="apt-rating-stars">★★★★★</div>
+            <div class="apt-rating-count" id="apt-rating-count">4 avaliações</div>
+          </div>
+        </div>
+        <div class="ratings-grid" id="apt-ratings-grid"></div>
+      </div>
+
+      <div class="apt-policies">
+        <h3>O que você deve saber</h3>
+        <div class="policy-cols">
+          <div class="policy-col">
+            <div class="policy-col-icon">📅</div>
+            <div class="policy-col-title">Regras da casa</div>
+            <ul class="policy-col-list" id="policy-rules"></ul>
+            <a href="https://wa.me/5585999696377?text=Olá! Gostaria de saber mais sobre as regras do apartamento." target="_blank" class="policy-saiba-mais">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Saiba mais →
+            </a>
+          </div>
+          <div class="policy-col">
+            <div class="policy-col-icon">🔍</div>
+            <div class="policy-col-title">Política de cancelamento</div>
+            <ul class="policy-col-list">
+              <li>Reembolso integral até 7 dias antes</li>
+              <li>50% de reembolso entre 3 e 7 dias</li>
+              <li>Sem reembolso em menos de 72h</li>
+            </ul>
+            <a href="https://wa.me/5585999696377?text=Olá! Gostaria de saber mais sobre a política de cancelamento." target="_blank" class="policy-saiba-mais">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Saiba mais →
+            </a>
+          </div>
+          <div class="policy-col">
+            <div class="policy-col-icon">🛡️</div>
+            <div class="policy-col-title">Segurança e propriedade</div>
+            <ul class="policy-col-list">
+              <li>Self check-in com teclado numérico</li>
+              <li>Portaria e segurança 24h</li>
+              <li>Câmeras nas áreas comuns</li>
+            </ul>
+            <a href="https://wa.me/5585999696377?text=Olá! Gostaria de saber mais sobre a segurança do condomínio." target="_blank" class="policy-saiba-mais">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Saiba mais →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="apt-sidebar">
+      <div class="sidebar-card">
+        <div style="padding:14px 0 10px;border-bottom:1px solid var(--border-soft);margin-bottom:4px;">
+          <span style="font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);">Valores sob consulta</span><br>
+          <span style="font-size:0.82rem;color:var(--text-dim);margin-top:4px;display:block;">O proprietário informará o valor após verificar a disponibilidade.</span>
+        </div>
+        <div class="sidebar-form">
+          <div class="sf-row">
+            <div class="sf-field">
+              <span class="sf-label">Check-in</span>
+              <input type="date" id="sf-checkin" oninput="updateSidebarWA()">
+            </div>
+            <div class="sf-field">
+              <span class="sf-label">Check-out</span>
+              <input type="date" id="sf-checkout" oninput="updateSidebarWA()">
+            </div>
+          </div>
+          <div class="sf-field full">
+            <span class="sf-label">Hóspedes</span>
+            <select id="sf-guests" onchange="updateSidebarWA()">
+              <option>1 hóspede</option>
+              <option>2 hóspedes</option>
+              <option>3 hóspedes</option>
+              <option>4 hóspedes</option>
+              <option>5 hóspedes</option>
+              <option>6 hóspedes</option>
+              <option>7 hóspedes</option>
+            </select>
+          </div>
+        </div>
+        <button class="sidebar-reserve-btn" onclick="reserveFromDetail()">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="#0A0A0A" style="margin-right:8px;vertical-align:middle"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  Reservar via WhatsApp
+</button>
+        <a id="sidebar-wa" href="#" target="_blank" class="sidebar-wa-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Perguntar pelo WhatsApp
+        </a>
+        <a id="sidebar-airbnb" href="#" target="_blank" style="display:none;width:100%;align-items:center;justify-content:center;gap:10px;background:transparent;color:#FF5A5F;border:1px solid rgba(255,90,95,0.4);padding:14px;font-family:'Jost',sans-serif;font-size:0.78rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;margin-top:10px;" onmouseover="this.style.background='rgba(255,90,95,0.08)'" onmouseout="this.style.background='transparent'">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#FF5A5F"><path d="M12 2C8.5 2 5.5 4.5 5.5 8c0 5.25 6.5 14 6.5 14s6.5-8.75 6.5-14c0-3.5-3-6-6.5-6zm0 8.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 5.5 12 5.5s2.5 1.12 2.5 2.5S13.38 10.5 12 10.5z"/></svg>
+          Ver no Airbnb
+        </a>
+        <p class="sidebar-note">Sem taxas de intermediários. Pagamento via Pix, cartão ou transferência.</p>
+        <div class="sidebar-features">
+          <div class="sf-feat"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 89m² — área total</div>
+          <div class="sf-feat"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Wi-Fi de alta velocidade</div>
+          <div class="sf-feat"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Cozinha completa</div>
+          <div class="sf-feat"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Vaga de garagem inclusa</div>
+          <div class="sf-feat" id="sf-ac-feat"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Ar-condicionado</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GALERIA COMPLETA -->
+  <div class="apt-gallery-section">
+    <h3>Galeria de fotos</h3>
+    <div class="full-gallery-grid" id="full-gallery-grid"></div>
+  </div>
+
+  <!-- REVIEWS -->
+  <div class="apt-reviews" id="apt-reviews-section" style="display:none">
+    <h3 id="apt-reviews-title">Avaliações</h3>
+    <div class="reviews-grid" id="apt-reviews-grid"></div>
+  </div>
+
+  <footer>
+    <a class="logo" onclick="goHome()" style="cursor:pointer">Valps <span>Residence</span></a>
+    <span>© 2025 Valps Residence · Todos os direitos reservados</span>
+    <div class="footer-links">
+      <a href="#">Privacidade</a>
+      <a href="#">Termos</a>
+      <a href="https://wa.me/5585999696377" target="_blank">WhatsApp</a>
+    </div>
+  </footer>
+</div><!-- /page-apt -->
+
+<script src="index.js"></script>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="closeLightboxOutside(event)">
+  <span class="lb-close" onclick="closeLightbox()">✕</span>
+  <div class="lb-arrow prev" onclick="lbPrev(); event.stopPropagation()">‹</div>
+  <img id="lb-img" class="lb-img" src="" alt="">
+  <div class="lb-arrow next" onclick="lbNext(); event.stopPropagation()">›</div>
+  <div class="lb-caption" id="lb-caption"></div>
+  <div class="lb-counter" id="lb-counter"></div>
+</div>
+
+</body>
+</html>
