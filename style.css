@@ -367,7 +367,8 @@
 
   /* ── RESPONSIVE ── */
   @media(max-width:1024px){
-    nav{padding:18px 28px;} nav ul{display:none;}
+    nav{padding:18px 28px;}
+    nav ul{gap:20px;}
     section{padding:80px 28px;} #hero{padding:100px 24px 60px;}
     .search-bar{flex-direction:column;} .search-field{border-right:none;border-bottom:1px solid var(--border-soft);}
     .search-btn{padding:18px;width:100%;justify-content:center;}
@@ -379,7 +380,7 @@
     #resultados{padding:16px 24px;} 
     #resultados{flex-direction:column;align-items:flex-start;gap:6px;}
     .result-clear{margin-top:6px;}
-    .hero-stats{flex-wrap:wrap;gap:28px;}
+    .hero-stats{flex-wrap:wrap;gap:28px;row-gap:18px;}
     .apt-detail-hero{height:56vh;}
     .local-grid{gap:40px;}
     .oferta-card{min-height:260px;}
@@ -454,6 +455,12 @@
     /* Barra de resultados */
     #resultados{padding:12px 18px;flex-direction:column;align-items:flex-start;gap:4px;}
     .result-text{font-size:0.8rem;}
+
+    /* Hero stats mais compactos */
+    .hero-stats{gap:18px;row-gap:10px;flex-wrap:wrap;}
+    .hero-stats > div{min-width:44%;text-align:center;}
+    .stat-num{font-size:2rem;}
+    .stat-label{font-size:0.62rem;}
 
     /* Ofertas em pilha mais compacta */
     .ofertas-grid{gap:8px;}
