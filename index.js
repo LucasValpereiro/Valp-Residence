@@ -133,8 +133,8 @@ const APTS = [
         {author:'Eduardo Fellipe',stars:5,date:'ago. 2025',text:'Muito bem localizado, local seguro, ap confortável. Rápido nas respostas, ótimo custo-benefício.'},
       ],
       photos:[
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/7378bf12-e191-47fe-a0b4-7cf6f342da38.jpeg',label:'Sala de Estar'},
           {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/657bbe48-76dc-4549-9587-f12332c93977.jpeg',label:'Sala de Estar'},
+          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/7378bf12-e191-47fe-a0b4-7cf6f342da38.jpeg',label:'Sala de Estar'},
           {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/294ca237-8c73-448b-b567-70b5b1639f65.jpeg',label:'Quarto 1'},
           {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/259ba243-a697-4a99-8846-2a24d2d7f59e.jpeg',label:'Sala de Jantar'},
           {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/db6801b1-e86d-4cf8-9ede-4eddf499452f.jpeg',label:'Banheiro'},
@@ -461,18 +461,17 @@ const APTS = [
         {author:'Renata',stars:5,date:'nov. 2025',text:'O apto foi reservado para representantes da empresa de 4 estados. Todos elogiaram e já pediram para reservar o mesmo apto para 2026!'},
       ],
       photos:[
-          {src:'https://lh3.googleusercontent.com/d/1hG0gTF0HdYGr7ENdSp2M_Rszl3_npiDG',label:'Sala de Estar'},
-          {src:'https://lh3.googleusercontent.com/d/1ShiuZ06DAh0WeBhJm2LyY8YaaFbBwKLS',label:'Quarto 1'},
-          {src:'https://lh3.googleusercontent.com/d/1Z8NWKbzaQrKdgYw7xprRTWogJN-nBWGX',label:'Quarto 2'},
-          {src:'https://lh3.googleusercontent.com/d/1zu5UpfQ-GA5Zui8c62yPSDI1m62cvgCD',label:'Quarto 3'},
+          {src:'https://lh3.googleusercontent.com/d/1hG0gTF0HdYGr7ENdSp2M_Rszl3_npiDG',label:'Corredor'},
+          {src:'https://lh3.googleusercontent.com/d/1ShiuZ06DAh0WeBhJm2LyY8YaaFbBwKLS',label:'Sala de Jantar'},
+          {src:'https://lh3.googleusercontent.com/d/1Z8NWKbzaQrKdgYw7xprRTWogJN-nBWGX',label:'Sala de Estar'},
+          {src:'https://lh3.googleusercontent.com/d/1zu5UpfQ-GA5Zui8c62yPSDI1m62cvgCD',label:'Sala de Estar'},
           {src:'https://lh3.googleusercontent.com/d/19L7Rzk_4pPeYrW0J1rEfxJ9scdN-0Cv3',label:'Quarto 1'},
           {src:'https://lh3.googleusercontent.com/d/165xJ7XGHHPn8L1ntBX5QSnhXKFsvz7TB',label:'Cozinha'},
           {src:'https://lh3.googleusercontent.com/d/1NBRMnc6g58W_Qv3EheJDXz7snZmsonS5',label:'Cozinha'},
           {src:'https://lh3.googleusercontent.com/d/1gUOuJWkntPuXsT7jTZySDqWSjRktEVeB',label:'Quarto 2'},
           {src:'https://lh3.googleusercontent.com/d/1S1Bo1RMJQbc4Nh7Yy5XXkqUUwYDeB5eK',label:'Quarto 3'},
           {src:'https://lh3.googleusercontent.com/d/17d_mtvUzM2mQmY9MrAxkMcK_KNh5Q76k',label:'Banheiro'},
-          {src:'https://lh3.googleusercontent.com/d/1poHoQLTcwEddjdEIUojbeMGPurkr7Oek',label:'Banheiro 2'},
-          {src:'https://lh3.googleusercontent.com/d/1xXIKThabvYSDLmDB8t7g_KvtGLEGPqlg',label:'Entrada'}
+          {src:'https://lh3.googleusercontent.com/d/1poHoQLTcwEddjdEIUojbeMGPurkr7Oek',label:'Banheiro 2'}
         ],
     },
   ];
@@ -499,9 +498,7 @@ const APTS = [
       div.dataset.type = a.type;
       div.dataset.guests = a.guests;
       div.onclick = () => openApt(a.id);
-      const firstPhoto = a.photos && a.photos.length > 0
-        ? (a.photos.find(p => p && p.src && p.label === 'Sala de Estar') || a.photos.find(p => p && p.src))
-        : null;
+      const firstPhoto = a.photos && a.photos.length > 0 ? a.photos.find(p => p && p.src) : null;
       const hasPhoto = !!firstPhoto;
       const cardBg = hasPhoto
         ? `background-image:url(${firstPhoto.src});background-size:cover;background-position:center;`
@@ -535,20 +532,19 @@ const APTS = [
   ];
   
   function renderGallery(apt) {
+    currentGalleryIdx = 0;
     const photos = apt.photos && apt.photos.length
       ? apt.photos.map((p, i) => p || { src:null, label: PHOTO_LABELS[i % PHOTO_LABELS.length] })
       : Array.from({length:6}, (_,i) => ({ src:null, label: PHOTO_LABELS[i % PHOTO_LABELS.length] }));
     const total = photos.length;
-    const salaIdx = photos.findIndex(p => p && p.label === 'Sala de Estar' && p.src);
-    currentGalleryIdx = salaIdx >= 0 ? salaIdx : 0;
-    updateGallerySlide(apt, currentGalleryIdx, photos);
+    updateGallerySlide(apt, 0, photos);
   
     // thumbs
     const thumbsEl = document.getElementById('gallery-thumbs');
     thumbsEl.innerHTML = '';
     photos.forEach((p, t) => {
       const th = document.createElement('div');
-      th.className = `g-thumb ${t === currentGalleryIdx ? 'active' : ''}`;
+      th.className = `g-thumb ${t === 0 ? 'active' : ''}`;
       if (p.src) {
         th.style.backgroundImage = `url(${p.src})`;
         th.style.backgroundSize = 'cover';
