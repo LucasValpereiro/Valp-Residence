@@ -680,17 +680,23 @@ const APTS = [
     const bedGrid = document.getElementById('apt-beds-grid');
     if ((apt.rooms || apt.beds) && (apt.rooms || apt.beds).length) {
       bedSec.style.display = 'block';
-      // photos for beds: skip index 0 (sala), use 1,2,3 for quartos
       const _rooms = apt.rooms || apt.beds;
-      const bedPhotoIdxs = _rooms ? _rooms.map((_,i) => i + 1) : [];
+      // Para cada quarto, busca a foto pelo label correspondente (Quarto 1, Quarto 2, etc.)
       bedGrid.innerHTML = _rooms.map((b,i) => {
-        const photoIdx = bedPhotoIdxs[i];
-        const photo = apt.photos && apt.photos[photoIdx];
+        const quartoLabel = `Quarto ${i+1}`;
+        const suiteLabels = ['Suíte','Suite'];
+        // Tenta achar pelo label exato, depois por Suíte (se o quarto for suíte), depois qualquer quarto
+        let photo = apt.photos && (
+          apt.photos.find(p => p && p.label === quartoLabel && p.src) ||
+          (i === 0 && apt.photos.find(p => p && suiteLabels.includes(p.label) && p.src)) ||
+          apt.photos.find(p => p && p.label && p.label.startsWith('Quarto') && p.src)
+        );
+        const photoIdx = photo ? apt.photos.indexOf(photo) : -1;
         const bgStyle = photo
           ? `style="background-image:url(${photo.src});background-size:cover;background-position:center;"`
           : `style="background:var(--surface2);"`;
         return `
-          <div class="bed-card" onclick="openLightbox(${photoIdx})" style="cursor:pointer;padding:0;overflow:hidden;">
+          <div class="bed-card" onclick="${photoIdx >= 0 ? `openLightbox(${photoIdx})` : ''}" style="cursor:pointer;padding:0;overflow:hidden;">
             <div class="bed-photo" ${bgStyle}></div>
             <div style="padding:14px 16px;">
               <div class="bed-room">Quarto ${i+1}</div>
