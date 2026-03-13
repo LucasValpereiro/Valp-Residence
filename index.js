@@ -11,7 +11,7 @@ const APTS = [
       rating:4.88, reviewsCount:8,
       ratings:{limpeza:4.9,exatidao:5.0,checkin:5.0,comunicacao:5.0,localizacao:5.0,custo:4.8},
       highlights:['🔑 Self check-in com fechadura inteligente','🌿 Região tranquila e segura','🏠 Cozinha totalmente equipada'],
-      rooms:[{name:'Quarto 1',beds:'1 cama queen'},{name:'Quarto 2',beds:'2 camas de solteiro'},{name:'Sala',beds:'1 sofá-cama'}],
+      rooms:[{name:'Quarto 1',beds:'1 cama queen'},{name:'Quarto 2',beds:'2 camas de solteiro'},{name:'Quarto 3',beds:'1 sofá-cama'}],
       amenities:['🍳 Cozinha completa','📶 Wi-Fi fibra','💼 Espaço de trabalho','🚗 Estacionamento gratuito','🐾 Permitido animais','📺 TV 50"','🛗 Elevador','🫧 Máquina de lavar','❄️ A/C nos quartos','📷 Câmeras externas'],
       rules:{checkin:'Após 14:00',checkout:'Antes das 10:00',maxGuests:5},
       reviewCards:[
@@ -78,10 +78,10 @@ const APTS = [
       ratings:{limpeza:5.0,exatidao:4.8,checkin:5.0,comunicacao:5.0,localizacao:5.0,custo:4.8},
       highlights:['🔑 Self check-in com teclado numérico','🌿 Região tranquila e segura','💬 Ótima comunicação com o anfitrião'],
       rooms:[
-        {name:'Quarto 1',beds:'1 cama casal + 1 cama solteiro',img:null},
-        {name:'Quarto 2',beds:'1 cama queen',img:null},
-        {name:'Quarto 3',beds:'2 camas de solteiro',img:null},
-      ],
+          {name:'Quarto 1',beds:'2 camas de solteiro',img:null},
+          {name:'Quarto 2',beds:'1 cama queen',img:null},
+          {name:'Quarto 3',beds:'1 cama de casal + 1 cama de solteiro',img:null},
+        ],
       amenities:['🍳 Cozinha completa','📶 Wi-Fi fibra','💼 Espaço de trabalho','🚗 Estacionamento gratuito','🐾 Permitido animais','📺 TV','🛗 Elevador','🫧 Máquina de lavar','❄️ A/C em todos os quartos'],
       rules:{checkin:'Após 14:00',checkout:'Antes das 10:00',maxGuests:7},
       reviewCards:[
@@ -133,14 +133,14 @@ const APTS = [
       photos:[
           {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/7378bf12-e191-47fe-a0b4-7cf6f342da38.jpeg',label:'Sala de Estar'},
           {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/657bbe48-76dc-4549-9587-f12332c93977.jpeg',label:'Sala de Estar'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/294ca237-8c73-448b-b567-70b5b1639f65.jpeg',label:'Quarto 1'},
+          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/294ca237-8c73-448b-b567-70b5b1639f65.jpeg',label:'Quarto 2'},
           {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/259ba243-a697-4a99-8846-2a24d2d7f59e.jpeg',label:'Sala de Jantar'},
           {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/db6801b1-e86d-4cf8-9ede-4eddf499452f.jpeg',label:'Banheiro'},
           {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/0e1bab2a-eb57-4e09-bc27-8d54b44f4954.jpeg',label:'Cozinha'},
           {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/ee9fa7ad-c2f1-43ae-a278-5f5592e99e2a.jpeg',label:'Cozinha'},
           {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/30f58084-7c46-41ab-9806-da32808d68f9.jpeg',label:'Lavanderia'},
           {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/d8b33807-985e-4105-ac11-9400e46a1eb6.jpeg',label:'Sala de Estar'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/1e4d9652-f979-48ad-b80a-b780dce8d1da.jpeg',label:'Quarto 2'},
+          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/1e4d9652-f979-48ad-b80a-b780dce8d1da.jpeg',label:'Quarto 1'},
           {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/ee887a47-95d2-4165-ab42-a6f165933b01.jpeg',label:'Quarto 3'}
         ],
     },
@@ -219,7 +219,7 @@ const APTS = [
       rating:4.72, reviewsCount:99,
       ratings:{limpeza:4.6,exatidao:4.7,checkin:4.9,comunicacao:4.9,localizacao:4.9,custo:4.6},
       highlights:['🔑 Self check-in com fechadura inteligente','📍 Ótima localização','💼 Espaço de trabalho exclusivo'],
-      rooms:[{name:'Quarto 1',beds:'2 camas de solteiro'},{name:'Quarto 2',beds:'1 cama queen'},{name:'Quarto extra',beds:'1 cama de solteiro'}],
+      rooms:[{name:'Quarto 1',beds:'1 cama queen'},{name:'Quarto 2',beds:'2 camas de solteiro'},{name:'Quarto 3',beds:'1 sofá-cama'}],
       amenities:['🍳 Cozinha completa','📶 Wi-Fi fibra','💼 Espaço de trabalho','🚗 Estacionamento gratuito','🐾 Permitido animais','📺 TV','🛗 Elevador','🫧 Máquina de lavar','❄️ A/C nos quartos','🌅 Varanda'],
       rules:{checkin:'Após 14:00',checkout:'Antes das 10:00',maxGuests:5},
       reviewCards:[
@@ -239,10 +239,10 @@ const APTS = [
           {src:'https://lh3.googleusercontent.com/d/1OE5FH100n61nU5XlmDJU_XJeKSZN08Sp',label:'Lavanderia'},
           {src:'https://lh3.googleusercontent.com/d/11ZK7Ev24im7NZDR1kxl0blZqto3UOO-w',label:'Lavabo'},
           {src:'https://lh3.googleusercontent.com/d/1h45kiM6VKcHA_rY11MdNQnqA0Evle9hr',label:'Corredor'},
-          {src:'https://lh3.googleusercontent.com/d/1nmGXonqkatApwyfCUsx98E8U70souJ-2',label:'Quarto 1'},
-          {src:'https://lh3.googleusercontent.com/d/1_pK8Ba_o0urQKeb2UcLbwg3KbUNA4uhF',label:'Quarto 1'},
-          {src:'https://lh3.googleusercontent.com/d/1sPpwD4iS0yXQJI_1c7ZLC5BKyLZ_7o4j',label:'Quarto 2'},
-          {src:'https://lh3.googleusercontent.com/d/1_30zyRKQK2ZUu0dJLvMY60pVha5pmLrQ',label:'Quarto 2'},
+          {src:'https://lh3.googleusercontent.com/d/1nmGXonqkatApwyfCUsx98E8U70souJ-2',label:'Quarto 2'},
+          {src:'https://lh3.googleusercontent.com/d/1_pK8Ba_o0urQKeb2UcLbwg3KbUNA4uhF',label:'Quarto 2'},
+          {src:'https://lh3.googleusercontent.com/d/1sPpwD4iS0yXQJI_1c7ZLC5BKyLZ_7o4j',label:'Quarto 1'},
+          {src:'https://lh3.googleusercontent.com/d/1_30zyRKQK2ZUu0dJLvMY60pVha5pmLrQ',label:'Quarto 1'},
           {src:'https://lh3.googleusercontent.com/d/1lW_rt-zYwruSOkc0_N4b25Cs-3PT_elD',label:'Banheiro'}
         ],
     },
@@ -255,7 +255,7 @@ const APTS = [
       rating:4.76, reviewsCount:84,
       ratings:{limpeza:4.7,exatidao:4.8,checkin:4.9,comunicacao:4.9,localizacao:5.0,custo:4.7},
       highlights:['🔑 Self check-in com fechadura inteligente','🌿 Região tranquila','💼 Espaço de trabalho exclusivo'],
-      rooms:[{name:'Quarto 1',beds:'2 camas de solteirão'},{name:'Quarto 2',beds:'1 cama queen'},{name:'Quarto 3',beds:'1 cama de solteiro'},{name:'Sala',beds:'1 sofá-cama 2,50m'}],
+      rooms:[{name:'Quarto 1',beds:'2 camas de solteiro'},{name:'Quarto 2',beds:'1 cama queen'},{name:'Quarto 3',beds:'1 cama de solteiro'},{name:'Quarto 4',beds:'1 sofá-cama 2,50m'}],
       amenities:['🍳 Cozinha completa','📶 Wi-Fi fibra','💼 Espaço de trabalho','🚗 Estacionamento gratuito','🐾 Permitido animais','📺 TV','🛗 Elevador','🫧 Máquina de lavar','💇 Secador de cabelo','🍷 Taças de vinho'],
       rules:{checkin:'Após 14:00',checkout:'Antes das 10:00',maxGuests:5},
       reviewCards:[
@@ -275,8 +275,8 @@ const APTS = [
           {src:'https://lh3.googleusercontent.com/d/1URsjPccyc7g-C444eX8LH49pSV8J2uY3',label:'Quarto 3'},
           {src:'https://lh3.googleusercontent.com/d/1G-pvq6gxz8q0PCfkGD512uI6efvD1qYY',label:'Lavabo'},
           {src:'https://lh3.googleusercontent.com/d/1RSWeZxnfwww2djzL6Tsy3GXlPOeJ8yhS',label:'Corredor'},
-          {src:'https://lh3.googleusercontent.com/d/1yFeWO_BLqc1qK41ndsjiaWG-K_RnqnJk',label:'Quarto 1'},
-          {src:'https://lh3.googleusercontent.com/d/1SVEb2TcESwXrOs3VpiYLCARV221yBYtw',label:'Quarto 2'},
+          {src:'https://lh3.googleusercontent.com/d/1yFeWO_BLqc1qK41ndsjiaWG-K_RnqnJk',label:'Quarto 2'},
+          {src:'https://lh3.googleusercontent.com/d/1SVEb2TcESwXrOs3VpiYLCARV221yBYtw',label:'Quarto 1'},
           {src:'https://lh3.googleusercontent.com/d/1jLe5IwD5PiC83o-BEsyaQIld0F9uW_Lb',label:'Banheiro'}
         ],
     },
@@ -359,7 +359,7 @@ const APTS = [
       rating:4.83, reviewsCount:120,
       ratings:{limpeza:4.8,exatidao:4.9,checkin:5.0,comunicacao:4.9,localizacao:4.9,custo:4.8},
       highlights:['🔑 Self check-in com fechadura inteligente','🌿 Região tranquila e segura','💼 Espaço de trabalho exclusivo'],
-      rooms:[{name:'Quarto 1',beds:'1 cama queen + 1 sofá-cama'},{name:'Quarto 2',beds:'5 camas de solteiro'},{name:'Quarto 3',beds:'1 cama de casal'},{name:'Quarto 4',beds:'3 camas de solteiro'}],
+      rooms:[{name:'Quarto 1',beds:'1 cama queen'},{name:'Quarto 2',beds:'1 cama queen'},{name:'Quarto 3',beds:'3 camas de solteiro'},{name:'Quarto 4',beds:'2 camas de solteiro + 1 beliche'},{name:'Quarto 5',beds:'1 sofá-cama'}],
       amenities:['🍳 Cozinha completa','📶 Wi-Fi fibra','💼 Espaço de trabalho','🚗 Estacionamento gratuito','🐾 Permitido animais','📺 HDTV com TV a cabo','🛗 Elevador','🫧 Máquina de lavar','❄️ A/C','☕ Nespresso','💇 Secador de cabelo','🍷 Taças de vinho','👔 Ferro de passar'],
       rules:{checkin:'Após 14:00',checkout:'Antes das 10:00',maxGuests:12},
       reviewCards:[
@@ -373,8 +373,8 @@ const APTS = [
           {src:'https://lh3.googleusercontent.com/d/1w_wBFjyycc33mch9FBV6Z5JN8B_sMoe0',label:'Sala de Jantar'},
           {src:'https://lh3.googleusercontent.com/d/1jSrd59dSP74qavNhX8FKvsaVADyFVsIC',label:'Sala de Jantar'},
           {src:'https://lh3.googleusercontent.com/d/1zp1MmAomPIt3QxaqlJ6Vq45akag2cggC',label:'Sala de Estar'},
-          {src:'https://lh3.googleusercontent.com/d/12lp_BUmxfOVniHJeuEeH6OMBtQJROVoy',label:'Quarto 4'},
-          {src:'https://lh3.googleusercontent.com/d/1Jhdgk4zcEnA28vGADiOGg05T-nqvtqNN',label:'Quarto 4'},
+          {src:'https://lh3.googleusercontent.com/d/12lp_BUmxfOVniHJeuEeH6OMBtQJROVoy',label:'Quarto 2'},
+          {src:'https://lh3.googleusercontent.com/d/1Jhdgk4zcEnA28vGADiOGg05T-nqvtqNN',label:'Quarto 2'},
           {src:'https://lh3.googleusercontent.com/d/1v6imBvDAgykIVj36efYRwhejWAJ6ZfNb',label:'Banheiro'},
           {src:'https://lh3.googleusercontent.com/d/1kgfIGpMgue_55T36PDPlsTC2cgU1dh9W',label:'Cozinha'},
           {src:'https://lh3.googleusercontent.com/d/1k0jwbI6N_ZFV7AeD-rTLM_qW01YxqFow',label:'Cozinha'},
@@ -386,8 +386,8 @@ const APTS = [
           {src:'https://lh3.googleusercontent.com/d/1aHaQSzCyaixH_Br74v47vk6fpj8FDtC-',label:'Quarto 1'},
           {src:'https://lh3.googleusercontent.com/d/177NzaQpSX7vCFibB7Iprc5rszvQHxQmu',label:'Quarto 1'},
           {src:'https://lh3.googleusercontent.com/d/1DlyXSLwZoFQg56EeqZYEiFfidqGMZnqI',label:'Banheiro 2'},
-          {src:'https://lh3.googleusercontent.com/d/1PBM4nalLvt-rSFActtxUBmSX8ccdqkr9',label:'Quarto 2'},
-          {src:'https://lh3.googleusercontent.com/d/15WguOac-V28QJABlkHGc6GZOPPkao5fY',label:'Quarto 3'},
+          {src:'https://lh3.googleusercontent.com/d/1PBM4nalLvt-rSFActtxUBmSX8ccdqkr9',label:'Quarto 3'},
+          {src:'https://lh3.googleusercontent.com/d/15WguOac-V28QJABlkHGc6GZOPPkao5fY',label:'Quarto 4'},
           {src:'https://lh3.googleusercontent.com/d/1lKRHq5NNj1RxpKCiLPoFodGOj8gTTEkE',label:'Banheiro 3'}
         ],
     },
@@ -400,7 +400,7 @@ const APTS = [
       rating:4.81, reviewsCount:84,
       ratings:{limpeza:4.8,exatidao:4.8,checkin:4.9,comunicacao:4.9,localizacao:4.9,custo:4.8},
       highlights:['🔑 Self check-in com fechadura inteligente','🌿 Região tranquila e segura','🏠 Cozinha totalmente equipada'],
-      rooms:[{name:'Quarto 1',beds:'1 cama queen (suíte)'},{name:'Quarto 2',beds:'1 cama queen (suíte)'},{name:'Quarto 3',beds:'1 cama queen'},{name:'Quarto 4',beds:'3 camas de solteiro'},{name:'Quarto 5',beds:'3 camas solteiro + beliche'}],
+      rooms:[{name:'Quarto 1',beds:'1 cama queen (suíte)'},{name:'Quarto 2',beds:'1 cama queen (suíte)'},{name:'Quarto 3',beds:'3 camas de solteiro'},{name:'Quarto 4',beds:'1 cama de solteiro + beliche'},{name:'Quarto 5',beds:'1 cama queen'}],
       amenities:['🍳 Cozinha completa','📶 Wi-Fi fibra','💼 Espaço de trabalho','🚗 Estacionamento gratuito','🐾 Permitido animais','📺 TV','🛗 Elevador','🫧 Máquina de lavar','❄️ A/C em 2 suítes','🌀 Ventilador de teto','☕ Cafeteira Nespresso','🌙 Cortinas blackout'],
       rules:{checkin:'Após 14:00',checkout:'Antes das 10:00',maxGuests:15},
       reviewCards:[
@@ -442,7 +442,7 @@ const APTS = [
       rating:4.73, reviewsCount:22,
       ratings:{limpeza:4.8,exatidao:4.7,checkin:4.9,comunicacao:4.9,localizacao:4.8,custo:4.6},
       highlights:['🔑 Self check-in com teclado numérico','🏠 Cozinha totalmente equipada','💬 Ótima comunicação com o anfitrião'],
-      rooms:[{name:'Quarto 1',beds:'1 cama queen + 2 camas solteiro'},{name:'Quarto 2',beds:'1 cama de solteiro'},{name:'Quarto 3',beds:'1 cama queen'}],
+      rooms:[{name:'Quarto 1',beds:'1 cama queen + 2 camas solteiro'},{name:'Quarto 2',beds:'1 cama queen'},{name:'Quarto 3',beds:'1 cama de solteiro'}],
       amenities:['🍳 Cozinha completa','📶 Wi-Fi fibra','💼 Espaço de trabalho','🚗 Estacionamento gratuito','🐾 Permitido animais','📺 TV','❄️ A/C em todos os quartos','☕ Cafeteira expresso','🥘 Airfryer','🥪 Sanduicheira','🍷 Taças de vinho'],
       rules:{checkin:'Após 14:00',checkout:'Antes das 10:00',maxGuests:7},
       reviewCards:[
@@ -451,10 +451,10 @@ const APTS = [
         {author:'Renata',stars:5,date:'nov. 2025',text:'O apto foi reservado para representantes da empresa de 4 estados. Todos elogiaram e já pediram para reservar o mesmo apto para 2026!'},
       ],
       photos:[
-          {src:'https://lh3.googleusercontent.com/d/1hG0gTF0HdYGr7ENdSp2M_Rszl3_npiDG',label:'Sala de Estar'},
-          {src:'https://lh3.googleusercontent.com/d/1ShiuZ06DAh0WeBhJm2LyY8YaaFbBwKLS',label:'Quarto 1'},
-          {src:'https://lh3.googleusercontent.com/d/1Z8NWKbzaQrKdgYw7xprRTWogJN-nBWGX',label:'Quarto 2'},
-          {src:'https://lh3.googleusercontent.com/d/1zu5UpfQ-GA5Zui8c62yPSDI1m62cvgCD',label:'Quarto 3'},
+          {src:'https://lh3.googleusercontent.com/d/1hG0gTF0HdYGr7ENdSp2M_Rszl3_npiDG',label:'Corredor'},
+          {src:'https://lh3.googleusercontent.com/d/1ShiuZ06DAh0WeBhJm2LyY8YaaFbBwKLS',label:'Sala de Jantar'},
+          {src:'https://lh3.googleusercontent.com/d/1Z8NWKbzaQrKdgYw7xprRTWogJN-nBWGX',label:'Sala de Estar'},
+          {src:'https://lh3.googleusercontent.com/d/1zu5UpfQ-GA5Zui8c62yPSDI1m62cvgCD',label:'Sala de Estar'},
           {src:'https://lh3.googleusercontent.com/d/19L7Rzk_4pPeYrW0J1rEfxJ9scdN-0Cv3',label:'Quarto 1'},
           {src:'https://lh3.googleusercontent.com/d/165xJ7XGHHPn8L1ntBX5QSnhXKFsvz7TB',label:'Cozinha'},
           {src:'https://lh3.googleusercontent.com/d/1NBRMnc6g58W_Qv3EheJDXz7snZmsonS5',label:'Cozinha'},
@@ -524,9 +524,25 @@ const APTS = [
   ];
   
   function renderGallery(apt) {
-    const photos = apt.photos && apt.photos.length
+    const rawPhotos = apt.photos && apt.photos.length
       ? apt.photos.map((p, i) => p || { src:null, label: PHOTO_LABELS[i % PHOTO_LABELS.length] })
       : Array.from({length:6}, (_,i) => ({ src:null, label: PHOTO_LABELS[i % PHOTO_LABELS.length] }));
+  
+    // Ordenar fotos agrupando por cômodo
+    const LABEL_ORDER = [
+      'Sala de Estar','Sala de Jantar','Cozinha',
+      'Quarto 1','Quarto 2','Quarto 3','Quarto 4','Quarto 5',
+      'Suíte','Suite',
+      'Banheiro','Banheiro 2','Banheiro 3','Banheiro 4',
+      'Lavabo','Lavanderia',
+      'Varanda','Área externa','Vista','Corredor','Detalhe','Outro'
+    ];
+    const getLabelOrder = label => {
+      const idx = LABEL_ORDER.indexOf(label);
+      return idx >= 0 ? idx : LABEL_ORDER.length;
+    };
+    const photos = [...rawPhotos].sort((a, b) => getLabelOrder(a.label) - getLabelOrder(b.label));
+  
     const total = photos.length;
     const salaIdx = photos.findIndex(p => p && p.label === 'Sala de Estar' && p.src);
     currentGalleryIdx = salaIdx >= 0 ? salaIdx : 0;
@@ -686,9 +702,11 @@ const APTS = [
         const quartoLabel = `Quarto ${i+1}`;
         const suiteLabels = ['Suíte','Suite'];
         // Tenta achar pelo label exato, depois por Suíte (se o quarto for suíte), depois qualquer quarto
+        const isSofa = typeof b === 'object' ? (b.beds || '').toLowerCase().includes('sofá') : b.toLowerCase().includes('sofá');
         let photo = apt.photos && (
           apt.photos.find(p => p && p.label === quartoLabel && p.src) ||
           (i === 0 && apt.photos.find(p => p && suiteLabels.includes(p.label) && p.src)) ||
+          (isSofa && apt.photos.find(p => p && p.label === 'Sala de Estar' && p.src)) ||
           apt.photos.find(p => p && p.label && p.label.startsWith('Quarto') && p.src)
         );
         const photoIdx = photo ? apt.photos.indexOf(photo) : -1;
