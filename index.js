@@ -132,15 +132,15 @@ const APTS = [
       ],
       photos:[
           {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/7378bf12-e191-47fe-a0b4-7cf6f342da38.jpeg',label:'Sala de Estar'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/657bbe48-76dc-4549-9587-f12332c93977.jpeg',label:'Sala de Estar'},
+          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/d8b33807-985e-4105-ac11-9400e46a1eb6.jpeg',label:'Sala de Estar'},
+            {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/657bbe48-76dc-4549-9587-f12332c93977.jpeg',label:'Sala de Estar'},
           {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/294ca237-8c73-448b-b567-70b5b1639f65.jpeg',label:'Quarto 2'},
           {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/259ba243-a697-4a99-8846-2a24d2d7f59e.jpeg',label:'Sala de Jantar'},
           {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/db6801b1-e86d-4cf8-9ede-4eddf499452f.jpeg',label:'Banheiro'},
           {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/0e1bab2a-eb57-4e09-bc27-8d54b44f4954.jpeg',label:'Cozinha'},
           {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/ee9fa7ad-c2f1-43ae-a278-5f5592e99e2a.jpeg',label:'Cozinha'},
           {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/30f58084-7c46-41ab-9806-da32808d68f9.jpeg',label:'Lavanderia'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/d8b33807-985e-4105-ac11-9400e46a1eb6.jpeg',label:'Sala de Estar'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/1e4d9652-f979-48ad-b80a-b780dce8d1da.jpeg',label:'Quarto 1'},
+                  {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/1e4d9652-f979-48ad-b80a-b780dce8d1da.jpeg',label:'Quarto 1'},
           {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/ee887a47-95d2-4165-ab42-a6f165933b01.jpeg',label:'Quarto 3'}
         ],
     },
