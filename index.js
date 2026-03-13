@@ -131,8 +131,8 @@ const APTS = [
         {author:'Eduardo Fellipe',stars:5,date:'ago. 2025',text:'Muito bem localizado, local seguro, ap confortável. Rápido nas respostas, ótimo custo-benefício.'},
       ],
       photos:[
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/7378bf12-e191-47fe-a0b4-7cf6f342da38.jpeg',label:'Sala de Estar'},
           {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/d8b33807-985e-4105-ac11-9400e46a1eb6.jpeg',label:'Sala de Estar'},
+          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/7378bf12-e191-47fe-a0b4-7cf6f342da38.jpeg',label:'Sala de Estar'},
             {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/657bbe48-76dc-4549-9587-f12332c93977.jpeg',label:'Sala de Estar'},
           {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/294ca237-8c73-448b-b567-70b5b1639f65.jpeg',label:'Quarto 2'},
           {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/259ba243-a697-4a99-8846-2a24d2d7f59e.jpeg',label:'Sala de Jantar'},
