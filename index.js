@@ -987,7 +987,7 @@ initReveal();
 // ═══════════════════════════════════════
 window.addEventListener('scroll',()=>{
 const nav=document.getElementById('navbar');
-nav.style.padding=window.scrollY>60?'14px 72px':'24px 72px';
+nav.style.padding=window.scrollY>60?'6px 72px':'10px 72px';
 });
 
 // ═══════════════════════════════════════
