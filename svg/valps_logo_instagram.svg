@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 500 500" width="500" height="500" xmlns="http://www.w3.org/2000/svg">
+  <!-- fundo quadrado estilo Instagram -->
+  <rect width="500" height="500" fill="#0A0A0A"/>
+  <!-- borda dourada sutil -->
+  <rect x="2" y="2" width="496" height="496" fill="none" stroke="rgba(201,168,76,0.15)" stroke-width="1.5"/>
+  <!-- ícone centralizado e escalado para 500x500 -->
+  <!-- telhado -->
+  <path d="M100,290 L250,90 L400,290" fill="none" stroke="#C9A84C" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="250" cy="88" r="14" fill="#C9A84C"/>
+  <!-- janelas apoiadas na linha -->
+  <rect x="192" y="272" width="54" height="54" rx="6" fill="none" stroke="#C9A84C" stroke-width="5"/>
+  <rect x="254" y="272" width="54" height="54" rx="6" fill="none" stroke="#C9A84C" stroke-width="5"/>
+  <!-- linha base -->
+  <line x1="100" y1="326" x2="400" y2="326" stroke="#C9A84C" stroke-width="4"/>
+  <!-- texto -->
+  <text x="250" y="400" text-anchor="middle" font-family="'Playfair Display',Georgia,serif" font-size="92" font-weight="400" fill="#F0EDE8" letter-spacing="18">VALPS</text>
+  <text x="250" y="440" text-anchor="middle" font-family="'Playfair Display',Georgia,serif" font-size="36" font-style="italic" fill="#C9A84C" letter-spacing="12">Residence</text>
+</svg>
