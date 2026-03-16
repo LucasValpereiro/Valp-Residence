@@ -76,43 +76,49 @@
     <span class="result-clear" onclick="clearSearch()">✕ Limpar filtros</span>
   </div>
 
-  <!-- OFERTAS -->
-  <section id="ofertas">
-    <div class="reveal">
-      <div class="sec-tag">Promoções exclusivas</div>
-      <h2 class="sec-title">Aproveite nossas<br><em>ofertas especiais</em></h2>
-      <p class="sec-sub">Preços especiais para estadias longas, fins de semana e reservas antecipadas.</p>
-    </div>
-    <div class="ofertas-grid reveal">
-      <div class="oferta-card">
-        <div class="oferta-bg oferta-bg-1"></div>
-        <span class="oferta-tag">✦ Mais popular</span>
-        <div class="oferta-content">
-          <h3 class="oferta-title">Estadia Longa</h3>
-          <p class="oferta-desc">Reserve 7 diárias ou mais e ganhe desconto especial.</p>
-          <div class="oferta-price"><span class="from">A partir de</span><span class="amount">R$ 149</span><span class="period">/ diária</span><span class="old-price">R$ 180</span></div>
-          <span class="oferta-btn" onclick="scrollToSection('contato')">Reservar agora →</span>
+  <!-- LOCALIZAÇÃO -->
+  <section id="localizacao">
+    <div class="local-grid">
+      <div class="reveal">
+        <div class="map-container">
+          <iframe
+            src="https://www.google.com/maps?q=-23.616923,-46.679839&z=17&output=embed"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Localização Valps Residence">
+          </iframe>
+        </div>
+        <div class="map-actions">
+          <a href="https://maps.app.goo.gl/XikVgN2Us3NKyxiA8" target="_blank" class="map-action-btn primary">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            Ver em 360°
+          </a>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=-23.616923,-46.679839" target="_blank" class="map-action-btn">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+            Como chegar
+          </a>
+          <a href="https://maps.app.goo.gl/XikVgN2Us3NKyxiA8" target="_blank" class="map-action-btn">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Abrir no Maps
+          </a>
         </div>
       </div>
-      <div class="oferta-card">
-        <div class="oferta-bg oferta-bg-2"></div>
-        <span class="oferta-tag">Final de semana</span>
-        <div class="oferta-content">
-          <h3 class="oferta-title">Pacote Weekend</h3>
-          <p class="oferta-desc">Sex, sáb e dom com café da manhã incluso.</p>
-          <div class="oferta-price"><span class="amount">R$ 520</span><span class="period">/ pacote</span><span class="old-price">R$ 640</span></div>
-          <span class="oferta-btn" onclick="scrollToSection('contato')">Reservar →</span>
-        </div>
-      </div>
-      <div class="oferta-card">
-        <div class="oferta-bg oferta-bg-3"></div>
-        <span class="oferta-tag">Antecipada</span>
-        <div class="oferta-content">
-          <h3 class="oferta-title">Reserva Antecipada</h3>
-          <p class="oferta-desc">Reserve com 30+ dias de antecedência.</p>
-          <div class="oferta-price"><span class="amount">–15%</span><span class="period">no total</span></div>
-          <span class="oferta-btn" onclick="scrollToSection('contato')">Reservar →</span>
-        </div>
+      <div class="reveal reveal-delay-2">
+        <div class="sec-tag">Localização</div>
+        <h2 class="sec-title">Tudo perto,<br><em>nada faltando</em></h2>
+        <p class="sec-sub">Localização privilegiada com fácil acesso ao melhor que a cidade tem a oferecer.</p>
+        <ul class="features-list">
+          <li><div class="feat-icon">✈️</div> Aeroporto de Congonhas a 10 minutos</li>
+          <li><div class="feat-icon">🚇</div> Metrô — estação próxima com fácil acesso</li>
+          <li><div class="feat-icon">💊</div> Farmácias no entorno imediato</li>
+          <li><div class="feat-icon">🍽️</div> Restaurantes e bares a poucos passos</li>
+          <li><div class="feat-icon">🛒</div> Supermercados a menos de 5 minutos</li>
+        </ul>
+        <p style="font-size:0.8rem;color:var(--text-muted);margin-top:20px;border-left:2px solid var(--gold);padding-left:14px;line-height:1.7;">
+          Precisa de indicações de restaurantes, farmácias ou pontos turísticos?
+          <a href="https://wa.me/5585999696377?text=Olá! Gostaria de indicações sobre a região." target="_blank" style="color:var(--gold);text-decoration:none;">Fale com o proprietário →</a>
+        </p>
       </div>
     </div>
   </section>
@@ -164,49 +170,43 @@
     </div>
   </section>
 
-  <!-- LOCALIZAÇÃO -->
-  <section id="localizacao">
-    <div class="local-grid">
-      <div class="reveal">
-        <div class="map-container">
-          <iframe
-            src="https://www.google.com/maps?q=-23.616923,-46.679839&z=17&output=embed"
-            allowfullscreen
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            title="Localização Valps Residence">
-          </iframe>
-        </div>
-        <div class="map-actions">
-          <a href="https://maps.app.goo.gl/XikVgN2Us3NKyxiA8" target="_blank" class="map-action-btn primary">
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-            Ver em 360°
-          </a>
-          <a href="https://www.google.com/maps/dir/?api=1&destination=-23.616923,-46.679839" target="_blank" class="map-action-btn">
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
-            Como chegar
-          </a>
-          <a href="https://maps.app.goo.gl/XikVgN2Us3NKyxiA8" target="_blank" class="map-action-btn">
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            Abrir no Maps
-          </a>
+  <!-- OFERTAS -->
+  <section id="ofertas">
+    <div class="reveal">
+      <div class="sec-tag">Promoções exclusivas</div>
+      <h2 class="sec-title">Aproveite nossas<br><em>ofertas especiais</em></h2>
+      <p class="sec-sub">Preços especiais para estadias longas, fins de semana e reservas antecipadas.</p>
+    </div>
+    <div class="ofertas-grid reveal">
+      <div class="oferta-card">
+        <div class="oferta-bg oferta-bg-1"></div>
+        <span class="oferta-tag">✦ Mais popular</span>
+        <div class="oferta-content">
+          <h3 class="oferta-title">Estadia Longa</h3>
+          <p class="oferta-desc">Reserve 7 diárias ou mais e ganhe desconto especial.</p>
+          <div class="oferta-price"><span class="from">A partir de</span><span class="amount">R$ 149</span><span class="period">/ diária</span><span class="old-price">R$ 180</span></div>
+          <span class="oferta-btn" onclick="scrollToSection('contato')">Reservar agora →</span>
         </div>
       </div>
-      <div class="reveal reveal-delay-2">
-        <div class="sec-tag">Localização</div>
-        <h2 class="sec-title">Tudo perto,<br><em>nada faltando</em></h2>
-        <p class="sec-sub">Localização privilegiada com fácil acesso ao melhor que a cidade tem a oferecer.</p>
-        <ul class="features-list">
-          <li><div class="feat-icon">✈️</div> Aeroporto de Congonhas a 10 minutos</li>
-          <li><div class="feat-icon">🚇</div> Metrô — estação próxima com fácil acesso</li>
-          <li><div class="feat-icon">💊</div> Farmácias no entorno imediato</li>
-          <li><div class="feat-icon">🍽️</div> Restaurantes e bares a poucos passos</li>
-          <li><div class="feat-icon">🛒</div> Supermercados a menos de 5 minutos</li>
-        </ul>
-        <p style="font-size:0.8rem;color:var(--text-muted);margin-top:20px;border-left:2px solid var(--gold);padding-left:14px;line-height:1.7;">
-          Precisa de indicações de restaurantes, farmácias ou pontos turísticos? 
-          <a href="https://wa.me/5585999696377?text=Olá! Gostaria de indicações sobre a região." target="_blank" style="color:var(--gold);text-decoration:none;">Fale com o proprietário →</a>
-        </p>
+      <div class="oferta-card">
+        <div class="oferta-bg oferta-bg-2"></div>
+        <span class="oferta-tag">Final de semana</span>
+        <div class="oferta-content">
+          <h3 class="oferta-title">Pacote Weekend</h3>
+          <p class="oferta-desc">Sex, sáb e dom com café da manhã incluso.</p>
+          <div class="oferta-price"><span class="amount">R$ 520</span><span class="period">/ pacote</span><span class="old-price">R$ 640</span></div>
+          <span class="oferta-btn" onclick="scrollToSection('contato')">Reservar →</span>
+        </div>
+      </div>
+      <div class="oferta-card">
+        <div class="oferta-bg oferta-bg-3"></div>
+        <span class="oferta-tag">Antecipada</span>
+        <div class="oferta-content">
+          <h3 class="oferta-title">Reserva Antecipada</h3>
+          <p class="oferta-desc">Reserve com 30+ dias de antecedência.</p>
+          <div class="oferta-price"><span class="amount">–15%</span><span class="period">no total</span></div>
+          <span class="oferta-btn" onclick="scrollToSection('contato')">Reservar →</span>
+        </div>
       </div>
     </div>
   </section>
@@ -229,11 +229,11 @@
       </div>
       <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-q">Quais formas de pagamento são aceitas? <span class="faq-icon">+</span></div>
-        <div class="faq-a">Aceitamos Pix, transferência bancária e cartão de crédito em até 6x sem juros. Reservas diretas não têm taxas de serviço adicionais.</div>
+        <div class="faq-a">Aceitamos PIX, Transferência Bancária e Link de pagamento solicitando ao proprietário. Reservas diretas não têm taxas de serviço adicionais.</div>
       </div>
       <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-q">Qual é a política de cancelamento? <span class="faq-icon">+</span></div>
-        <div class="faq-a">Cancelamentos com mais de 7 dias: reembolso integral. Entre 3 e 7 dias: reembolso de 50%. Menos de 72h: sem reembolso. Casos de força maior são analisados individualmente.</div>
+        <div class="faq-a">Cancelamentos com mais de 30 dias: reembolso integral. Até 15 dias: reembolso de 50%. Após isso, sem reembolso.</div>
       </div>
       <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-q">Os apartamentos são mobiliados? <span class="faq-icon">+</span></div>
@@ -241,11 +241,11 @@
       </div>
       <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-q">Qual é o horário de check-in e check-out? <span class="faq-icon">+</span></div>
-        <div class="faq-a">Check-in a partir das 14h e check-out até as 12h. Early check-in e late check-out podem ser solicitados mediante disponibilidade.</div>
+        <div class="faq-a">Check-in a partir das 14h e check-out até as 10h da manhã. Early check-in e late check-out podem ser solicitados mediante disponibilidade.</div>
       </div>
       <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-q">É permitido pets? <span class="faq-icon">+</span></div>
-        <div class="faq-a">Aceitamos pets de pequeno porte (até 10kg) com consulta prévia e taxa de limpeza de R$ 80. Informe na solicitação de reserva.</div>
+        <div class="faq-a">Aceitamos pets de pequeno porte (até 10kg) com consulta prévia e taxa de limpeza de R$ 180. Informe na solicitação de reserva.</div>
       </div>
       <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-q">Por que reservar direto ao invés da Booking ou Airbnb? <span class="faq-icon">+</span></div>
@@ -253,7 +253,7 @@
       </div>
       <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-q">Tem estacionamento disponível? <span class="faq-icon">+</span></div>
-        <div class="faq-a">Sim, cada apartamento tem uma vaga privativa inclusa. Para dois veículos, há vagas adicionais por R$ 20/dia, sujeito à disponibilidade.</div>
+        <div class="faq-a">Sim, há vagas rotativas para todos os apartamentos.</div>
       </div>
     </div>
   </section>
@@ -288,15 +288,23 @@
       <div class="form-group"><label>Acomodação</label>
         <select id="contato-apt">
           <option value="">Selecione uma unidade</option>
+          <option>Apto 11</option>
+          <option>Apto 12</option>
           <option>Apto 21</option>
-          <option>Apto 101</option><option>Apto 102</option><option>Apto 103</option>
-          <option>Apto 202</option><option>Apto 203</option><option>Apto 204</option>
-          <option>Apto 301</option><option>Apto 302</option><option>Apto 303</option>
-          <option>Apto 304</option><option>Apto 401</option><option>Apto 402</option>
+          <option>Apto 22</option>
+          <option>Apto 31</option>
+          <option>Apto 32</option>
+          <option>Apto 41</option>
+          <option>Apto 42</option>
+          <option>Apto 51</option>
+          <option>Apto 52</option>
+          <option>Duplex 61</option>
+          <option>Duplex 62</option>
+          <option>Apto 001</option>
         </select>
       </div>
       <div class="form-group"><label>Hóspedes</label>
-        <select id="c-guests"><option>1 hóspede</option><option>2 hóspedes</option><option>3 hóspedes</option><option>4 hóspedes</option><option>5 hóspedes</option><option>6 hóspedes</option><option>7 hóspedes</option></select>
+        <select id="c-guests"><option>1 hóspede</option><option>2 hóspedes</option><option>3 hóspedes</option><option>4 hóspedes</option><option>5 hóspedes</option><option>6 hóspedes</option><option>7 hóspedes</option><option>8 hóspedes</option><option>9 hóspedes</option><option>10 hóspedes</option><option>11 hóspedes</option><option>12 hóspedes</option><option>13 hóspedes</option><option>14 hóspedes</option></select>
       </div>
       <div class="form-group full"><label>Mensagem (opcional)</label><textarea id="c-msg" placeholder="Dúvidas, pedidos especiais..."></textarea></div>
       <button type="submit" class="form-submit">
@@ -396,9 +404,9 @@
             <div class="policy-col-icon">🔍</div>
             <div class="policy-col-title">Política de cancelamento</div>
             <ul class="policy-col-list">
-              <li>Reembolso integral até 7 dias antes</li>
-              <li>50% de reembolso entre 3 e 7 dias</li>
-              <li>Sem reembolso em menos de 72h</li>
+              <li>Reembolso integral com mais de 30 dias</li>
+              <li>50% de reembolso até 15 dias</li>
+              <li>Sem reembolso após isso</li>
             </ul>
             <a href="https://wa.me/5585999696377?text=Olá! Gostaria de saber mais sobre a política de cancelamento." target="_blank" class="policy-saiba-mais">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
@@ -410,7 +418,6 @@
             <div class="policy-col-title">Segurança e propriedade</div>
             <ul class="policy-col-list">
               <li>Self check-in com teclado numérico</li>
-              <li>Portaria e segurança 24h</li>
               <li>Câmeras nas áreas comuns</li>
             </ul>
             <a href="https://wa.me/5585999696377?text=Olá! Gostaria de saber mais sobre a segurança do condomínio." target="_blank" class="policy-saiba-mais">
@@ -450,13 +457,20 @@
               <option>5 hóspedes</option>
               <option>6 hóspedes</option>
               <option>7 hóspedes</option>
+              <option>8 hóspedes</option>
+              <option>9 hóspedes</option>
+              <option>10 hóspedes</option>
+              <option>11 hóspedes</option>
+              <option>12 hóspedes</option>
+              <option>13 hóspedes</option>
+              <option>14 hóspedes</option>
             </select>
           </div>
         </div>
         <button class="sidebar-reserve-btn" onclick="reserveFromDetail()">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="#0A0A0A" style="margin-right:8px;vertical-align:middle"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-  Reservar via WhatsApp
-</button>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#0A0A0A" style="margin-right:8px;vertical-align:middle"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Reservar via WhatsApp
+        </button>
         <a id="sidebar-wa" href="#" target="_blank" class="sidebar-wa-btn">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           Perguntar pelo WhatsApp
@@ -467,7 +481,7 @@
         </a>
         <p class="sidebar-note">Sem taxas de intermediários. Pagamento via Pix, cartão ou transferência.</p>
         <div class="sidebar-features">
-          <div class="sf-feat"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 89m² — área total</div>
+          <div class="sf-feat" id="sf-sqm-feat"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 89m² — área total</div>
           <div class="sf-feat"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Wi-Fi de alta velocidade</div>
           <div class="sf-feat"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Cozinha completa</div>
           <div class="sf-feat"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Vaga de garagem inclusa</div>
