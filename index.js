@@ -490,13 +490,13 @@ APTS.forEach((a, i) => {
   if (a.id === 'apto-41') {
     div.style.cursor = 'default';
     div.innerHTML = `
-      <div class="apt-img" style="background:linear-gradient(135deg,#0d0d0d 0%,#111318 50%,#0a0c10 100%);position:relative;overflow:hidden;">
+      <div class="apt-img coming-soon-img" style="background:linear-gradient(135deg,#0d0d0d 0%,#111318 50%,#0a0c10 100%);position:relative;overflow:hidden;">
         <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.04) 1px,transparent 1px);background-size:28px 28px;"></div>
-        <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 70% at 50% 50%,rgba(201,168,76,0.07) 0%,transparent 70%);"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 70% at 50% 50%,rgba(201,168,76,0.09) 0%,transparent 70%);"></div>
         <span class="apt-num" style="z-index:2;">Nº ${a.num}</span>
-        <div style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;gap:10px;">
-          <div style="border:1px solid rgba(201,168,76,0.35);padding:5px 16px;font-size:0.58rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:2px;">Em projeto</div>
-          <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:400;font-style:italic;color:var(--text);letter-spacing:0.04em;line-height:1;">Coming Soon</div>
+        <div style="position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;gap:10px;">
+          <div style="border:1px solid rgba(201,168,76,0.45);padding:5px 16px;font-size:0.58rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:2px;background:rgba(0,0,0,0.3);">Em projeto</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:400;font-style:italic;color:#F0EDE8;letter-spacing:0.04em;line-height:1;text-shadow:0 1px 8px rgba(0,0,0,0.8);">Coming Soon</div>
           <div style="display:flex;gap:6px;margin-top:6px;">${[...Array(3)].map(()=>`<div style="width:4px;height:4px;border-radius:50%;background:var(--gold);opacity:0.6;"></div>`).join('')}</div>
         </div>
       </div>
@@ -1064,3 +1064,33 @@ if (e.key === 'Escape') closeLightbox();
 if (e.key === 'ArrowLeft') lbPrev();
 if (e.key === 'ArrowRight') lbNext();
 });
+
+// ═══════════════════════════════════════
+// THEME TOGGLE
+// ═══════════════════════════════════════
+function applyTheme(theme) {
+document.documentElement.setAttribute('data-theme', theme);
+const btn = document.getElementById('theme-toggle');
+if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+localStorage.setItem('valps-theme', theme);
+}
+
+function toggleTheme() {
+const current = document.documentElement.getAttribute('data-theme') || 'dark';
+applyTheme(current === 'dark' ? 'light' : 'dark');
+}
+
+// ═══════════════════════════════════════
+// LANGUAGE TOGGLE (stub)
+// ═══════════════════════════════════════
+function setLang(lang) {
+document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+const btn = document.getElementById('btn-' + lang);
+if (btn) btn.classList.add('active');
+}
+
+// ── Init theme on load ──
+(function() {
+const saved = localStorage.getItem('valps-theme') || 'dark';
+applyTheme(saved);
+})();
