@@ -260,6 +260,7 @@
         </div>
       </div>
     </div>
+  </section>
 
   <!-- FORMAS DE PAGAMENTO -->
   <section id="pagamentos">
@@ -388,7 +389,7 @@
       </div>
       <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-q"><span>Quais formas de pagamento são aceitas?</span> <span class="faq-icon">+</span></div>
-        <div class="faq-a">Aceitamos PIX, Transferência Bancária e Link de pagamento solicitando ao proprietário. Reservas diretas não têm taxas de serviço adicionais.</div>
+        <div class="faq-a">Aceitamos PIX, Transferência Bancária, Link de Pagamento (enviado pelo proprietário via WhatsApp) e Criptomoedas (Bitcoin, Ethereum e Solana). Todos os pagamentos são realizados diretamente com o proprietário, sem taxas de intermediários.</div>
       </div>
       <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-q"><span>Qual é a política de cancelamento?</span> <span class="faq-icon">+</span></div>
@@ -442,8 +443,8 @@
     <form class="contato-form reveal" onsubmit="handleContactSubmit(event)">
       <div class="form-group"><label>Nome completo</label><input type="text" id="c-nome" placeholder="Seu nome" required></div>
       <div class="form-group"><label>Telefone / WhatsApp</label><input type="tel" id="c-tel" placeholder="(00) 00000-0000"></div>
-      <div class="form-group"><label>Check-in</label><input type="date" id="c-checkin"></div>
-      <div class="form-group"><label>Check-out</label><input type="date" id="c-checkout"></div>
+      <div class="form-group date-hint" style="position:relative;"><label>Check-in</label><input type="date" id="c-checkin"></div>
+      <div class="form-group date-hint" style="position:relative;"><label>Check-out</label><input type="date" id="c-checkout"></div>
       <div class="form-group"><label>Acomodação</label>
         <select id="contato-apt">
           <option value="">Selecione uma unidade</option>

@@ -85,6 +85,19 @@ nav ul a:hover{color:var(--gold);}
 .search-field.date-hint:hover::after{opacity:1;}
 .search-field input::placeholder{color:var(--text-muted);}
 /* Form groups date inputs */
+.form-group.date-hint::after{
+  content:'Clique no 📅 para escolher a data';
+  position:absolute;
+  bottom:-26px;left:0;
+  background:rgba(201,168,76,0.12);
+  border:1px solid var(--border);
+  color:var(--gold);
+  font-size:0.62rem;letter-spacing:0.08em;
+  padding:3px 10px;white-space:nowrap;
+  pointer-events:none;opacity:0;
+  transition:opacity 0.2s;border-radius:2px;z-index:10;
+}
+.form-group.date-hint:hover::after{opacity:1;}
 .form-group input[type="date"]::-webkit-calendar-picker-indicator{
   filter:invert(75%) sepia(50%) saturate(400%) hue-rotate(5deg) brightness(95%);
   cursor:pointer;opacity:1;width:16px;height:16px;
