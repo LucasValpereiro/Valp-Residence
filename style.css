@@ -36,6 +36,17 @@ nav ul a:hover{color:var(--gold);}
 .hero-bg::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 20%,rgba(201,168,76,0.08) 0%,transparent 70%);}
 .hero-bg::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.04) 1px,transparent 1px);background-size:60px 60px;}
 .hero-content{position:relative;z-index:2;max-width:800px;}
+.hero-logo{
+  width:420px;
+  margin:0 auto 24px;
+  opacity:0;
+  animation:fadeUp 0.9s ease forwards 0.3s;
+}
+.hero-logo svg{
+  width:100%;
+  height:auto;
+  display:block;
+}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);padding:6px 18px;font-size:0.7rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:32px;opacity:0;animation:fadeUp 0.8s ease forwards 0.2s;}
 .hero-title{font-family:'Playfair Display',serif;font-size:clamp(3.2rem,7vw,6.5rem);font-weight:400;line-height:1.05;margin-bottom:24px;opacity:0;animation:fadeUp 0.8s ease forwards 0.4s;}
 .hero-title em{font-style:italic;color:var(--gold);}
@@ -492,8 +503,9 @@ footer .logo{font-size:1.3rem;color:var(--text);}
 /* ═══ SEÇÃO DE PAGAMENTOS ═══ */
 #pagamentos{padding:96px 72px;background:var(--deep);border-top:1px solid var(--border-soft);}
 .pagamentos-header{text-align:center;margin-bottom:60px;}
-.pagamentos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border-soft);margin-bottom:1px;}
+.pagamentos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border-soft);margin-bottom:1px;align-items:stretch;}
 .pagamento-card{background:var(--surface);padding:32px 28px;display:flex;flex-direction:column;gap:14px;transition:background 0.2s;}
+.pagamento-card .cripto-btn{margin-top:auto;}
 .pagamento-card:hover{background:var(--surface2);}
 .pagamento-icon{font-size:2.4rem;line-height:1;}
 .pagamento-title{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:400;color:var(--text);}
