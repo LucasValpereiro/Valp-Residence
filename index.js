@@ -1065,6 +1065,7 @@ async function handleContactSubmit(e) {
   e.preventDefault();
   const nome    = document.getElementById('c-nome').value;
   const tel     = document.getElementById('c-tel').value;
+  const email   = document.getElementById('c-email') ? document.getElementById('c-email').value : '';
   const ci      = document.getElementById('c-checkin').value;
   const co      = document.getElementById('c-checkout').value;
   const apt     = document.getElementById('contato-apt').value;
@@ -1076,7 +1077,7 @@ async function handleContactSubmit(e) {
   await salvarNoFirebase({
     nome:        nome || '',
     telefone:    tel  || '',
-    email:       '',
+    email:       email || '',
     apartamento: apt  || '',
     checkin:     fmtDate(ci)  || '',
     checkout:    fmtDate(co)  || '',
@@ -1096,6 +1097,7 @@ async function handleContactSubmit(e) {
   let msg = 'Olá! Gostaria de solicitar uma reserva no *Valps Residence*.';
   if (nome)   msg += '\n\n👤 Nome: *' + nome + '*';
   if (tel)    msg += '\n📱 Telefone: *' + tel + '*';
+  if (email)  msg += '\n📧 E-mail: *' + email + '*';
   if (apt)    msg += '\n🏠 Acomodação: *' + apt + '*';
   if (ci)     msg += '\n📅 Check-in: *' + fmtDate(ci) + '*';
   if (co)     msg += '\n📅 Check-out: *' + fmtDate(co) + '*';
