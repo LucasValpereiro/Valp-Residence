@@ -435,6 +435,7 @@ const APTS = [
   {
     id:'apto-001', num:'001', name:'Apto 001',
     type:'3q', guests:7, ac:true, sqm:64,
+    airbnb_url:'https://airbnb.com/h/valp001',
     detail:'3 quartos · 5 camas + sofá-cama · 2 banheiros',
     desc:'Hospedagem prática e completa com 3 quartos e ar-condicionado para até 7 pessoas. Wi-Fi fibra, cozinha equipada com airfryer, máquina de café expresso e sanduicheira. A 2 quarteirões do metrô e 10 min do Aeroporto de Congonhas.',
     rating:4.90, reviewsCount:22,
@@ -688,6 +689,7 @@ badges.innerHTML = `
   <span class="badge">Nº ${apt.num}</span>
   <span class="badge">${apt.sqm}m²</span>
   <span class="badge">${apt.detail.split(' · ').slice(0,2).join(' · ')}</span>
+  <span class="badge">🚿 ${apt.detail.split(' · ')[2] || ''}</span>
   <span class="badge ${apt.ac ? 'gold' : ''}">${apt.ac ? '❄️ Com Ar-condicionado' : '🌬️ Sem Ar-condicionado'}</span>
   <span class="badge">Até ${apt.guests} hóspede${apt.guests>1?'s':''}</span>
   ${ratingBadge}`;
