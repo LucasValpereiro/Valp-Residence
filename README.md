@@ -1,199 +1,142 @@
-<div align="center">
+# 🏨 Valps Residence
 
-<!-- LOGO SVG inline — renderiza no GitHub -->
-<img src="https://raw.githubusercontent.com/lucasvalpereiro/Valp-Residence/main/valps_logo_escuro.svg" alt="Valps Residence Logo" width="200"/>
+Site oficial de hospedagem do Valps Residence — 13 apartamentos modernos com reserva direta, sem taxas de intermediários.
 
-# Valps Residence
-
-**Landing page de hospedagem de curta temporada com 13 acomodações na Zona Sul de São Paulo.**
-
-[![Site ao vivo](https://img.shields.io/badge/🌐_Site_ao_vivo-C9A84C?style=for-the-badge&logo=github&logoColor=black)](https://lucasvalpereiro.github.io/Valp-Residence/)
-[![WhatsApp](https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/5585999696377)
-
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
-![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-222?style=flat-square&logo=github&logoColor=white)
-
-</div>
-
----
-
-## 📋 Índice
-
-- [Visão Geral](#-visão-geral)
-- [Funcionalidades](#-funcionalidades)
-- [Screenshots](#-screenshots)
-- [Acomodações](#-acomodações)
-- [Identidade Visual](#-identidade-visual)
-- [Stack](#-stack)
-- [Estrutura de Arquivos](#-estrutura-de-arquivos)
-- [Changelog](#-changelog)
-
----
-
-## 🏠 Visão Geral
-
-O **Valps Residence** é um site de landing page para aluguel de curta temporada com **13 apartamentos** na Zona Sul de São Paulo, próximos ao Aeroporto de Congonhas, ao metrô Campo Belo e aos shoppings Morumbi e Ibirapuera.
-
-Desenvolvido em **HTML, CSS e JavaScript puro** — sem frameworks ou dependências. O objetivo é oferecer uma experiência premium ao hóspede com reserva direta, eliminando as taxas de serviço das plataformas (10–20%).
-
-**Novidades recentes:**
-- 🇧🇷 🇺🇸 Seletor de idioma PT / EN sem extensão de navegador
-- ☀️ 🌙 Light Mode / Dark Mode com persistência
-- Seção de Ofertas atualizada (Estadia Longa + Pacote Weekend)
-
----
-
-## ✨ Funcionalidades
-
-| Feature | Descrição |
-|---|---|
-| 🏠 **13 Acomodações** | Página individual com galeria, comodidades, avaliações e regras |
-| 🔍 **Busca e Filtros** | Filtro por check-in, check-out, hóspedes e tipo de apto |
-| 📱 **WhatsApp Integrado** | Formulário gera mensagem formatada automaticamente |
-| 🖼️ **Galeria Lightbox** | Slideshow, thumbnails e navegação fullscreen por teclado |
-| ⭐ **Avaliações Reais** | Reviews com notas por categoria |
-| 🗺️ **Mapa + Street View** | Google Maps embed com rota e 360° |
-| 🏷️ **Ofertas Especiais** | Estadia Longa (–25%) e Pacote Weekend (–10%) |
-| 🇧🇷🇺🇸 **Bilíngue PT/EN** | Tradução completa do site com 1 clique |
-| ☀️🌙 **Light/Dark Mode** | Alternância de tema com preferência salva |
-| 🚧 **Coming Soon** | Apto 41 com card "Em projeto" |
+🔗 **[Ver site ao vivo](https://valpsresidence.com)**
 
 ---
 
 ## 📸 Screenshots
 
-### Hero — Navbar + Busca
-> Navbar com logo arquitetônico animado, bandeiras de idioma, toggle de tema e barra de busca integrada.
+### Hero — Tela Inicial
+![Hero](screenshots/01_hero.png)
 
-### Grid de Acomodações
-> 13 unidades com fotos reais, tags de A/C, filtros por tipo e botão "Ver detalhes".
+### Acomodações
+![Acomodações](screenshots/02_acomodacoes.png)
 
-### Página de Detalhe
-> Galeria com lightbox, sidebar de reserva via WhatsApp e link para Airbnb.
+### Página do Apartamento
+![Apartamento](screenshots/06_apartamento.png)
 
-### Ofertas Especiais
-> Estadia Longa (30+ noites, até 25% off) e Pacote Weekend (3 noites, até 10% off).
+### Formas de Pagamento
+![Pagamentos](screenshots/03_pagamentos.png)
 
----
+### Criptomoedas
+![Criptomoedas](screenshots/07_cripto.png)
 
-## 🏡 Acomodações
+### Formulário de Reserva
+![Reserva](screenshots/05_reserva.png)
 
-| Unidade | Tipo | Camas | Hóspedes | Área | A/C | Avaliação |
-|---|---|---|---|---|---|---|
-| Apto 11 | 2 Quartos | 4 + sofá-cama | 5 | 89m² | ❄️ | ⭐ 4.90 |
-| Apto 12 | 3 Quartos | 5 camas | 6 | 89m² | — | ⭐ 4.90 |
-| Apto 21 | 3 Quartos | 5 + sofá-cama | 7 | 89m² | ❄️ | ⭐ 4.90 |
-| Apto 22 | 3 Quartos | 5 camas | 6 | 90m² | — | ⭐ 4.90 |
-| Apto 31 | 2 Quartos | 3 + sofá-cama | 5 | 89m² | — | ⭐ 4.90 |
-| Apto 32 | 2 Quartos | 3 + sofá-cama | 5 | 89m² | — | ⭐ 4.90 |
-| Apto 41 | 2 Quartos | 3 + sofá-cama | 5 | 89m² | ❄️ | 🚧 Em projeto |
-| Apto 42 | 3 Quartos | 5 + sofá-cama | 5 | 90m² | — | ⭐ 4.90 |
-| Apto 51 | 2 Quartos | 3 + sofá-cama | 5 | 89m² | ❄️ | ⭐ 4.90 |
-| Apto 52 | 2 Quartos | 3 + sofá-cama | 5 | 89m² | — | ⭐ 4.90 |
-| **Duplex 61** | **Duplex** | **9 + sofá-cama** | **12** | **170m²** | ❄️ | ⭐ 4.90 |
-| **Duplex 62** | **Duplex** | **9 + sofá-cama** | **14** | **180m²** | ❄️ | ⭐ 4.90 |
-| Apto 001 | 3 Quartos | 5 + sofá-cama | 7 | 64m² | ❄️ | ⭐ 4.90 |
+### FAQ
+![FAQ](screenshots/04_faq.png)
 
 ---
 
-## 🎨 Identidade Visual
+## 📖 Sobre o Projeto
 
-### Logo
-Conceito arquitetônico — silhueta de telhado com duas janelas apoiadas na linha base. Disponível em 3 versões SVG vetorial.
-
-| Versão | Uso |
-|---|---|
-| `valps_logo_escuro.svg` | Site, fundos escuros — 600×260px |
-| `valps_logo_claro.svg` | Impressos, fundos claros — 600×260px |
-| `valps_logo_instagram.svg` | Perfil do Instagram — 500×500px |
-
-### Paleta de Cores
-
-| Cor | Hex | Uso |
-|---|---|---|
-| 🟡 Gold | `#C9A84C` | Destaques, ícones, CTAs |
-| 🟡 Gold Light | `#E2C97E` | Hover, gradientes |
-| 🟡 Gold Dark | `#9E7A2A` | Logo no tema claro |
-| ⬛ Black | `#0A0A0A` | Fundo principal (dark) |
-| ⬛ Deep | `#111318` | Fundo secundário (dark) |
-| ⬛ Surface | `#16191F` | Cards, inputs (dark) |
-| 🟫 Text | `#F0EDE8` | Texto principal (dark) |
-| 🟢 WhatsApp | `#25D366` | Botões de CTA WhatsApp |
-
-### Tipografia
-- **Playfair Display** — Títulos, logo, preços (serif elegante)
-- **Jost** — Body, UI, botões, labels (sans-serif moderna)
+Landing page completa para o Valps Residence, com sistema de reservas integrado ao WhatsApp e Firebase. O site apresenta os apartamentos disponíveis, calendário de disponibilidade, promoções e formulário de reserva — tudo com foco em conversão direta sem intermediários como Airbnb.
 
 ---
 
-## 🛠️ Stack
+## ✨ Funcionalidades
 
-```
-HTML5 · CSS3 (variáveis, Grid, Animations) · JavaScript Vanilla
-Google Fonts (Playfair Display + Jost) · Google Maps Embed
-WhatsApp API · Airbnb Links · GitHub Pages
-```
-
-**Zero dependências externas.** Carrega instantaneamente em qualquer servidor estático.
+- Galeria de apartamentos com carrossel de fotos e detalhes individuais
+- Sistema de busca com filtro por data de check-in, check-out e número de hóspedes
+- Formulário de reserva com envio automático via WhatsApp
+- Integração com Firebase Firestore para salvar reservas em tempo real
+- Calendário de disponibilidade interativo
+- Seção de promoções e ofertas especiais
+- Seção de localização com mapa integrado
+- Formas de pagamento: PIX, Transferência, Link de Pagamento e Criptomoedas (BTC, ETH, SOL)
+- FAQ com perguntas frequentes
+- Design responsivo para mobile e desktop
+- Botão flutuante do WhatsApp em todas as páginas
 
 ---
 
-## 📁 Estrutura de Arquivos
+## 🛠️ Tecnologias
+
+- HTML5
+- CSS3
+- JavaScript (Vanilla)
+- Firebase Firestore (banco de dados em tempo real)
+- Google Apps Script (sincronização automática com Google Sheets)
+- Netlify / GitHub Pages (hospedagem)
+
+---
+
+## 🔗 Integrações
+
+### Firebase + Google Sheets
+As reservas feitas pelo site são salvas automaticamente no Firebase Firestore e sincronizadas a cada hora com uma planilha Google Sheets via Google Apps Script. A planilha conta com:
+
+- Aba **Reservas Firebase** com todas as reservas do site
+- Aba **Dashboard** com gráficos e KPIs: total de reservas, receita, ticket médio, ranking de apartamentos e faturamento por mês
+
+### WhatsApp
+Ao preencher o formulário de reserva, o sistema monta automaticamente uma mensagem com os dados do hóspede e redireciona para o WhatsApp do Valps Residence.
+
+### Criptomoedas
+O site aceita pagamentos em Bitcoin (BTC), Ethereum (ETH) e Solana (SOL), com confirmação direta pelo WhatsApp.
+
+---
+
+## 📁 Estrutura do Projeto
 
 ```
-valps-residence/
-├── index.html          # Estrutura HTML — home + detalhe do apto
-├── style.css           # Design system completo + light mode
-├── index.js            # Dados dos 13 aptos + tradução PT/EN + tema
-│
-├── valps_logo_escuro.svg
-├── valps_logo_claro.svg
-├── valps_logo_instagram.svg
-│
-└── README.md           # Esta documentação
-```
-
-### Adicionando ou editando um apartamento
-
-Todos os dados ficam no array `APTS` em `index.js`:
-
-```javascript
-{
-  id: 'apto-21',
-  name: 'Apto 21',
-  type: '3q',          // '2q' | '3q' | 'duplex'
-  guests: 7,
-  ac: true,            // ar-condicionado
-  sqm: 89,
-  rating: 4.90,
-  airbnb_url: 'https://airbnb.com/h/...',
-  photos: [ { src: '...', label: 'Sala de Estar' }, ... ],
-  reviewCards: [ { author, stars, date, text }, ... ]
-}
+ValpsResidence/
+├── index.html                  # Página principal
+├── style.css                   # Estilos globais
+├── index.js                    # Scripts e lógica do site
+├── firebase_para_sheets.js     # Script Google Apps Script (sincronização)
+├── screenshots/                # Prints das seções do site
+└── README.md                   # Este arquivo
 ```
 
 ---
 
-## 📝 Changelog
+## 🚀 Como Usar
 
-### Versão atual
-- ✅ **Seletor PT/EN** — bandeiras 🇧🇷🇺🇸 na navbar, tradução completa do site em JS puro
-- ✅ **Light Mode** — toggle ☀️/🌙 com CSS variables e persistência em localStorage
-- ✅ **Ofertas atualizadas** — Estadia Longa (30+ noites, –25%) e Pacote Weekend (3 noites, –10%), Reserva Antecipada removida
-- ✅ **Logo arquitetônico** — SVG inline com animação de entrada em 4 camadas
-- ✅ **Apto 41 Coming Soon** — card bloqueado com visual premium
-- ✅ **Sidebar dinâmica** — m² e A/C lidos do objeto e atualizados em tempo real
-- ✅ **Metragens corrigidas** — Apto 001→64m², Duplex 61→170m², Duplex 62→180m²
-- ✅ **FAQ com políticas reais** — cancelamento, pets, check-out, pagamento
+1. Clone o repositório:
+```bash
+git clone https://github.com/LucasValpereiro/ValpsResidence.git
+```
+
+2. Abra o arquivo `index.html` no navegador para visualizar localmente
+
+3. Para o deploy, faça o push para o GitHub — o Netlify atualiza automaticamente
 
 ---
 
-<div align="center">
+## ⚙️ Google Apps Script (Firebase → Sheets)
 
-**© 2025 Valps Residence · Zona Sul de São Paulo**
+O arquivo `firebase_para_sheets.js` deve ser colado no **Apps Script** da planilha Google Sheets vinculada ao projeto:
 
-[🌐 Site ao vivo](https://lucasvalpereiro.github.io/Valp-Residence/) · [💬 WhatsApp](https://wa.me/5585999696377)
+1. Abra a planilha no Google Sheets
+2. Acesse **Extensões → Apps Script**
+3. Cole o conteúdo do arquivo substituindo o código existente
+4. Salve (Ctrl+S) e execute a função `instalarGatilho`
+5. Autorize as permissões solicitadas
 
-</div>
+A partir daí, a planilha sincroniza automaticamente com o Firebase a cada 1 hora. O menu **🔥 Firebase** aparece na planilha com a opção de sincronização manual.
+
+---
+
+## 🏠 Apartamentos
+
+| Apartamento | Quartos | Capacidade | Ar-condicionado |
+|---|---|---|---|
+| Apto 11 | 2 quartos | Até 5 hóspedes | ✅ Com A/C |
+| Apto 12 | 3 quartos | Até 6 hóspedes | ❌ Sem A/C |
+| Apto 21 | 3 quartos | Até 6 hóspedes | ✅ Com A/C |
+| Apto 22 | 3 quartos | Até 6 hóspedes | ❌ Sem A/C |
+
+---
+
+## 👤 Autor
+
+**Lucas Valpereiro**
+- GitHub: [@LucasValpereiro](https://github.com/LucasValpereiro)
+
+---
+
+Desenvolvido com foco em conversão direta e gestão profissional de hospedagem.
