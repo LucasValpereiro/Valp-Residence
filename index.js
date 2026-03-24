@@ -1148,3 +1148,12 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'ArrowLeft') lbPrev();
   if (e.key === 'ArrowRight') lbNext();
 });
+// ── LOCAL TABS ──
+function switchLocalTab(tab, btn) {
+  // Update buttons
+  document.querySelectorAll('.local-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  // Update panels
+  document.querySelectorAll('.local-tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('local-tab-' + tab).classList.add('active');
+}

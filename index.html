@@ -149,53 +149,287 @@
 
   <!-- LOCALIZAÇÃO -->
   <section id="localizacao">
-    <div class="local-grid">
-      <div class="reveal">
-        <div class="address-bar">
-          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="var(--gold)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span>Rua Álvaro Luis Roberto de Assumpção, 73 — São Paulo — SP</span>
+
+    <!-- TAB SWITCHER -->
+    <div class="local-tabs reveal">
+      <button class="local-tab active" onclick="switchLocalTab('mapa', this)">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Mapa & Localização
+      </button>
+      <button class="local-tab" onclick="switchLocalTab('pontos', this)">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Pontos de Interesse
+      </button>
+    </div>
+
+    <!-- TAB 1: MAPA -->
+    <div id="local-tab-mapa" class="local-tab-panel active">
+      <div class="local-grid">
+        <div class="reveal">
+          <div class="address-bar">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="var(--gold)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Rua Álvaro Luis Roberto de Assumpção, 73 — São Paulo — SP</span>
+          </div>
+          <div class="map-container">
+            <iframe
+              src="https://www.google.com/maps?q=-23.616923,-46.679839&z=17&output=embed"
+              allowfullscreen
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Localização Valps Residence">
+            </iframe>
+          </div>
+          <div class="map-actions">
+            <a href="https://maps.app.goo.gl/XikVgN2Us3NKyxiA8" target="_blank" class="map-action-btn primary">
+              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+              <span>Ver em 360°</span>
+            </a>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=-23.616923,-46.679839" target="_blank" class="map-action-btn">
+              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+              <span>Como chegar</span>
+            </a>
+            <a href="https://maps.app.goo.gl/XikVgN2Us3NKyxiA8" target="_blank" class="map-action-btn">
+              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>Abrir no Maps</span>
+            </a>
+          </div>
         </div>
-        <div class="map-container">
-          <iframe
-            src="https://www.google.com/maps?q=-23.616923,-46.679839&z=17&output=embed"
-            allowfullscreen
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            title="Localização Valps Residence">
-          </iframe>
+        <div class="reveal reveal-delay-2">
+          <div class="sec-tag">Localização</div>
+          <h2 class="sec-title"><span>Tudo perto,</span><br><em>nada faltando</em></h2>
+          <p class="sec-sub">Localização privilegiada com fácil acesso ao melhor que a cidade tem a oferecer.</p>
+          <ul class="features-list">
+            <li><div class="feat-icon">✈️</div> Aeroporto de Congonhas a 10 minutos</li>
+            <li><div class="feat-icon">🚇</div> Metrô — estação próxima com fácil acesso</li>
+            <li><div class="feat-icon">💊</div> Farmácias no entorno imediato</li>
+            <li><div class="feat-icon">🍽️</div> Restaurantes e bares a poucos passos</li>
+            <li><div class="feat-icon">🛒</div> Supermercados a menos de 5 minutos</li>
+          </ul>
+          <p style="font-size:0.8rem;color:var(--text-muted);margin-top:20px;border-left:2px solid var(--gold);padding-left:14px;line-height:1.7;">
+            Precisa de indicações de restaurantes, farmácias ou pontos turísticos?
+            <a href="https://wa.me/5585999696377?text=Olá! Gostaria de indicações sobre a região." target="_blank" style="color:var(--gold);text-decoration:none;">Fale com o proprietário →</a>
+          </p>
         </div>
-        <div class="map-actions">
-          <a href="https://maps.app.goo.gl/XikVgN2Us3NKyxiA8" target="_blank" class="map-action-btn primary">
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-            <span>Ver em 360°</span>
-          </a>
-          <a href="https://www.google.com/maps/dir/?api=1&destination=-23.616923,-46.679839" target="_blank" class="map-action-btn">
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
-            <span>Como chegar</span>
-          </a>
-          <a href="https://maps.app.goo.gl/XikVgN2Us3NKyxiA8" target="_blank" class="map-action-btn">
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span>Abrir no Maps</span>
-          </a>
-        </div>
-      </div>
-      <div class="reveal reveal-delay-2">
-        <div class="sec-tag">Localização</div>
-        <h2 class="sec-title"><span>Tudo perto,</span><br><em>nada faltando</em></h2>
-        <p class="sec-sub">Localização privilegiada com fácil acesso ao melhor que a cidade tem a oferecer.</p>
-        <ul class="features-list">
-          <li><div class="feat-icon">✈️</div> Aeroporto de Congonhas a 10 minutos</li>
-          <li><div class="feat-icon">🚇</div> Metrô — estação próxima com fácil acesso</li>
-          <li><div class="feat-icon">💊</div> Farmácias no entorno imediato</li>
-          <li><div class="feat-icon">🍽️</div> Restaurantes e bares a poucos passos</li>
-          <li><div class="feat-icon">🛒</div> Supermercados a menos de 5 minutos</li>
-        </ul>
-        <p style="font-size:0.8rem;color:var(--text-muted);margin-top:20px;border-left:2px solid var(--gold);padding-left:14px;line-height:1.7;">
-          Precisa de indicações de restaurantes, farmácias ou pontos turísticos?
-          <a href="https://wa.me/5585999696377?text=Olá! Gostaria de indicações sobre a região." target="_blank" style="color:var(--gold);text-decoration:none;">Fale com o proprietário →</a>
-        </p>
       </div>
     </div>
+
+    <!-- TAB 2: PONTOS DE INTERESSE -->
+    <div id="local-tab-pontos" class="local-tab-panel">
+      <div class="poi-header reveal">
+        <div class="sec-tag">Pontos de Interesse</div>
+        <h2 class="sec-title"><span>O melhor da cidade,</span><br><em>a minutos de você</em></h2>
+        <p class="sec-sub">Os lugares que nossos hóspedes mais perguntam — todos próximos do Valps Residence.</p>
+      </div>
+
+      <!-- CATEGORIA: EVENTOS & ENTRETENIMENTO -->
+      <div class="poi-category reveal">
+        <div class="poi-cat-label">
+          <span class="poi-cat-icon">🎉</span>
+          Eventos &amp; Entretenimento
+        </div>
+        <div class="poi-grid">
+
+          <div class="poi-card">
+            <div class="poi-emoji">🎪</div>
+            <div class="poi-info">
+              <div class="poi-name">São Paulo Expo</div>
+              <div class="poi-aka">Expo Imigrantes</div>
+              <div class="poi-desc">Maior centro de eventos de SP — feiras, congressos, shows e exposições durante todo o ano.</div>
+            </div>
+            <div class="poi-meta">
+              <span class="poi-dist">~7 min</span>
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Rua+%C3%81lvaro+Luis+Roberto+de+Assump%C3%A7%C3%A3o+73+S%C3%A3o+Paulo+SP&destination=S%C3%A3o+Paulo+Expo+Rod.+dos+Imigrantes+S%C3%A3o+Paulo&destination_place_id=ChIJlcvDpN1azpQRZ5Fxj-VskTE" target="_blank" class="poi-btn">Como chegar →</a>
+            </div>
+          </div>
+
+          <div class="poi-card">
+            <div class="poi-emoji">🏎️</div>
+            <div class="poi-info">
+              <div class="poi-name">Autódromo de Interlagos</div>
+              <div class="poi-aka">F1 · Lollapalooza · Rock in Rio SP</div>
+              <div class="poi-desc">Palco da Fórmula 1 no Brasil e dos maiores festivais de música do país.</div>
+            </div>
+            <div class="poi-meta">
+              <span class="poi-dist">~12 min</span>
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Rua+%C3%81lvaro+Luis+Roberto+de+Assump%C3%A7%C3%A3o+73+S%C3%A3o+Paulo+SP&destination=Aut%C3%B3dromo+Jos%C3%A9+Carlos+Pace+Interlagos+S%C3%A3o+Paulo&destination_place_id=ChIJr4SVPshPzpQRwKUs2gfc_C8" target="_blank" class="poi-btn">Como chegar →</a>
+            </div>
+          </div>
+
+          <div class="poi-card">
+            <div class="poi-emoji">🎵</div>
+            <div class="poi-info">
+              <div class="poi-name">Allianz Parque</div>
+              <div class="poi-aka">Shows · Jogos do Palmeiras</div>
+              <div class="poi-desc">Arena multiuso com capacidade para 45 mil pessoas. Palco dos maiores shows internacionais.</div>
+            </div>
+            <div class="poi-meta">
+              <span class="poi-dist">~25 min</span>
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Rua+%C3%81lvaro+Luis+Roberto+de+Assump%C3%A7%C3%A3o+73+S%C3%A3o+Paulo+SP&destination=Allianz+Parque+S%C3%A3o+Paulo&destination_place_id=ChIJRV1xHf1XzpQRsVwZ1iFUToY" target="_blank" class="poi-btn">Como chegar →</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CATEGORIA: NEGÓCIOS & SERVIÇOS -->
+      <div class="poi-category reveal">
+        <div class="poi-cat-label">
+          <span class="poi-cat-icon">💼</span>
+          Negócios &amp; Serviços
+        </div>
+        <div class="poi-grid">
+
+          <div class="poi-card poi-card-highlight">
+            <div class="poi-emoji">🇺🇸</div>
+            <div class="poi-info">
+              <div class="poi-name">Consulado dos EUA</div>
+              <div class="poi-aka">Visto Americano ✅</div>
+              <div class="poi-desc">Consulado Geral dos Estados Unidos em SP — entrevistas de visto B1/B2 e serviços consulares.</div>
+            </div>
+            <div class="poi-meta">
+              <span class="poi-dist">~7 min</span>
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Rua+%C3%81lvaro+Luis+Roberto+de+Assump%C3%A7%C3%A3o+73+S%C3%A3o+Paulo+SP&destination=Consulado+Geral+dos+Estados+Unidos+S%C3%A3o+Paulo&destination_place_id=ChIJZ9eEQOhQzpQR-myLn_2Lby0" target="_blank" class="poi-btn">Como chegar →</a>
+            </div>
+          </div>
+
+          <div class="poi-card">
+            <div class="poi-emoji">🏢</div>
+            <div class="poi-info">
+              <div class="poi-name">Avenida Berrini</div>
+              <div class="poi-aka">Polo corporativo de SP</div>
+              <div class="poi-desc">Principal centro financeiro e empresarial da Zona Sul — sede das maiores multinacionais do Brasil.</div>
+            </div>
+            <div class="poi-meta">
+              <span class="poi-dist">~15 min</span>
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Rua+%C3%81lvaro+Luis+Roberto+de+Assump%C3%A7%C3%A3o+73+S%C3%A3o+Paulo+SP&destination=Avenida+Engenheiro+Lu%C3%ADs+Carlos+Berrini+S%C3%A3o+Paulo&destination_place_id=ChIJh0-W7TRXzpQR1BqPtqxOO80" target="_blank" class="poi-btn">Como chegar →</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CATEGORIA: SHOPPINGS -->
+      <div class="poi-category reveal">
+        <div class="poi-cat-label">
+          <span class="poi-cat-icon">🛍️</span>
+          Shoppings
+        </div>
+        <div class="poi-grid">
+
+          <div class="poi-card">
+            <div class="poi-emoji">🏬</div>
+            <div class="poi-info">
+              <div class="poi-name">MorumbiShopping</div>
+              <div class="poi-aka">Lojas · Gastronomia · Cinema</div>
+              <div class="poi-desc">Um dos maiores shoppings de SP com marcas nacionais e internacionais, praça de alimentação completa e cinema.</div>
+            </div>
+            <div class="poi-meta">
+              <span class="poi-dist">~7 min</span>
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Rua+%C3%81lvaro+Luis+Roberto+de+Assump%C3%A7%C3%A3o+73+S%C3%A3o+Paulo+SP&destination=MorumbiShopping+S%C3%A3o+Paulo&destination_place_id=ChIJq6omp8RQzpQRyCoIvgF3s6Y" target="_blank" class="poi-btn">Como chegar →</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CATEGORIA: AO REDOR -->
+      <div class="poi-category reveal">
+        <div class="poi-cat-label">
+          <span class="poi-cat-icon">📍</span>
+          No Entorno Imediato
+        </div>
+        <div class="poi-grid">
+
+          <div class="poi-card">
+            <div class="poi-emoji">🥐</div>
+            <div class="poi-info">
+              <div class="poi-name">Padaria Santa Marcelina</div>
+              <div class="poi-aka">Café · Pães · Salgados</div>
+              <div class="poi-desc">Padaria completa aberta todos os dias das 6h às 22h — café da manhã, almoço e lanche da tarde.</div>
+            </div>
+            <div class="poi-meta">
+              <span class="poi-dist">~3 min</span>
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Rua+%C3%81lvaro+Luis+Roberto+de+Assump%C3%A7%C3%A3o+73+S%C3%A3o+Paulo+SP&destination=Padaria+Santa+Marcelina+Vieira+de+Morais+S%C3%A3o+Paulo&destination_place_id=ChIJHZoiU6JQzpQRckTyrTZt24k" target="_blank" class="poi-btn">Como chegar →</a>
+            </div>
+          </div>
+
+          <div class="poi-card">
+            <div class="poi-emoji">🛒</div>
+            <div class="poi-info">
+              <div class="poi-name">Hirota Food</div>
+              <div class="poi-aka">Supermercado japonês</div>
+              <div class="poi-desc">Supermercado com grande variedade de produtos importados, japoneses e orgânicos. A poucos passos.</div>
+            </div>
+            <div class="poi-meta">
+              <span class="poi-dist">~2 min</span>
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Rua+%C3%81lvaro+Luis+Roberto+de+Assump%C3%A7%C3%A3o+73+S%C3%A3o+Paulo+SP&destination=Hirota+Food+Vieira+de+Morais+S%C3%A3o+Paulo&destination_place_id=ChIJM2BJCKNQzpQRlIaug_JjCG0" target="_blank" class="poi-btn">Como chegar →</a>
+            </div>
+          </div>
+
+          <div class="poi-card">
+            <div class="poi-emoji">🍕</div>
+            <div class="poi-info">
+              <div class="poi-name">Bar Dois Irmãos</div>
+              <div class="poi-aka">Pizza · Chopp · Música ao vivo</div>
+              <div class="poi-desc">Tradicional bar do Campo Belo com pizzas artesanais, chopp gelado e música ao vivo nos fins de semana.</div>
+            </div>
+            <div class="poi-meta">
+              <span class="poi-dist">~5 min</span>
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Rua+%C3%81lvaro+Luis+Roberto+de+Assump%C3%A7%C3%A3o+73+S%C3%A3o+Paulo+SP&destination=Bar+Dois+Irm%C3%A3os+Campo+Belo+S%C3%A3o+Paulo&destination_place_id=ChIJZY4-VaRQzpQRwhzspNmrlls" target="_blank" class="poi-btn">Como chegar →</a>
+            </div>
+          </div>
+
+          <div class="poi-card">
+            <div class="poi-emoji">💊</div>
+            <div class="poi-info">
+              <div class="poi-name">Drogaria São Paulo</div>
+              <div class="poi-aka">Farmácia 24 horas</div>
+              <div class="poi-desc">Farmácia aberta 24h por dia, todos os dias da semana. A menos de 5 minutos a pé.</div>
+            </div>
+            <div class="poi-meta">
+              <span class="poi-dist">~3 min</span>
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Rua+%C3%81lvaro+Luis+Roberto+de+Assump%C3%A7%C3%A3o+73+S%C3%A3o+Paulo+SP&destination=Drogaria+S%C3%A3o+Paulo+Vieira+de+Morais+Campo+Belo&destination_place_id=ChIJo-FXI3ZRzpQR6EN1oVxCC2o" target="_blank" class="poi-btn">Como chegar →</a>
+            </div>
+          </div>
+
+          <div class="poi-card">
+            <div class="poi-emoji">🌿</div>
+            <div class="poi-info">
+              <div class="poi-name">Parque do Ibirapuera</div>
+              <div class="poi-aka">Parque · Museus · Lazer</div>
+              <div class="poi-desc">O Central Park paulistano — museus, lagos, trilhas, feiras e muito verde no coração da cidade.</div>
+            </div>
+            <div class="poi-meta">
+              <span class="poi-dist">~15 min</span>
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Rua+%C3%81lvaro+Luis+Roberto+de+Assump%C3%A7%C3%A3o+73+S%C3%A3o+Paulo+SP&destination=Parque+do+Ibirapuera+S%C3%A3o+Paulo&destination_place_id=ChIJ0RGdBvFZzpQRQeWcrwlhk8s" target="_blank" class="poi-btn">Como chegar →</a>
+            </div>
+          </div>
+
+          <div class="poi-card">
+            <div class="poi-emoji">✈️</div>
+            <div class="poi-info">
+              <div class="poi-name">Aeroporto de Congonhas</div>
+              <div class="poi-aka">CGH — Voos domésticos</div>
+              <div class="poi-desc">O aeroporto mais conveniente de SP para voos domésticos — direto da porta ao embarque em minutos.</div>
+            </div>
+            <div class="poi-meta">
+              <span class="poi-dist">~10 min</span>
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Rua+%C3%81lvaro+Luis+Roberto+de+Assump%C3%A7%C3%A3o+73+S%C3%A3o+Paulo+SP&destination=Aeroporto+de+Congonhas+S%C3%A3o+Paulo&destination_place_id=ChIJ8wDUuXpazpQRhXBN5pcG5zo" target="_blank" class="poi-btn">Como chegar →</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="poi-footer reveal">
+        <p>Quer saber mais sobre a região ou receber indicações personalizadas?</p>
+        <a href="https://wa.me/5585999696377?text=Olá! Gostaria de indicações sobre os pontos de interesse próximos ao Valps Residence." target="_blank" class="poi-wa-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Fale com o proprietário
+        </a>
+      </div>
+    </div>
+
   </section>
 
   <!-- ACOMODAÇÕES -->
@@ -481,7 +715,7 @@
           <option>Apto 001</option>
         </select>
       </div>
-      <div class="form-group"><label>Hóspedes</label>
+      <div class="form-group full"><label>Hóspedes</label>
         <select id="c-guests"><option>1 hóspede</option><option>2 hóspedes</option><option>3 hóspedes</option><option>4 hóspedes</option><option>5 hóspedes</option><option>6 hóspedes</option><option>7 hóspedes</option><option>8 hóspedes</option><option>9 hóspedes</option><option>10 hóspedes</option><option>11 hóspedes</option><option>12 hóspedes</option><option>13 hóspedes</option><option>14 hóspedes</option></select>
       </div>
       <div class="form-group full"><label>Mensagem (opcional)</label><textarea id="c-msg" placeholder="Dúvidas, pedidos especiais..."></textarea></div>

@@ -170,6 +170,40 @@ section{padding:110px 72px;}
 .features-list li:last-child{border-bottom:none;}
 .feat-icon{width:42px;height:42px;background:var(--surface);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem;}
 
+/* ── LOCATION TABS ── */
+.local-tabs{display:flex;gap:4px;margin-bottom:52px;border-bottom:1px solid var(--border);}
+.local-tab{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;font-family:'Jost',sans-serif;font-size:0.75rem;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;background:transparent;border:none;border-bottom:2px solid transparent;color:var(--text-muted);cursor:pointer;transition:all 0.2s;margin-bottom:-1px;}
+.local-tab svg{opacity:0.5;transition:opacity 0.2s;}
+.local-tab:hover{color:var(--text-dim);}
+.local-tab:hover svg{opacity:0.8;}
+.local-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.local-tab.active svg{opacity:1;}
+.local-tab-panel{display:none;}
+.local-tab-panel.active{display:block;}
+
+/* ── POI (Pontos de Interesse) ── */
+.poi-header{margin-bottom:52px;}
+.poi-category{margin-bottom:52px;}
+.poi-cat-label{display:flex;align-items:center;gap:12px;font-size:0.7rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+.poi-cat-icon{font-size:1.1rem;}
+.poi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.poi-card{display:flex;flex-direction:column;gap:14px;padding:28px 24px;background:var(--surface);border:1px solid var(--border);transition:border-color 0.2s,background 0.2s;}
+.poi-card:hover{border-color:rgba(201,168,76,0.35);background:rgba(201,168,76,0.03);}
+.poi-card-highlight{border-color:rgba(201,168,76,0.3);background:rgba(201,168,76,0.04);}
+.poi-emoji{font-size:1.8rem;line-height:1;}
+.poi-info{flex:1;}
+.poi-name{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:500;color:var(--text);margin-bottom:4px;line-height:1.3;}
+.poi-aka{font-size:0.72rem;letter-spacing:0.1em;color:var(--gold);text-transform:uppercase;margin-bottom:10px;font-weight:500;}
+.poi-desc{font-size:0.82rem;color:var(--text-muted);line-height:1.7;font-weight:300;}
+.poi-meta{display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid var(--border-soft);}
+.poi-dist{font-size:0.72rem;font-weight:600;letter-spacing:0.1em;color:var(--gold);background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.2);padding:5px 12px;}
+.poi-btn{font-size:0.7rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color 0.2s;}
+.poi-btn:hover{color:var(--gold);}
+.poi-footer{text-align:center;padding-top:48px;border-top:1px solid var(--border);}
+.poi-footer p{font-size:0.88rem;color:var(--text-muted);margin-bottom:20px;font-style:italic;}
+.poi-wa-btn{display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#fff;padding:15px 36px;font-family:'Jost',sans-serif;font-size:0.78rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;text-decoration:none;transition:background 0.2s;}
+.poi-wa-btn:hover{background:#1ebe5d;}
+
 /* ── OFERTAS (agora segundo — fundo deep) ── */
 #ofertas{background:var(--deep);}
 .ofertas-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:52px;}
@@ -448,6 +482,7 @@ footer .logo{font-size:1.3rem;color:var(--text);}
   .search-btn{padding:18px;width:100%;justify-content:center;}
   .apt-grid{grid-template-columns:1fr 1fr;} .calendar-grid{grid-template-columns:1fr;}
   .local-grid{grid-template-columns:1fr;} .sec-header{flex-direction:column;align-items:flex-start;gap:20px;}
+  .poi-grid{grid-template-columns:1fr;}
   #whatsapp{flex-direction:column;text-align:center;padding:60px 28px;} .wa-left{max-width:100%;}
   .contato-form{grid-template-columns:1fr;} .ofertas-grid{grid-template-columns:1fr;}
   .faq-grid{grid-template-columns:1fr;} footer{flex-direction:column;gap:20px;text-align:center;padding:36px 24px;}
@@ -457,6 +492,7 @@ footer .logo{font-size:1.3rem;color:var(--text);}
   .hero-stats{flex-wrap:wrap;gap:28px;row-gap:18px;}
   .apt-detail-hero{height:56vh;}
   .local-grid{gap:40px;}
+  .poi-grid{grid-template-columns:1fr 1fr;}
   .oferta-card{min-height:260px;}
   .wa-float{bottom:20px;right:20px;}
   .apt-detail-body{grid-template-columns:1fr;padding:40px 24px;}
