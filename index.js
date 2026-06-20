@@ -1,8 +1,6 @@
 /* ═══════════════════════════════════════════════════════
    FIREBASE — Banco de dados Valps Residence
 ═══════════════════════════════════════════════════════ */
-
-// Carregar Firebase via CDN (inserido dinamicamente)
 (function loadFirebase() {
   const scripts = [
     'https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js',
@@ -12,10 +10,7 @@
   scripts.forEach(src => {
     const s = document.createElement('script');
     s.src = src;
-    s.onload = () => {
-      loaded++;
-      if (loaded === scripts.length) initFirebase();
-    };
+    s.onload = () => { loaded++; if (loaded === scripts.length) initFirebase(); };
     document.head.appendChild(s);
   });
 })();
@@ -39,7 +34,6 @@ function initFirebase() {
   console.log('[Valps] Firebase conectado ✅');
 }
 
-// Salvar reserva no Firestore
 async function salvarNoFirebase(dados) {
   if (!db) { console.warn('[Valps] Firebase não inicializado ainda'); return false; }
   try {
@@ -57,9 +51,6 @@ async function salvarNoFirebase(dados) {
   }
 }
 
-// ═══════════════════════════════════════
-// DADOS DOS APARTAMENTOS
-// ═══════════════════════════════════════
 const APTS = [
     {
       id:'apto-11', num:'11', name:'Apto 11',
@@ -524,636 +515,470 @@ const APTS = [
     },
   ];
 
-const GRADIENTS = [
-  'linear-gradient(135deg,#1a1810,#2a2616)','linear-gradient(135deg,#0e1620,#162230)',
-  'linear-gradient(135deg,#110e20,#1c1630)','linear-gradient(135deg,#1a1410,#281e18)',
-  'linear-gradient(135deg,#0e1a14,#162818)','linear-gradient(135deg,#1a1018,#281828)',
-  'linear-gradient(135deg,#0e1818,#162626)','linear-gradient(135deg,#1e1408,#2e2012)',
-  'linear-gradient(135deg,#0e1020,#181830)','linear-gradient(135deg,#1a1818,#262424)',
-  'linear-gradient(135deg,#100e20,#1c1a30)','linear-gradient(135deg,#0a1a10,#122816)',
-  'linear-gradient(135deg,#1a1010,#281818)',
-];
+'use strict';
+const WA = '5585999696377';
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// ═══════════════════════════════════════
-// RENDER APT CARDS
-// ═══════════════════════════════════════
-function renderCards() {
-  const grid = document.getElementById('apt-grid');
-  grid.innerHTML = '';
-  APTS.forEach((a, i) => {
-    const div = document.createElement('div');
-    div.className = `apt-card reveal reveal-delay-${(i%4)+1}`;
-    div.dataset.type = a.type;
-    div.dataset.guests = a.guests;
-
-    // ── COMING SOON — Apto 41 ──
-    if (a.id === 'apto-41') {
-      div.style.cursor = 'default';
-      div.innerHTML = `
-        <div class="apt-img" style="background:linear-gradient(135deg,#0d0d0d 0%,#111318 50%,#0a0c10 100%);position:relative;overflow:hidden;">
-          <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.04) 1px,transparent 1px);background-size:28px 28px;"></div>
-          <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 70% at 50% 50%,rgba(201,168,76,0.07) 0%,transparent 70%);"></div>
-          <span class="apt-num" style="z-index:2;">Nº ${a.num}</span>
-          <div style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;gap:10px;">
-            <div style="border:1px solid rgba(201,168,76,0.35);padding:5px 16px;font-size:0.58rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:2px;">Em projeto</div>
-            <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:400;font-style:italic;color:var(--text);letter-spacing:0.04em;line-height:1;">Coming Soon</div>
-            <div style="display:flex;gap:6px;margin-top:6px;">${[...Array(3)].map(()=>`<div style="width:4px;height:4px;border-radius:50%;background:var(--gold);opacity:0.6;"></div>`).join('')}</div>
-          </div>
-        </div>
-        <div class="apt-info" style="opacity:0.45;pointer-events:none;">
-          <div class="apt-name">${a.name}</div>
-          <div class="apt-detail">${a.detail}</div>
-          <div class="apt-footer">
-            <div class="apt-price" style="font-size:0.78rem;color:var(--text-muted);font-family:'Jost',sans-serif;">Em breve disponível</div>
-          </div>
-        </div>`;
-      grid.appendChild(div);
-      return;
-    }
-
-    div.onclick = () => openApt(a.id);
-    const firstPhoto = a.photos && a.photos.length > 0
-      ? (a.photos.find(p => p && p.src && p.label === 'Sala de Estar') || a.photos.find(p => p && p.src))
-      : null;
-    const hasPhoto = !!firstPhoto;
-    const cardBg = hasPhoto
-      ? `background-image:url(${firstPhoto.src});background-size:cover;background-position:center;`
-      : `background:${GRADIENTS[i % GRADIENTS.length]}`;
-    div.innerHTML = `
-      <div class="apt-img" style="${cardBg}">
-        <span class="apt-num">Nº ${a.num}</span>
-        <span class="apt-ac-badge ${a.ac ? 'has-ac' : 'no-ac'}">${a.ac ? '❄️ Com A/C' : '🌬️ Sem A/C'}</span>
-        ${hasPhoto ? '' : '<svg width="38" height="38" fill="none" viewBox="0 0 24 24" stroke="rgba(201,168,76,0.3)" stroke-width="1"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>'}
-      </div>
-      <div class="apt-info">
-        <div class="apt-name">${a.name}</div>
-        <div class="apt-detail">${a.detail}</div>
-        <div class="apt-footer">
-          <div class="apt-price" style="font-size:0.78rem;color:var(--text-muted);font-family:'Jost',sans-serif;">Consulte disponibilidade e valores</div>
-          <span class="apt-btn">Ver detalhes</span>
-        </div>
-      </div>`;
-    grid.appendChild(div);
-  });
-  initReveal();
-}
-
-// ═══════════════════════════════════════
-// GALLERY STATE
-// ═══════════════════════════════════════
-let currentGalleryIdx = 0;
-let currentApt = null;
-const PHOTO_LABELS = [
-  'Sala de Estar','Quarto Principal','Cozinha','Banheiro','Varanda','Vista Externa'
-];
-
-function renderGallery(apt) {
-  const rawPhotos = apt.photos && apt.photos.length
-    ? apt.photos.map((p, i) => p || { src:null, label: PHOTO_LABELS[i % PHOTO_LABELS.length] })
-    : Array.from({length:6}, (_,i) => ({ src:null, label: PHOTO_LABELS[i % PHOTO_LABELS.length] }));
-
-  const LABEL_ORDER = [
-    'Sala de Estar','Sala de Jantar','Cozinha',
-    'Quarto 1','Quarto 2','Quarto 3','Quarto 4','Quarto 5',
-    'Suíte','Suite',
-    'Banheiro','Banheiro 2','Banheiro 3','Banheiro 4',
-    'Lavabo','Lavanderia',
-    'Varanda','Área externa','Vista','Corredor','Detalhe','Outro'
+/* ── MARQUEE ── */
+(function(){
+  const itens = [
+    ['Congonhas','10 min'],['Metrô Campo Belo','200 m'],['São Paulo Expo','7 min'],
+    ['Interlagos · F1','12 min'],['Consulado dos EUA','7 min'],['MorumbiShopping','7 min'],
+    ['Av. Berrini','15 min'],['Parque do Ibirapuera','15 min']
   ];
-  const getLabelOrder = label => {
-    const idx = LABEL_ORDER.indexOf(label);
-    return idx >= 0 ? idx : LABEL_ORDER.length;
-  };
-  const photos = [...rawPhotos].sort((a, b) => getLabelOrder(a.label) - getLabelOrder(b.label));
+  const html = itens.map(([n,d])=>`<span>${n} a <b>${d}</b></span>`).join('');
+  document.getElementById('mq-track').innerHTML = html + html;
+})();
 
-  const total = photos.length;
-  const salaIdx = photos.findIndex(p => p && p.label === 'Sala de Estar' && p.src);
-  currentGalleryIdx = salaIdx >= 0 ? salaIdx : 0;
-  updateGallerySlide(apt, currentGalleryIdx, photos);
-
-  const thumbsEl = document.getElementById('gallery-thumbs');
-  thumbsEl.innerHTML = '';
-  photos.forEach((p, t) => {
-    const th = document.createElement('div');
-    th.className = `g-thumb ${t === currentGalleryIdx ? 'active' : ''}`;
-    if (p.src) {
-      th.style.backgroundImage = `url(${p.src})`;
-      th.style.backgroundSize = 'cover';
-      th.style.backgroundPosition = 'center';
-    } else {
-      th.style.background = GRADIENTS[APTS.indexOf(apt) % GRADIENTS.length];
-      th.textContent = `F${t+1}`;
-    }
-    th.onclick = () => { currentGalleryIdx = t; updateGallerySlide(apt, t, photos); };
-    thumbsEl.appendChild(th);
+/* ── O EDIFÍCIO ── */
+(function(){
+  const byNum = n => APTS.find(a=>a.num===n);
+  const FLOORS = [
+    ['6º','Duplex',['61','62']],
+    ['5º','Andar',['51','52']],
+    ['4º','Andar',['41','42']],
+    ['3º','Andar',['31','32']],
+    ['2º','Andar',['21','22']],
+    ['1º','Andar',['11','12']],
+    ['T','Térreo',['001']],
+  ];
+  const b = document.getElementById('building');
+  let html = `
+    <div class="b-roof"><svg viewBox="0 0 240 60" style="overflow:visible">
+      <path d="M28,46 L120,6 L212,46" fill="none" stroke="#C9A84C" stroke-width="1.8" stroke-linecap="round"/>
+      <circle cx="120" cy="6" r="2.8" fill="#C9A84C"/>
+    </svg></div>
+    <div class="b-head"><span class="b-head-l">◇ Diretório do edifício</span><span class="b-head-r">Rua Álvaro L. R. de Assumpção, 73</span></div>`;
+  FLOORS.forEach(([lvl,lbl,nums])=>{
+    html += `<div class="b-floor"><div class="b-label"><b>${lvl}</b> ${lbl}</div><div class="b-units">`;
+    nums.forEach(n=>{
+      const a = byNum(n);
+      if(!a) return;
+      const soon = a.id==='apto-41';
+      const meta = soon ? 'Em projeto' : `${a.type==='duplex'?'Duplex · ':''}${a.sqm}m² · até ${a.guests} hóspedes`;
+      html += soon
+        ? `<button class="b-unit soon" tabindex="-1" aria-disabled="true"><span class="b-num">${a.num}</span><span class="b-meta">${meta}</span></button>`
+        : `<button class="b-unit" onclick="abrirModal('${a.id}')"><span class="b-num">${a.num}</span><span class="b-meta">${meta}</span></button>`;
+    });
+    html += `</div></div>`;
   });
+  html += `<div class="b-ground">Térreo · Garagem · Self check-in com fechadura inteligente</div>`;
+  b.innerHTML = html;
+})();
 
-  const fg = document.getElementById('full-gallery-grid');
-  fg.innerHTML = '';
-  photos.forEach((p, g) => {
-    const item = document.createElement('div');
-    item.className = 'full-gal-item';
-    item.style.position = 'relative';
-    if (p.src) {
-      item.style.backgroundImage = `url(${p.src})`;
-      item.style.backgroundSize = 'cover';
-      item.style.backgroundPosition = 'center';
-    } else {
-      item.style.background = GRADIENTS[(APTS.indexOf(apt) + g) % GRADIENTS.length];
-      item.innerHTML = `<svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="rgba(201,168,76,0.4)" stroke-width="1"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>`;
-    }
-    const lbl = document.createElement('span');
-    lbl.style.cssText = 'position:absolute;bottom:0;left:0;right:0;padding:18px 14px 10px;background:linear-gradient(transparent,rgba(0,0,0,0.55));font-size:0.65rem;color:rgba(240,237,232,0.85);letter-spacing:0.08em;';
-    lbl.textContent = p.label || '';
-    item.appendChild(lbl);
-    item.onclick = () => {
-      currentGalleryIdx = g;
-      updateGallerySlide(apt, g, photos);
-      openLightbox(g);
-    };
-    item.style.cursor = 'pointer';
-    fg.appendChild(item);
-  });
+/* ── CARDS DAS UNIDADES ── */
+function fotoCapa(a){
+  if(!a.photos || !a.photos.length) return null;
+  return a.photos.find(p=>p&&p.src&&p.label==='Sala de Estar') || a.photos.find(p=>p&&p.src) || null;
 }
-
-function updateGallerySlide(apt, idx, photos) {
-  const main = document.getElementById('apt-gallery-main');
-  const labelEl = document.getElementById('apt-gallery-label');
-  const placeholderSvg = document.getElementById('apt-gallery-placeholder');
-  const counter = document.getElementById('gallery-counter');
-  const p = photos[idx];
-  if (p && p.src) {
-    main.style.opacity = '0';
-    setTimeout(() => {
-      main.style.backgroundImage = `url(${p.src})`;
-      main.style.backgroundSize = 'cover';
-      main.style.backgroundPosition = 'center';
-      main.style.cursor = 'zoom-in';
-      main.style.opacity = '1';
-    }, 150);
-    if (labelEl) labelEl.style.display = 'none';
-    if (placeholderSvg) placeholderSvg.style.display = 'none';
-  } else {
-    main.style.backgroundImage = 'none';
-    main.style.background = GRADIENTS[(APTS.indexOf(apt) + idx) % GRADIENTS.length];
-    main.style.cursor = 'default';
-    if (labelEl) { labelEl.style.display = 'block'; labelEl.textContent = (p && p.label) || PHOTO_LABELS[idx % PHOTO_LABELS.length]; }
-    if (placeholderSvg) placeholderSvg.style.display = 'block';
-  }
-  counter.textContent = `${idx+1} / ${photos.length}`;
-  document.querySelectorAll('.g-thumb').forEach((t,i) => t.classList.toggle('active', i===idx));
-}
-
-function galleryPrev() {
-  const apt = currentApt;
-  const photos = apt.photos && apt.photos.length ? apt.photos : Array.from({length:6},(_,i)=>({src:null,label:PHOTO_LABELS[i%PHOTO_LABELS.length]}));
-  currentGalleryIdx = (currentGalleryIdx - 1 + photos.length) % photos.length;
-  updateGallerySlide(apt, currentGalleryIdx, photos);
-  stopAutoplay();
-  setTimeout(startAutoplay, 8000);
-}
-function galleryNext() {
-  const apt = currentApt;
-  const photos = apt.photos && apt.photos.length ? apt.photos : Array.from({length:6},(_,i)=>({src:null,label:PHOTO_LABELS[i%PHOTO_LABELS.length]}));
-  currentGalleryIdx = (currentGalleryIdx + 1) % photos.length;
-  updateGallerySlide(apt, currentGalleryIdx, photos);
-}
-
-let autoplayTimer = null;
-function startAutoplay() {
-  stopAutoplay();
-  autoplayTimer = setInterval(() => {
-    if (currentApt) galleryNext();
-  }, 4000);
-}
-function stopAutoplay() {
-  if (autoplayTimer) { clearInterval(autoplayTimer); autoplayTimer = null; }
-}
-
-// ═══════════════════════════════════════
-// ROUTING
-// ═══════════════════════════════════════
-function openApt(id) {
-  const apt = APTS.find(a => a.id === id);
-  if (!apt) return;
-  currentApt = apt;
-
-  document.getElementById('apt-breadcrumb-name').textContent = apt.name;
-  document.getElementById('apt-detail-name').textContent = apt.name;
-  document.getElementById('apt-gallery-label').textContent = apt.name;
-
-  const badges = document.getElementById('apt-detail-badges');
-  const ratingBadge = apt.rating ? `<span class="badge gold">★ ${apt.rating} · ${apt.reviewsCount} avaliações</span>` : '';
-  badges.innerHTML = `
-    <span class="badge">Nº ${apt.num}</span>
-    <span class="badge">${apt.sqm}m²</span>
-    <span class="badge">${apt.detail.split(' · ').slice(0,2).join(' · ')}</span>
-    <span class="badge">🚿 ${apt.detail.split(' · ')[2] || ''}</span>
-    <span class="badge ${apt.ac ? 'gold' : ''}">${apt.ac ? '❄️ Com Ar-condicionado' : '🌬️ Sem Ar-condicionado'}</span>
-    <span class="badge">Até ${apt.guests} hóspede${apt.guests>1?'s':''}</span>
-    ${ratingBadge}`;
-
-  document.getElementById('apt-detail-desc').textContent = apt.desc;
-
-  const hlSec = document.getElementById('apt-highlights');
-  const hlList = document.getElementById('apt-highlights-list');
-  if (apt.highlights && apt.highlights.length) {
-    hlSec.style.display = 'block';
-    hlList.innerHTML = apt.highlights.map(h => `
-      <div class="highlight-item">
-        <span class="highlight-icon">${h.split(' ')[0]}</span>
-        <span class="highlight-text">${h.split(' ').slice(1).join(' ')}</span>
-      </div>`).join('');
-  } else { hlSec.style.display = 'none'; }
-
-  const bedSec = document.getElementById('apt-beds');
-  const bedGrid = document.getElementById('apt-beds-grid');
-  if ((apt.rooms || apt.beds) && (apt.rooms || apt.beds).length) {
-    bedSec.style.display = 'block';
-    const _rooms = apt.rooms || apt.beds;
-    bedGrid.innerHTML = _rooms.map((b,i) => {
-      const quartoLabel = `Quarto ${i+1}`;  // keep PT for photo matching
-      const suiteLabels = ['Suíte','Suite'];
-      const isSofa = typeof b === 'object' ? (b.beds || '').toLowerCase().includes('sofá') : b.toLowerCase().includes('sofá');
-      let photo = apt.photos && (
-        apt.photos.find(p => p && p.label === quartoLabel && p.src) ||
-        (i === 0 && apt.photos.find(p => p && suiteLabels.includes(p.label) && p.src)) ||
-        (isSofa && apt.photos.find(p => p && p.label === 'Sala de Estar' && p.src)) ||
-        apt.photos.find(p => p && p.label && p.label.startsWith('Quarto') && p.src)
-      );
-      const photoIdx = photo ? apt.photos.indexOf(photo) : -1;
-      const bgStyle = photo
-        ? `style="background-image:url(${photo.src});background-size:cover;background-position:center;"`
-        : `style="background:var(--surface2);"`;
-      return `
-        <div class="bed-card" onclick="${photoIdx >= 0 ? `openLightbox(${photoIdx})` : ''}" style="cursor:pointer;padding:0;overflow:hidden;">
-          <div class="bed-photo" ${bgStyle}></div>
-          <div style="padding:14px 16px;">
-            <div class="bed-room">Quarto ${i+1}</div>
-            <div class="bed-desc">${typeof b === 'object' ? (b.beds || b.name) : (b.split(' — ')[1] || b)}</div>
-          </div>
-        </div>`;
-    }).join('');
-  } else { bedSec.style.display = 'none'; }
-
-  const ag = document.getElementById('apt-amenities-grid');
-  ag.innerHTML = apt.amenities.map(a => `
-    <div class="amenity">
-      <span class="amenity-icon">${a.split(' ')[0]}</span>
-      <span class="amenity-text">${a.split(' ').slice(1).join(' ')}</span>
-    </div>`).join('');
-
-  const ratSec = document.getElementById('apt-ratings-section');
-  if (apt.ratings) {
-    ratSec.style.display = 'block';
-    document.getElementById('apt-rating-big').textContent = apt.rating;
-    const totalReviews = apt.reviewsCount || apt.reviews_count || (apt.reviews ? apt.reviews.length : 0);
-    document.getElementById('apt-rating-count').textContent = totalReviews + ' avaliações';
-    const stars = Math.round(apt.rating);
-    document.getElementById('apt-rating-stars').textContent = '★'.repeat(stars) + '☆'.repeat(5-stars);
-    const rLabels = {limpeza:'Limpeza',exatidao:'Exatidão',checkin:'Check-in',comunicacao:'Comunicação',localizacao:'Localização',custo:'Custo-benefício'};
-    document.getElementById('apt-ratings-grid').innerHTML = Object.entries(apt.ratings).map(([k,v]) =>
-      `<div class="rating-item"><div class="rating-label">${rLabels[k]||k}</div><div class="rating-val">${v.toFixed(1)}</div></div>`).join('');
-  } else { ratSec.style.display = 'none'; }
-
-  const rulesEl = document.getElementById('policy-rules');
-  if (apt.rules) {
-    rulesEl.innerHTML = `
-      <li>Check-in: ${apt.rules.checkin}</li>
-      <li>Checkout: até as 10h da manhã</li>
-      <li>Máximo de ${apt.rules.maxGuests} hóspedes</li>
-      <li>Não é permitido festas ou eventos</li>`;
-  }
-
-  const revSec = document.getElementById('apt-reviews-section');
-  const revGrid = document.getElementById('apt-reviews-grid');
-  if ((apt.reviewCards || apt.reviews) && (apt.reviewCards || apt.reviews).length) {
-    const _reviews = apt.reviewCards || apt.reviews;
-    revSec.style.display = 'block';
-    document.getElementById('apt-reviews-title').textContent = `★ ${apt.rating} · ${apt.reviewsCount || apt.reviews_count || _reviews.length} avaliações`;
-    revGrid.innerHTML = _reviews.map(r => `
-      <div class="review-card">
-        <div class="review-header">
-          <div class="review-avatar">${(r.author || r.name)[0]}</div>
-          <div class="review-meta">
-            <div class="review-name">${r.author || r.name}</div>
-            <div class="review-info">${r.date || r.location || 'Brasil'}</div>
+(function(){
+  const g = document.getElementById('ugrid');
+  g.innerHTML = APTS.map((a,i)=>{
+    const capa = fotoCapa(a);
+    const soon = a.id==='apto-41';
+    const img = capa
+      ? `<img src="${capa.src}" alt="${a.name}" loading="lazy" onerror="this.style.display='none'">`
+      : '';
+    const tag = soon ? '' : `<span class="utag ${a.ac?'ac':'noac'}">${a.ac?'❄ Com A/C':'Sem A/C'}</span>`;
+    const ph = `<div class="ph"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#15211A" stroke-width="1"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>`;
+    if(soon){
+      return `<div class="ucard hide-soon" data-type="${a.type}" style="cursor:default;">
+        <div class="uimg">${ph}<span class="uplq">Nº ${a.num}</span>
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
+            <span style="font-family:var(--mono);font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;border:1px solid rgba(21,33,26,.3);padding:5px 14px;color:#5E6B4F;">Em projeto</span>
+            <span style="font-family:var(--disp);font-style:italic;font-size:1.5rem;color:#3A4636;">Coming soon</span>
           </div>
         </div>
-        <div class="review-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</div>
-        <div class="review-text">${r.text}</div>
-      </div>`).join('');
-  } else { revSec.style.display = 'none'; }
-
-  const acFeat = document.getElementById('sf-ac-feat');
-  const sqmFeat = document.getElementById('sf-sqm-feat');
-  if (sqmFeat) sqmFeat.innerHTML = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> ${apt.sqm}m² — área total`;
-  if (apt.ac) {
-    acFeat.style.display = 'flex';
-    acFeat.innerHTML = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="var(--gold)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> <span>Ar-condicionado</span>`;
-  } else {
-    acFeat.style.display = 'flex';
-    acFeat.innerHTML = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="var(--text-muted)" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> <span style="color:var(--text-muted)">Sem Ar-condicionado</span>`;
-  }
-
-  updateSidebarWA();
-
-  const airbnbBtn = document.getElementById('sidebar-airbnb');
-  if (apt.airbnb_url) {
-    airbnbBtn.href = apt.airbnb_url;
-    airbnbBtn.style.display = 'flex';
-  } else {
-    airbnbBtn.style.display = 'none';
-  }
-
-  renderGallery(apt);
-  startAutoplay();
-
-  document.getElementById('page-home').classList.remove('active');
-  document.getElementById('page-apt').classList.add('active');
-  window.location.hash = `apto-${id}`;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function goHome() {
-  stopAutoplay();
-  document.getElementById('page-apt').classList.remove('active');
-  document.getElementById('page-home').classList.add('active');
-  window.location.hash = '';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function buildWAMessage() {
-  const checkin  = document.getElementById('sf-checkin').value;
-  const checkout = document.getElementById('sf-checkout').value;
-  const guests   = document.getElementById('sf-guests').value;
-  const apt      = currentApt;
-  const fmtDate = d => {
-    if (!d) return null;
-    const [y,m,day] = d.split('-');
-    return `${day}/${m}/${y}`;
-  };
-  let msg = `Olá! Tenho interesse no *${apt.name}* do Valps Residence.`;
-  if (checkin)  msg += `\nCheck-in: *${fmtDate(checkin)}*`;
-  if (checkout) msg += `\nCheck-out: *${fmtDate(checkout)}*`;
-  if (guests)   msg += `\nHóspedes: *${guests}*`;
-  if (checkin && checkout) {
-    const diff = (new Date(checkout) - new Date(checkin)) / 86400000;
-    if (diff > 0 && typeof apt.price === 'number') {
-      const total = diff * apt.price;
-      msg += `\n\nTotal estimado: *R$ ${total.toLocaleString('pt-BR')} (${diff} noite${diff>1?'s':''} × R$ ${apt.price})*`;
+        <div class="uinfo" style="opacity:.55;"><div class="uname">${a.name}<i>${a.sqm}m²</i></div><div class="udet">${a.detail}</div></div>
+      </div>`;
     }
-  }
-  msg += `\n\nPodemos confirmar a reserva?`;
-  return `https://wa.me/5585999696377?text=${encodeURIComponent(msg)}`;
-}
+    return `<button class="ucard" data-type="${a.type}" onclick="abrirModal('${a.id}')">
+      <div class="uimg">${ph}${img}<span class="uplq">Nº ${a.num}</span>${tag}</div>
+      <div class="uinfo">
+        <div class="uname">${a.name}<i>${a.sqm}m² · ${a.guests} hósp.</i></div>
+        <div class="udet">${a.detail}</div>
+        <span class="ulink">Ver por dentro →</span>
+      </div>
+    </button>`;
+  }).join('');
+})();
 
-function reserveFromDetail() {
-  if (!currentApt) return;
-  window.open(buildWAMessage(), '_blank');
-}
-
-function updateSidebarWA() {
-  const el = document.getElementById('sidebar-wa');
-  if (el && currentApt) el.href = buildWAMessage();
-}
-
-window.addEventListener('load', () => {
-  const hash = window.location.hash;
-  if (hash.startsWith('#apto-')) {
-    const id = hash.replace('#apto-', '');
-    renderCards();
-    openApt(id);
-  } else {
-    renderCards();
-    goHome();
-  }
-});
-
-window.addEventListener('popstate', () => {
-  const hash = window.location.hash;
-  if (hash.startsWith('#apto-')) {
-    const id = hash.replace('#apto-', '');
-    openApt(id);
-  } else {
-    goHome();
-  }
-});
-
-// ═══════════════════════════════════════
-// SEARCH
-// ═══════════════════════════════════════
-function doSearch() {
-  const guests = document.getElementById('s-guests').value;
-  const ci     = document.getElementById('s-checkin').value;
-  const co     = document.getElementById('s-checkout').value;
-  const fmtDate = d => { const [y,m,day]=d.split('-'); return day+'/'+m+'/'+y; };
-
-  let msg = 'Olá! Tenho interesse em reservar no Valps Residence.';
-  if (ci)     msg += '\nCheck-in: *' + fmtDate(ci) + '*';
-  if (co)     msg += '\nCheck-out: *' + fmtDate(co) + '*';
-  if (guests) msg += '\nHóspedes: *' + guests + '*';
-  msg += '\n\nPoderia me informar a disponibilidade e valores?';
-
-  window.open('https://wa.me/5585999696377?text=' + encodeURIComponent(msg), '_blank');
-
-  let count = 0;
-  document.querySelectorAll('.apt-card').forEach(c => {
-    let show = true;
-    if (guests) {
-      const cg = parseInt(c.dataset.guests);
-      const gv = parseInt(guests);
-      if (!isNaN(gv) && cg < gv) show = false;
-    }
-    c.classList.toggle('hidden', !show);
-    if (show) count++;
-  });
-  const res = document.getElementById('resultados');
-  res.classList.add('visible');
-  document.getElementById('result-count').textContent = count;
-  let ds = '';
-  if (ci && co) {
-    const fmt = d => new Date(d+'T00:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'short'});
-    ds = ' · ' + fmt(ci) + ' → ' + fmt(co);
-  }
-  document.getElementById('result-dates').textContent = ds;
-  scrollToSection('acomodacoes');
-}
-
-function clearSearch() {
-  ['s-checkin','s-checkout','s-guests'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
-  document.querySelectorAll('.apt-card').forEach(c => c.classList.remove('hidden'));
-  document.getElementById('resultados').classList.remove('visible');
-}
-
-// ═══════════════════════════════════════
-// FILTROS
-// ═══════════════════════════════════════
-function filterApts(type, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.apt-card').forEach(card => {
-    if (type === 'all') {
-      card.style.display = '';
-    } else {
-      card.style.display = card.dataset.type === type ? '' : 'none';
-    }
+function filtrar(tipo, btn){
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.ucard').forEach(c=>{
+    c.style.display = (tipo==='all' || c.dataset.type===tipo) ? '' : 'none';
   });
 }
 
-// ═══════════════════════════════════════
-// CALENDÁRIO
-// ═══════════════════════════════════════
-function buildCalendar(id, occ) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  const now = new Date(); let y = now.getFullYear(), m = now.getMonth();
-  const mn = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-  function render() {
-    const fd = new Date(y,m,1).getDay(), dim = new Date(y,m+1,0).getDate();
-    const td = now.getDate(), isCur = y===now.getFullYear()&&m===now.getMonth();
-    let h = `<div class="cal-month"><button class="cal-nav" id="${id}-prev">‹</button><span class="cal-month-name">${mn[m]} ${y}</span><button class="cal-nav" id="${id}-next">›</button></div>
-    <div class="cal-days-header"><span>D</span><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span></div><div class="cal-days">`;
-    for(let i=0;i<fd;i++) h+=`<div class="cal-day empty"></div>`;
-    for(let d=1;d<=dim;d++){const cls=occ.includes(d)?'occupied':isCur&&d===td?'today':'';h+=`<div class="cal-day ${cls}">${d}</div>`;}
-    h+=`</div>`; el.innerHTML=h;
-    document.getElementById(`${id}-prev`).onclick=()=>{m--;if(m<0){m=11;y--;}render();};
-    document.getElementById(`${id}-next`).onclick=()=>{m++;if(m>11){m=0;y++;}render();};
-  }render();
-}
-buildCalendar('cal-airbnb',[4,5,10,11,17,18,19,24,25,30]);
+/* ── POIs ── */
+(function(){
+  const ORIG = 'Rua+%C3%81lvaro+Luis+Roberto+de+Assump%C3%A7%C3%A3o+73+S%C3%A3o+Paulo+SP';
+  const dir = (dest,pid)=>`https://www.google.com/maps/dir/?api=1&origin=${ORIG}&destination=${dest}${pid?`&destination_place_id=${pid}`:''}`;
+  const CATS = [
+    ['🎉 Eventos & Entretenimento',[
+      ['São Paulo Expo','Expo Imigrantes — feiras, congressos e shows','~7 min',dir('S%C3%A3o+Paulo+Expo+Rod.+dos+Imigrantes+S%C3%A3o+Paulo','ChIJlcvDpN1azpQRZ5Fxj-VskTE')],
+      ['Autódromo de Interlagos','F1 · Lollapalooza · Rock in Rio SP','~12 min',dir('Aut%C3%B3dromo+Jos%C3%A9+Carlos+Pace+Interlagos+S%C3%A3o+Paulo','ChIJr4SVPshPzpQRwKUs2gfc_C8')],
+      ['Allianz Parque','Shows internacionais · Jogos do Palmeiras','~25 min',dir('Allianz+Parque+S%C3%A3o+Paulo','ChIJRV1xHf1XzpQRsVwZ1iFUToY')],
+    ]],
+    ['💼 Negócios & Serviços',[
+      ['Consulado dos EUA','Entrevistas de visto B1/B2 ✅','~7 min',dir('Consulado+Geral+dos+Estados+Unidos+S%C3%A3o+Paulo','ChIJZ9eEQOhQzpQR-myLn_2Lby0')],
+      ['Avenida Berrini','Polo corporativo da Zona Sul','~15 min',dir('Avenida+Engenheiro+Lu%C3%ADs+Carlos+Berrini+S%C3%A3o+Paulo','ChIJh0-W7TRXzpQR1BqPtqxOO80')],
+      ['MorumbiShopping','Lojas · Gastronomia · Cinema','~7 min',dir('MorumbiShopping+S%C3%A3o+Paulo','ChIJq6omp8RQzpQRyCoIvgF3s6Y')],
+    ]],
+    ['📍 No entorno imediato',[
+      ['Padaria Santa Marcelina','Café, pães e salgados · 6h às 22h','~3 min',dir('Padaria+Santa+Marcelina+Vieira+de+Morais+S%C3%A3o+Paulo','ChIJHZoiU6JQzpQRckTyrTZt24k')],
+      ['Hirota Food','Supermercado japonês a poucos passos','~2 min',dir('Hirota+Food+Vieira+de+Morais+S%C3%A3o+Paulo','ChIJM2BJCKNQzpQRlIaug_JjCG0')],
+      ['Bar Dois Irmãos','Pizza · Chopp · Música ao vivo','~5 min',dir('Bar+Dois+Irm%C3%A3os+Campo+Belo+S%C3%A3o+Paulo','ChIJZY4-VaRQzpQRwhzspNmrlls')],
+      ['Drogaria São Paulo','Farmácia 24 horas','~3 min',dir('Drogaria+S%C3%A3o+Paulo+Vieira+de+Morais+Campo+Belo','ChIJo-FXI3ZRzpQR6EN1oVxCC2o')],
+      ['Parque do Ibirapuera','Museus, lagos e muito verde','~15 min',dir('Parque+do+Ibirapuera+S%C3%A3o+Paulo','ChIJ0RGdBvFZzpQRQeWcrwlhk8s')],
+      ['Aeroporto de Congonhas','CGH — voos domésticos','~10 min',dir('Aeroporto+de+Congonhas+S%C3%A3o+Paulo','ChIJ8wDUuXpazpQRhXBN5pcG5zo')],
+    ]],
+  ];
+  document.getElementById('poi-block').innerHTML = CATS.map(([cat,rows])=>`
+    <div class="poi-cat">${cat}</div>
+    ${rows.map(([n,s,d,url])=>`
+      <a class="poi-row" href="${url}" target="_blank">
+        <span class="poi-nm">${n}<small>${s}</small></span>
+        <span style="display:flex;align-items:baseline;gap:16px;"><span class="poi-d">${d}</span><span class="poi-go">Como chegar →</span></span>
+      </a>`).join('')}
+  `).join('') + `
+    <a class="btn btn-wa" style="margin-top:30px;" href="https://wa.me/${WA}?text=Olá! Gostaria de indicações sobre os pontos de interesse próximos ao Valps Residence." target="_blank">Pedir indicações ao proprietário</a>`;
+})();
 
-// ═══════════════════════════════════════
-// FAQ
-// ═══════════════════════════════════════
-function toggleFaq(el) {
-  const o = el.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(f=>f.classList.remove('open'));
-  if(!o) el.classList.add('open');
-}
+/* ── FAQ ── */
+(function(){
+  const FAQS = [
+    ['Como faço para reservar diretamente?','Preencha o formulário de reserva nesta página ou entre em contato pelo WhatsApp. Respondemos em até 2 horas para confirmar a disponibilidade e enviar as instruções de pagamento.'],
+    ['Quais formas de pagamento são aceitas?','Aceitamos PIX, Transferência Bancária, Link de Pagamento (enviado pelo proprietário via WhatsApp) e Criptomoedas (Bitcoin, Ethereum e Solana). Todos os pagamentos são realizados diretamente com o proprietário, sem taxas de intermediários.'],
+    ['Qual é a política de cancelamento?','Cancelamentos com mais de 30 dias: reembolso integral. Até 15 dias: reembolso de 50%. Após isso, sem reembolso.'],
+    ['Os apartamentos são mobiliados?','Sim! Todas as unidades são completamente mobiliadas com cozinha equipada, utensílios, roupa de cama, toalhas, Wi-Fi e TV. Você só precisa chegar com a mala.'],
+    ['Qual é o horário de check-in e check-out?','Check-in a partir das 14h e check-out até as 10h da manhã. Early check-in e late check-out podem ser solicitados mediante disponibilidade.'],
+    ['É permitido pets?','Aceitamos pets de pequeno porte (até 10kg) com consulta prévia e taxa de limpeza de R$ 180. Informe na solicitação de reserva.'],
+    ['Por que reservar direto ao invés da Booking ou Airbnb?','Reservando diretamente você economiza entre 10% e 20% em taxas de serviço. Além disso, tem atendimento personalizado e direto com o anfitrião.'],
+    ['Tem estacionamento disponível?','Sim, há vagas rotativas para todos os apartamentos.'],
+  ];
+  document.getElementById('faq-wrap').innerHTML = FAQS.map(([q,a],i)=>`
+    <div class="fq rv" style="--d:${i*0.05}s" onclick="this.classList.toggle('open')">
+      <div class="fq-q"><span>${q}</span><span class="fq-i">+</span></div>
+      <div class="fq-a">${a}</div>
+    </div>`).join('');
+})();
 
-// ═══════════════════════════════════════
-// SCROLL REVEAL
-// ═══════════════════════════════════════
-function initReveal() {
-  const obs = new IntersectionObserver(entries=>{
-    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
-  },{threshold:0.1});
-  document.querySelectorAll('.reveal:not(.visible)').forEach(el=>obs.observe(el));
-}
-initReveal();
-
-// ═══════════════════════════════════════
-// NAVBAR SCROLL
-// ═══════════════════════════════════════
-window.addEventListener('scroll',()=>{
-  const nav=document.getElementById('navbar');
-  nav.style.padding=window.scrollY>60?'6px 72px':'10px 72px';
-});
-
-// ═══════════════════════════════════════
-// UTILITIES
-// ═══════════════════════════════════════
-function scrollToSection(id) {
-  setTimeout(()=>{
-    const el = document.getElementById(id);
-    if(el) el.scrollIntoView({behavior:'smooth'});
-  }, 100);
-}
-
-async function handleContactSubmit(e) {
+/* ── FORM ── */
+(function(){
+  const sel = document.getElementById('f-apt');
+  APTS.filter(a=>a.id!=='apto-41').forEach(a=>{
+    const o = document.createElement('option'); o.value=a.name; o.textContent=a.name; sel.appendChild(o);
+  });
+  const g = document.getElementById('f-g');
+  for(let i=1;i<=14;i++){ const o=document.createElement('option'); o.value=i; o.textContent=`${i} hóspede${i>1?'s':''}`; g.appendChild(o); }
+  const mg = document.getElementById('m-g');
+  for(let i=1;i<=14;i++){ const o=document.createElement('option'); o.value=i; o.textContent=`${i} hóspede${i>1?'s':''}`; mg.appendChild(o); }
+})();
+function fmtData(v){ if(!v) return '—'; const [y,m,d]=v.split('-'); return `${d}/${m}/${y}`; }
+function enviarWA(e){
   e.preventDefault();
-  const nome    = document.getElementById('c-nome').value;
-  const tel     = document.getElementById('c-tel').value;
-  const email   = document.getElementById('c-email') ? document.getElementById('c-email').value : '';
-  const ci      = document.getElementById('c-checkin').value;
-  const co      = document.getElementById('c-checkout').value;
-  const apt     = document.getElementById('contato-apt').value;
-  const guests  = document.getElementById('c-guests').value;
-  const msgTxt  = document.getElementById('c-msg').value;
-  const fmtDate = d => { if(!d) return null; const [y,m,day]=d.split('-'); return day+'/'+m+'/'+y; };
-
-  // ── Salvar no Firebase ──────────────────────────────────────────────
-  await salvarNoFirebase({
-    nome:        nome || '',
-    telefone:    tel  || '',
-    email:       email || '',
-    apartamento: apt  || '',
-    checkin:     fmtDate(ci)  || '',
-    checkout:    fmtDate(co)  || '',
-    hospedes:    guests       || '',
-    mensagem:    msgTxt       || '',
-    canal:       'site'
+  const nome=document.getElementById('f-nome').value,
+        tel=document.getElementById('f-tel').value,
+        email=document.getElementById('f-email').value,
+        ci=document.getElementById('f-in').value, co=document.getElementById('f-out').value,
+        apt=document.getElementById('f-apt').value||'A definir',
+        g=document.getElementById('f-g').value,
+        msg=document.getElementById('f-msg').value;
+  const texto=`Olá! Gostaria de solicitar uma reserva no *Valps Residence* 🏠%0A%0A`+
+    `*Nome:* ${nome}%0A*Telefone:* ${tel||'—'}%0A*E-mail:* ${email||'—'}%0A`+
+    `*Acomodação:* ${apt}%0A*Check-in:* ${fmtData(ci)}%0A*Check-out:* ${fmtData(co)}%0A*Hóspedes:* ${g}`+
+    (msg?`%0A%0A*Mensagem:* ${msg}`:'');
+  window.open(`https://wa.me/${WA}?text=${texto}`,'_blank');
+  const btn=document.querySelector('.ct-submit');
+  if(btn){const o=btn.textContent;btn.textContent='✅ Enviando...';btn.disabled=true;
+    setTimeout(()=>{btn.textContent=o;btn.disabled=false;},3000);}
+  salvarNoFirebase({
+    nome: nome||'', telefone: tel||'', email: email||'',
+    apartamento: apt||'', checkin: ci?fmtData(ci):'', checkout: co?fmtData(co):'',
+    hospedes: g||'', mensagem: msg||'', canal:'site', formulario:'contato'
   });
-
-  // ── Visual: confirmar ao usuário ────────────────────────────────────
-  const btn = document.querySelector('.form-submit');
-  const originalHTML = btn.innerHTML;
-  btn.innerHTML = '✅ Enviando...';
-  btn.disabled = true;
-  setTimeout(() => { btn.innerHTML = originalHTML; btn.disabled = false; }, 3000);
-
-  // ── Enviar via WhatsApp (mantém comportamento original) ────────────
-  let msg = 'Olá! Gostaria de solicitar uma reserva no *Valps Residence*.';
-  if (nome)   msg += '\n\n👤 Nome: *' + nome + '*';
-  if (tel)    msg += '\n📱 Telefone: *' + tel + '*';
-  if (email)  msg += '\n📧 E-mail: *' + email + '*';
-  if (apt)    msg += '\n🏠 Acomodação: *' + apt + '*';
-  if (ci)     msg += '\n📅 Check-in: *' + fmtDate(ci) + '*';
-  if (co)     msg += '\n📅 Check-out: *' + fmtDate(co) + '*';
-  if (guests) msg += '\n👥 Hóspedes: *' + guests + '*';
-  if (msgTxt) msg += '\n\n💬 ' + msgTxt;
-  msg += '\n\nAguardo confirmação de disponibilidade e valores. Obrigado!';
-
-  window.open('https://wa.me/5585999696377?text=' + encodeURIComponent(msg), '_blank');
 }
 
-// ── LIGHTBOX ──
-let lbPhotos = [], lbIdx = 0;
-
-function openLightbox(idx) {
-  if (!currentApt || !currentApt.photos || !currentApt.photos.length) return;
-  lbPhotos = currentApt.photos;
-  lbIdx = (idx !== undefined && idx >= 0 && idx < lbPhotos.length) ? idx : 0;
-  showLbPhoto();
-  const lb = document.getElementById('lightbox');
-  lb.classList.add('open');
-  document.body.style.overflow = 'hidden';
+/* ── MODAL ── */
+let mApt=null, mIdx=0, mPhotos=[], autoTimer=null;
+function startAuto(){
+  stopAuto();
+  if(reduced || mPhotos.length<2) return;
+  autoTimer=setInterval(()=>galGo(mIdx+1),4500);
 }
-
-function showLbPhoto() {
-  const p = lbPhotos[lbIdx];
-  if (!p) return;
-  document.getElementById('lb-img').src = p.src;
-  document.getElementById('lb-caption').textContent = p.label || '';
-  document.getElementById('lb-counter').textContent = (lbIdx+1) + ' / ' + lbPhotos.length;
+function stopAuto(){ if(autoTimer){clearInterval(autoTimer);autoTimer=null;} }
+const LABEL_ORDER=['Sala de Estar','Sala de Jantar','Cozinha','Quarto 1','Quarto 2','Quarto 3','Quarto 4','Quarto 5','Suíte','Suite','Banheiro','Banheiro 2','Banheiro 3','Banheiro 4','Lavabo','Lavanderia','Varanda','Área externa','Vista','Corredor','Detalhe','Outro'];
+function abrirModal(id){
+  const a = APTS.find(x=>x.id===id); if(!a) return;
+  mApt=a;
+  mPhotos=(a.photos||[]).filter(p=>p&&p.src).sort((x,y)=>{
+    const ix=LABEL_ORDER.indexOf(x.label), iy=LABEL_ORDER.indexOf(y.label);
+    return (ix<0?99:ix)-(iy<0?99:iy);
+  });
+  mIdx=Math.max(0,mPhotos.findIndex(p=>p.label==='Sala de Estar'));
+  document.getElementById('m-plq').textContent=`Nº ${a.num} · Valps Residence`;
+  document.getElementById('m-name').textContent=a.name;
+  document.getElementById('m-desc').textContent=a.desc||'';
+  document.getElementById('m-badges').innerHTML=[
+    `<span class="m-bdg g">${a.sqm}m²</span>`,
+    `<span class="m-bdg">${a.detail}</span>`,
+    `<span class="m-bdg">Até ${a.guests} hóspedes</span>`,
+    `<span class="m-bdg ${a.ac?'g':''}">${a.ac?'❄ Com ar-condicionado':'Sem ar-condicionado'}</span>`,
+    a.rating?`<span class="m-bdg g">★ ${a.rating} · ${a.reviewsCount||''} avaliações</span>`:''
+  ].join('');
+  const hl=document.getElementById('m-hl');
+  if(a.highlights&&a.highlights.length){document.getElementById('m-hl-wrap').style.display='';hl.innerHTML=a.highlights.map(h=>`<div>${h}</div>`).join('');}
+  else document.getElementById('m-hl-wrap').style.display='none';
+  const rw=document.getElementById('m-rooms');
+  if(a.rooms&&a.rooms.length){
+    document.getElementById('m-rooms-wrap').style.display='';
+    rw.innerHTML=a.rooms.map(r=>{
+      const fi=mPhotos.findIndex(p=>p.label===r.name||p.label===r.name.replace('í','i'));
+      const ph=fi>=0?`<div class="m-rph" style="background-image:url(${mPhotos[fi].src})" onclick="abrirLightbox(${fi})" title="Ver foto de ${r.name}"></div>`:'';
+      return `<div class="m-room">${ph}<b>${r.name}</b><span>${r.beds}</span></div>`;
+    }).join('');
+  }
+  else document.getElementById('m-rooms-wrap').style.display='none';
+  document.getElementById('m-amen').innerHTML=(a.amenities||[]).map(x=>`<div>${x}</div>`).join('');
+  const revs=a.reviewCards||[];
+  if(revs.length){
+    document.getElementById('m-rev-wrap').style.display='';
+    document.getElementById('m-rev-title').textContent=`Avaliações ${a.rating?`· ★ ${a.rating}`:''}`;
+    document.getElementById('m-revs').innerHTML=revs.slice(0,3).map(r=>
+      `<div class="m-rev"><b>${r.author}</b> <span style="font-size:.7rem;color:var(--mut);">· ${r.date||''}</span><div class="st">${'★'.repeat(r.stars||5)}</div><p>${r.text}</p></div>`).join('');
+  } else document.getElementById('m-rev-wrap').style.display='none';
+  document.getElementById('m-rate').innerHTML=a.rating?`<b>${a.rating}</b><span>${'★'.repeat(Math.round(a.rating))} · ${a.reviewsCount||''} avaliações</span>`:`<b style="font-size:1.2rem;">Valps</b><span>Residence</span>`;
+  document.getElementById('m-ask').href=`https://wa.me/${WA}?text=Olá! Tenho uma dúvida sobre o *${a.name}* no Valps Residence.`;
+  const mgSel=document.getElementById('m-g');
+  if(mgSel)mgSel.value=Math.min(a.guests||2,14);
+  const ab=document.getElementById('m-airbnb');
+  if(a.airbnb_url){ab.style.display='inline-flex';ab.href=a.airbnb_url;}else ab.style.display='none';
+  document.getElementById('m-feats').innerHTML=[`${a.sqm}m² — área total`,'Wi-Fi de alta velocidade','Cozinha completa','Vaga de garagem inclusa',a.ac?'Ar-condicionado':null].filter(Boolean).map(x=>`<span>${x}</span>`).join('');
+  const th=document.getElementById('m-thumbs');
+  th.innerHTML=mPhotos.map((p,i)=>`<div class="m-th ${i===mIdx?'on':''}" style="background-image:url(${p.src})" onclick="galGo(${i})" title="${p.label}"></div>`).join('');
+  // galeria completa
+  const fg=document.getElementById('m-fullgal');
+  if(mPhotos.length){
+    document.getElementById('m-fullgal-wrap').style.display='';
+    fg.innerHTML=mPhotos.map((p,i)=>`<div class="mfg" style="background-image:url(${p.src})" onclick="abrirLightbox(${i})"><i>${p.label||''}</i></div>`).join('');
+  } else document.getElementById('m-fullgal-wrap').style.display='none';
+  galGo(mIdx);
+  startAuto();
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow='hidden';
+  document.querySelector('.m-panel').scrollTop=0;
 }
-
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('open');
-  document.body.style.overflow = '';
+function galGo(i){
+  if(!mPhotos.length){document.getElementById('m-img').style.display='none';document.getElementById('m-ct').textContent='—';document.getElementById('m-lb').textContent='Fotos em breve';return;}
+  mIdx=(i+mPhotos.length)%mPhotos.length;
+  const img=document.getElementById('m-img');
+  img.style.display='';img.src=mPhotos[mIdx].src;img.alt=mPhotos[mIdx].label||'';
+  document.getElementById('m-ct').textContent=`${mIdx+1} / ${mPhotos.length}`;
+  document.getElementById('m-lb').textContent=mPhotos[mIdx].label||'';
+  document.querySelectorAll('.m-th').forEach((t,j)=>t.classList.toggle('on',j===mIdx));
 }
-
-function closeLightboxOutside(e) {
-  if (e.target.id === 'lightbox') closeLightbox();
+function galNav(d){galGo(mIdx+d);startAuto();}
+function fecharModal(){
+  stopAuto();
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow='';
 }
+// pausa o autoplay quando o mouse está sobre a foto
+(function(){
+  const g=document.querySelector('.m-gal');
+  if(g){
+    g.addEventListener('mouseenter',stopAuto);
+    g.addEventListener('mouseleave',()=>{if(document.getElementById('modal').classList.contains('open'))startAuto();});
+  }
+})();
 
-function lbPrev() { lbIdx = (lbIdx - 1 + lbPhotos.length) % lbPhotos.length; showLbPhoto(); }
-function lbNext() { lbIdx = (lbIdx + 1) % lbPhotos.length; showLbPhoto(); }
-
-document.addEventListener('keydown', function(e) {
-  const lb = document.getElementById('lightbox');
-  if (!lb || !lb.classList.contains('open')) return;
-  if (e.key === 'Escape') closeLightbox();
-  if (e.key === 'ArrowLeft') lbPrev();
-  if (e.key === 'ArrowRight') lbNext();
+/* ── LIGHTBOX ── */
+let lbIdx=0;
+function abrirLightbox(i){
+  if(!mPhotos.length)return;
+  stopAuto();
+  lbIdx=(i+mPhotos.length)%mPhotos.length;
+  mostrarLb();
+  document.getElementById('lb').style.display='flex';
+}
+function mostrarLb(){
+  const p=mPhotos[lbIdx];
+  document.getElementById('lb-img').src=p.src;
+  document.getElementById('lb-img').alt=p.label||'';
+  document.getElementById('lb-cap').textContent=p.label||'';
+  document.getElementById('lb-ct').textContent=`${lbIdx+1} / ${mPhotos.length}`;
+}
+function lbNav(d){lbIdx=(lbIdx+d+mPhotos.length)%mPhotos.length;mostrarLb();}
+function fecharLb(){
+  document.getElementById('lb').style.display='none';
+  if(document.getElementById('modal').classList.contains('open'))startAuto();
+}
+document.addEventListener('keydown',e=>{
+  const lbAberto=document.getElementById('lb').style.display==='flex';
+  if(lbAberto){
+    if(e.key==='Escape')fecharLb();
+    if(e.key==='ArrowLeft')lbNav(-1);
+    if(e.key==='ArrowRight')lbNav(1);
+    return;
+  }
+  if(!document.getElementById('modal').classList.contains('open'))return;
+  if(e.key==='Escape')fecharModal();
+  if(e.key==='ArrowLeft')galNav(-1);
+  if(e.key==='ArrowRight')galNav(1);
 });
-// ── LOCAL TABS ──
-function switchLocalTab(tab, btn) {
-  // Update buttons
-  document.querySelectorAll('.local-tab').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  // Update panels
-  document.querySelectorAll('.local-tab-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('local-tab-' + tab).classList.add('active');
+
+/* ── CALENDÁRIO (ilustrativo) ── */
+let calY, calM;
+(function(){const t=new Date();calY=t.getFullYear();calM=t.getMonth();})();
+const MESES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+function ocupados(y,m){
+  // pseudo-aleatório determinístico por mês (apenas ilustrativo)
+  const occ=new Set();let s=y*12+m;
+  for(let i=0;i<10;i++){s=(s*9301+49297)%233280;occ.add(1+(s%28));}
+  return occ;
+}
+function renderMes(y,m,elDays,elName){
+  elName.textContent=`${MESES[m]} ${y}`;
+  const first=new Date(y,m,1).getDay(), nd=new Date(y,m+1,0).getDate();
+  const hoje=new Date(); const occ=ocupados(y,m);
+  let html='';
+  for(let i=0;i<first;i++)html+='<span class="cal-d empty"></span>';
+  for(let d=1;d<=nd;d++){
+    const isToday=d===hoje.getDate()&&m===hoje.getMonth()&&y===hoje.getFullYear();
+    const isOcc=occ.has(d);
+    html+=`<span class="cal-d ${isOcc?'occ':'free'} ${isToday?'today':''}">${d}</span>`;
+  }
+  elDays.innerHTML=html;
+}
+function renderCalendarios(){
+  renderMes(calY,calM,document.getElementById('cal-d1'),document.getElementById('cal-n1'));
+  const y2=calM===11?calY+1:calY, m2=(calM+1)%12;
+  renderMes(y2,m2,document.getElementById('cal-d2'),document.getElementById('cal-n2'));
+  if(typeof buildThread==='function')setTimeout(buildThread,50);
+}
+function calMove(d){
+  calM+=d; if(calM<0){calM=11;calY--;} if(calM>11){calM=0;calY++;}
+  renderCalendarios();
+}
+renderCalendarios();
+
+/* ── MENU MOBILE ── */
+function abrirMenu(){document.getElementById('mnav').classList.add('open');document.body.style.overflow='hidden';}
+function fecharMenu(){document.getElementById('mnav').classList.remove('open');document.body.style.overflow='';}
+function navTo(id){fecharMenu();setTimeout(()=>scrollToId(id),60);}
+
+/* ── UTIL ── */
+function scrollToId(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:reduced?'auto':'smooth'});}
+
+/* ── NAV + PROGRESSO ── */
+const navEl=document.getElementById('nav');
+const progEl=document.querySelector('#progress i');
+
+/* ── REVEALS ── */
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+document.querySelectorAll('.rv,.rv-l,.rv-r,.rv-clip,.rv-scale,.rv-line').forEach(el=>io.observe(el));
+
+/* ── CONTADORES ── */
+const cio=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(!e.isIntersecting)return;
+    cio.unobserve(e.target);
+    const el=e.target, target=parseFloat(el.dataset.count), suf=el.dataset.suffix||'';
+    const dec=String(el.dataset.count).includes('.')?1:0;
+    if(reduced){el.textContent=el.dataset.count+suf;return;}
+    const t0=performance.now(), dur=1400;
+    (function tick(t){
+      const p=Math.min(1,(t-t0)/dur), ease=1-Math.pow(1-p,3);
+      el.textContent=(target*ease).toFixed(dec)+suf;
+      if(p<1)requestAnimationFrame(tick);
+    })(t0);
+  });
+},{threshold:.5});
+document.querySelectorAll('[data-count]').forEach(el=>cio.observe(el));
+
+/* ── O FIO DE OURO (linha que segue o scroll) ── */
+const thread=document.getElementById('thread');
+const tBase=thread.querySelector('.t-base');
+const tDraw=thread.querySelector('.t-draw');
+const tTip=thread.querySelector('.t-tip');
+const tTip2=thread.querySelector('.t-tip2');
+const tNodes=document.getElementById('t-nodes');
+let tLen=0;
+
+function buildThread(){
+  if(window.innerWidth<=960||reduced)return;
+  const W=document.documentElement.clientWidth;
+  const H=document.documentElement.scrollHeight;
+  thread.setAttribute('width',W);thread.setAttribute('height',H);
+  thread.style.height=H+'px';
+  const secs=[...document.querySelectorAll('[data-node]')];
+  const pts=[{x:W*0.5,y:0}];
+  secs.forEach(s=>{
+    const r=s.getBoundingClientRect(), top=r.top+window.scrollY;
+    const side=s.dataset.node==='left'?0.052:0.948;
+    pts.push({x:W*side,y:top+r.height*0.42});
+  });
+  pts.push({x:W*0.5,y:H-40});
+  // curva suave através dos pontos
+  let d=`M ${pts[0].x},${pts[0].y}`;
+  for(let i=1;i<pts.length;i++){
+    const p0=pts[i-1],p1=pts[i],my=(p0.y+p1.y)/2;
+    d+=` C ${p0.x},${my} ${p1.x},${my} ${p1.x},${p1.y}`;
+  }
+  tBase.setAttribute('d',d);tDraw.setAttribute('d',d);
+  tLen=tDraw.getTotalLength();
+  tDraw.style.strokeDasharray=tLen;
+  tDraw.style.strokeDashoffset=tLen;
+  tNodes.innerHTML=pts.slice(1,-1).map(p=>`<circle class="t-node" r="4" cx="${p.x}" cy="${p.y}"/>`).join('');
+  updateThread();
+}
+function updateThread(){
+  if(!tLen)return;
+  const max=document.documentElement.scrollHeight-window.innerHeight;
+  const prog=Math.min(1,Math.max(0,(window.scrollY+window.innerHeight*0.62)/document.documentElement.scrollHeight));
+  const drawn=tLen*prog;
+  tDraw.style.strokeDashoffset=tLen-drawn;
+  const pt=tDraw.getPointAtLength(drawn);
+  tTip.setAttribute('cx',pt.x);tTip.setAttribute('cy',pt.y);
+  tTip2.setAttribute('cx',pt.x);tTip2.setAttribute('cy',pt.y);
+}
+
+/* ── SCROLL LOOP ── */
+let ticking=false;
+function onScroll(){
+  if(ticking)return;ticking=true;
+  requestAnimationFrame(()=>{
+    const y=window.scrollY;
+    navEl.classList.toggle('solid',y>50);
+    const max=document.documentElement.scrollHeight-window.innerHeight;
+    progEl.style.transform=`scaleX(${max>0?y/max:0})`;
+    updateThread();
+    ticking=false;
+  });
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+window.addEventListener('resize',()=>{clearTimeout(window.__rs);window.__rs=setTimeout(buildThread,200);});
+window.addEventListener('load',()=>setTimeout(buildThread,300));
+setTimeout(buildThread,800);
+onScroll();
+
+
+/* ── RESERVA DA UNIDADE (modal) ── */
+function reservarUnidade(){
+  if(!mApt)return;
+  const ci=document.getElementById('m-in').value,
+        co=document.getElementById('m-out').value,
+        g=document.getElementById('m-g').value;
+  const texto=`Olá! Gostaria de reservar o *${mApt.name}* no Valps Residence 🏠%0A%0A`+
+    `*Check-in:* ${fmtData(ci)}%0A*Check-out:* ${fmtData(co)}%0A*Hóspedes:* ${g}%0A%0A`+
+    `Pode me confirmar a disponibilidade e o valor?`;
+  window.open(`https://wa.me/${WA}?text=${texto}`,'_blank');
+  salvarNoFirebase({
+    apartamento: mApt.name, checkin: ci?fmtData(ci):'', checkout: co?fmtData(co):'',
+    hospedes: g||'', canal:'site', formulario:'unidade'
+  });
 }
