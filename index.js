@@ -1,984 +1,460 @@
-/* ═══════════════════════════════════════════════════════
-   FIREBASE — Banco de dados Valps Residence
-═══════════════════════════════════════════════════════ */
-(function loadFirebase() {
-  const scripts = [
-    'https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js',
-    'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js'
-  ];
-  let loaded = 0;
-  scripts.forEach(src => {
-    const s = document.createElement('script');
-    s.src = src;
-    s.onload = () => { loaded++; if (loaded === scripts.length) initFirebase(); };
-    document.head.appendChild(s);
-  });
-})();
-
-const firebaseConfig = {
-  apiKey:            "AIzaSyBxj1heAgzKm5G--GVCT35j7iMXcb5AjHY",
-  authDomain:        "valps-residence.firebaseapp.com",
-  projectId:         "valps-residence",
-  storageBucket:     "valps-residence.firebasestorage.app",
-  messagingSenderId: "912233004206",
-  appId:             "1:912233004206:web:79da7522c71a39cac1813f",
-  measurementId:     "G-0NHQ6E5E8P"
-};
-
-let db = null;
-
-function initFirebase() {
-  if (typeof firebase === 'undefined') return;
-  if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-  db = firebase.firestore();
-  console.log('[Valps] Firebase conectado ✅');
+/* ════════════════════════════════════════════════
+   VALPS RESIDENCE — proposta v3 "Fio de Ouro"
+   Pinheiro profundo · Creme · Dourado
+════════════════════════════════════════════════ */
+:root{
+  --pine:#0A110D;          /* página escura */
+  --moss:#0F1812;          /* superfície escura */
+  --moss2:#17231B;         /* hover escuro */
+  --cream:#F2EBDA;         /* seções claras */
+  --paper:#E9E0CA;         /* superfície clara */
+  --inkg:#15211A;          /* texto sobre claro */
+  --gold:#C9A84C;
+  --goldb:#E3C87D;
+  --golddeep:#8F722C;
+  --txt:#F0EAD9;
+  --mut:#8FA08F;           /* apagado sobre escuro */
+  --mutl:#6B755F;          /* apagado sobre claro */
+  --line:rgba(201,168,76,.22);
+  --linesoft:rgba(240,234,217,.09);
+  --linelight:rgba(21,33,26,.14);
+  --disp:'Fraunces',Georgia,serif;
+  --sans:'Hanken Grotesk',system-ui,sans-serif;
+  --mono:'Spline Sans Mono',monospace;
+  --px:clamp(20px,6vw,96px);
+  --ease:cubic-bezier(.22,1,.36,1);
 }
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--pine);color:var(--txt);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+::selection{background:rgba(201,168,76,.35);}
+:focus-visible{outline:1.5px solid var(--gold);outline-offset:3px;}
+img{display:block;max-width:100%;}
+button{font-family:inherit;}
+a{-webkit-tap-highlight-color:transparent;}
 
-async function salvarNoFirebase(dados) {
-  if (!db) { console.warn('[Valps] Firebase não inicializado ainda'); return false; }
-  try {
-    const docRef = await db.collection('reservas').add({
-      ...dados,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      origem: 'site',
-      status: 'pendente'
-    });
-    console.log('[Valps] Reserva salva:', docRef.id);
-    return true;
-  } catch (err) {
-    console.error('[Valps] Erro ao salvar:', err);
-    return false;
-  }
-}
+/* grão */
+body::after{content:'';position:fixed;inset:0;z-index:1900;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
 
-const APTS = [
-    {
-      id:'apto-11', num:'11', name:'Apto 11',
-      type:'2q', guests:5, ac:true, sqm:89, featured:true,
-      airbnb_url:'https://airbnb.com/h/valps11',
-      detail:'2 quartos · 4 camas + sofá-cama · 1 banheiro',
-      desc:'Apartamento amplo e confortável de 89m² no coração da Zona Sul. Dois quartos com ar-condicionado, cozinha equipada com airfryer, camas box, garagem gratuita. A 200m do metrô Campo Belo e 15 min do Aeroporto de Congonhas.',
-      rating:4.90, reviewsCount:8,
-      ratings:{limpeza:4.9,exatidao:5.0,checkin:5.0,comunicacao:5.0,localizacao:5.0,custo:4.8},
-      highlights:['🔑 Self check-in com fechadura inteligente','🌿 Região tranquila e segura','🏠 Cozinha totalmente equipada'],
-      rooms:[{name:'Quarto 1',beds:'1 cama queen'},{name:'Quarto 2',beds:'2 camas de solteiro'},{name:'Quarto 3',beds:'1 sofá-cama'}],
-      amenities:['🍳 Cozinha completa','📶 Wi-Fi fibra','💼 Espaço de trabalho','🚗 Estacionamento gratuito','🐾 Permitido animais','📺 TV 50"','🛗 Elevador','🫧 Máquina de lavar','❄️ A/C nos quartos','📷 Câmeras externas'],
-      rules:{checkin:'Após 14:00',checkout:'Antes das 10:00',maxGuests:5},
-      reviewCards:[
-        {author:'Marcelo',stars:5,date:'set. 2025',text:'Gostamos muito da estadia. O Fabiano nos ajudou com um check-in flexível. O local estava limpo e organizado. Tivemos uma ótima comunicação. Voltarei sempre que possível!'},
-        {author:'Noádia',stars:5,date:'nov. 2025',text:'Excelente apartamento e estadia. Fabiano um super anfitrião. Top!'},
-        {author:'Bruno Monteiro',stars:5,date:'nov. 2025',text:'Ótima acomodação como no anúncio! Super recomendo!'},
-      ],
-      photos:[
-          {src:'https://lh3.googleusercontent.com/d/1J2fksoRVLdmcTlwnUolyRSDgzvvg2QQb',label:'Sala de Estar'},
-          {src:'https://lh3.googleusercontent.com/d/1ERj9neTPsuXXihR5RG-khc-HParKWjDR',label:'Sala de Jantar'},
-          {src:'https://lh3.googleusercontent.com/d/1cti87HBRp__k5wt-osBL9fL_fFfW0P1F',label:'Sala de Estar'},
-          {src:'https://lh3.googleusercontent.com/d/1Vx7IvCNoRXsSwWfRUnM-zV1f3DNHRxKy',label:'Cozinha'},
-          {src:'https://lh3.googleusercontent.com/d/1j8eK0n5k2q5gxEU722Zb6wuYQCrGnQTn',label:'Cozinha'},
-          {src:'https://lh3.googleusercontent.com/d/1wqaU0HVRJf35a3ubblyZPJbJ2LC-0NBq',label:'Lavanderia'},
-          {src:'https://lh3.googleusercontent.com/d/1TWedcf_H_TnaZTGfqukop21EiPtl0dFN',label:'Lavanderia'},
-          {src:'https://lh3.googleusercontent.com/d/19irvTEOYcVODIZEsCn-zvviHj3qCkasH',label:'Lavabo'},
-          {src:'https://lh3.googleusercontent.com/d/1bS5k0ReQG3e4bqWQkgWasMQ5fFX0SnVl',label:'Corredor'},
-          {src:'https://lh3.googleusercontent.com/d/1kAjp1Iv_eNABvNotumbpGjKoFOEjhpUC',label:'Quarto 1'},
-          {src:'https://lh3.googleusercontent.com/d/141G0WQ9EZ-0B_NbuZADYDfukDDjLkfuv',label:'Quarto 2'},
-          {src:'https://lh3.googleusercontent.com/d/1VG11fr8QHi_EM2OCUGqJvUUfuEjJ5WJY',label:'Quarto 2'},
-          {src:'https://lh3.googleusercontent.com/d/1Co6_bX3ncGC_zzhPUoKMa60lQ47dyOlH',label:'Banheiro'}
-        ],
-    },
-    {
-      id:'apto-12', num:'12', name:'Apto 12',
-      type:'3q', guests:6, ac:false, sqm:89, featured:true,
-      airbnb_url:'https://airbnb.com/h/projeto12',
-      detail:'3 quartos · 5 camas · 1,5 banheiros',
-      desc:'Melhor custo-benefício da Zona Sul! Apartamento recém renovado com 3 quartos, camas e enxovais novos, cozinha e lavanderia completas. Netflix incluso. A 5 min do metrô Campo Belo e 10 min do Aeroporto de Congonhas.',
-      rating:4.90, reviewsCount:103,
-      ratings:{limpeza:4.8,exatidao:4.9,checkin:4.9,comunicacao:4.9,localizacao:4.9,custo:4.8},
-      highlights:['🔑 Self check-in com fechadura inteligente','🍽️ Ótimos restaurantes por perto','🏠 Cozinha totalmente equipada'],
-      rooms:[{name:'Quarto 1',beds:'1 cama de casal'},{name:'Quarto 2',beds:'2 camas de solteiro'},{name:'Quarto 3',beds:'1 cama de casal'}],
-      amenities:['🍳 Cozinha completa','📶 Wi-Fi fibra','🚗 Estacionamento gratuito','🐾 Permitido animais','📺 HDTV com Netflix','🛗 Elevador','🫧 Máquina de lavar','🌅 Varanda privativa'],
-      rules:{checkin:'Após 14:00',checkout:'Antes das 10:00',maxGuests:6},
-      reviewCards:[
-        {author:'Natan',stars:5,date:'nov. 2025',text:'Ótimo ap, muito limpo, móveis em bom estado de conservação, eletrodomésticos e utensílios novos, imóvel amplo, arejado e bem localizado.'},
-        {author:'Lucas',stars:5,date:'nov. 2025',text:'Excelente apartamento. Fabiano sempre respondeu com bastante agilidade e resolveu tudo que pedimos. Recomendo muito!'},
-        {author:'Daniela Regina',stars:5,date:'fev. 2026',text:'A estadia foi ótima! Fabiano foi super flexível para o check-in. O apartamento é ótimo, de fácil acesso e boa localização.'},
-      ],
-      photos:[
-          {src:'https://lh3.googleusercontent.com/d/1v5Jg9NWLXfUa7n80R8lp2CxQmOTCHeHc',label:'Corredor'},
-          {src:'https://lh3.googleusercontent.com/d/1bbNR8iGRMrIniqq3tbqLxBBmy1hzRiHK',label:'Quarto 2'},
-          {src:'https://lh3.googleusercontent.com/d/1MIhyaWVIoS-O7NPZxkjP5xvNkwid2k-7',label:'Sala de Estar'},
-          {src:'https://lh3.googleusercontent.com/d/1M_rzSol0cU9W2SY-xJ5HroGRQ85nr9DA',label:'Sala de Estar'},
-          {src:'https://lh3.googleusercontent.com/d/1sX7PdHvX8xbyr9fmCbwPwY99UTBT7oY4',label:'Cozinha'},
-          {src:'https://lh3.googleusercontent.com/d/1Rg5w-SuWAdLjc6CGxpFH1Xagr3P4N3uS',label:'Lavanderia'},
-          {src:'https://lh3.googleusercontent.com/d/1MjiZxXH_8i9OFl7GpiH_Llsh4ojZs1Ln',label:'Lavanderia'},
-          {src:'https://lh3.googleusercontent.com/d/1vO-id-mmKUzzUN6fuLdFD0XwCUji3KNV',label:'Lavabo'},
-          {src:'https://lh3.googleusercontent.com/d/1GzcN-MtFAGX9Xz_E9U_F0cozvPWyERgl',label:'Corredor'},
-          {src:'https://lh3.googleusercontent.com/d/1q4s9eksVzd0c2ceoY_AU0l21ckkepoc-',label:'Quarto 1'},
-          {src:'https://lh3.googleusercontent.com/d/1o5ExOI9Kl8EiLEpd0yIIjDZS9DR0Z3Nb',label:'Quarto 3'},
-          {src:'https://lh3.googleusercontent.com/d/15_N4ijUNiQyJH2TgP7Eolj2A2NhrIDYT',label:'Quarto 3'},
-          {src:'https://lh3.googleusercontent.com/d/1GTzGAT9_K2TCLbIOKHDMjJe8sq9N16mj',label:'Banheiro'}
-        ],
-    },
-    {
-      id:'apto-21', num:'21', name:'Apto 21',
-      type:'3q', guests:7, ac:true, sqm:89,
-      airbnb_url:'https://airbnb.com/h/valp21',
-      detail:'3 quartos · 5 camas + sofá-cama · 2 banheiros',
-      desc:'Apartamento completo de 89m² com 3 quartos e ar-condicionado em todos os cômodos. Sala espaçosa, cozinha equipada com airfryer, enxoval completo e garagem gratuita. Perfeito para famílias e grupos.',
-      rating:4.90, reviewsCount:4,
-      ratings:{limpeza:5.0,exatidao:4.8,checkin:5.0,comunicacao:5.0,localizacao:5.0,custo:4.8},
-      highlights:['🔑 Self check-in com teclado numérico','🌿 Região tranquila e segura','💬 Ótima comunicação com o anfitrião'],
-      rooms:[
-          {name:'Quarto 1',beds:'2 camas de solteiro',img:null},
-          {name:'Quarto 2',beds:'1 cama queen',img:null},
-          {name:'Quarto 3',beds:'1 cama de casal + 1 cama de solteiro',img:null},
-        ],
-      amenities:['🍳 Cozinha completa','📶 Wi-Fi fibra','💼 Espaço de trabalho','🚗 Estacionamento gratuito','🐾 Permitido animais','📺 TV','🛗 Elevador','🫧 Máquina de lavar','❄️ A/C em todos os quartos'],
-      rules:{checkin:'Após 14:00',checkout:'Antes das 10:00',maxGuests:7},
-      reviewCards:[
-        {author:'Guilherme',stars:5,date:'out. 2024',text:'Excelente apartamento! Muito bem localizado, limpo e confortável. O Fabiano é um anfitrião atencioso e sempre disponível. Com certeza voltarei!'},
-        {author:'Caroline',stars:4,date:'nov. 2024',text:'Ótima localização, apartamento espaçoso e bem equipado. No geral foi uma ótima estadia.'},
-        {author:'Nathan',stars:5,date:'dez. 2024',text:'Perfeito! Espaço lindo, limpo e muito bem localizado. Fabiano super atencioso e respondeu todas as dúvidas rapidamente.'},
-      ],
-      photos:[
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1613394694955946573/original/7bf1f20f-92c6-4db9-9c41-1e6df4bc4467.jpeg',label:'Sala de Estar'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1613394694955946573/original/89591c1e-3d50-4468-afde-575777f360d3.jpeg',label:'Sala de Estar'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1613394694955946573/original/846194a5-cc43-4ea8-a453-61fc5f7dcadb.jpeg',label:'Quarto 1'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1613394694955946573/original/91da5e9b-88f2-481c-9318-a48dc9235227.jpeg',label:'Cozinha'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1613394694955946573/original/2d55cec4-96bd-499e-b4a2-a21fd1f0e27b.jpeg',label:'Sala de Estar'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1613394694955946573/original/f1c93f3f-3c7d-49ea-8486-f86935e3c1aa.jpeg',label:'Banheiro'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1613394694955946573/original/5334786a-2d57-4faf-a5b7-d55b555a92c0.jpeg',label:'Banheiro 2'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1613394694955946573/original/83db96f6-5724-44e3-8ef0-bf926e87a4e1.jpeg',label:'Banheiro'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1613394694955946573/original/93217aba-7cfb-4f85-ae9d-77e8db27f9fe.jpeg',label:'Quarto 1'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1613394694955946573/original/1ab48adc-2c40-4776-a997-bed31628bcea.jpeg',label:'Quarto 2'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1613394694955946573/original/95eb7ccd-8343-4c90-8ee0-1264b5ab3215.jpeg',label:'Quarto 3'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1613394694955946573/original/6f6c2c6c-65de-4fa7-8ae0-c656ff37a827.jpeg',label:'Sala de Estar'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1613394694955946573/original/b580e1ca-7231-4d2e-86d8-66ccc1921ad1.jpeg',label:'Sala de Estar'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1613394694955946573/original/61c3b4ea-41fe-40b1-a218-76d643ee025e.jpeg',label:'Sala de Jantar'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1613394694955946573/original/d13093f7-f78e-4cc5-aabf-46b60f1a3371.jpeg',label:'Banheiro 2'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1613394694955946573/original/4927051c-304f-4971-9149-82207c2f503a.jpeg',label:'Banheiro'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1613394694955946573/original/91ccc369-1d31-436c-ae65-c9287cf3bb1a.jpeg',label:'Banheiro 2'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1613394694955946573/original/67ece3fd-c1ed-4eac-9158-25198f0e3fb3.jpeg',label:'Cozinha'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1613394694955946573/original/2db94679-23e2-43ab-ae70-318234d2d2ee.jpeg',label:'Banheiro'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1613394694955946573/original/1a7e88ee-f347-4886-97c6-76689a836963.png',label:'Sala de Estar'}
-        ],
-    },
-    {
-      id:'apto-22', num:'22', name:'Apto 22',
-      type:'3q', guests:6, ac:false, sqm:90,
-      airbnb_url:'https://airbnb.com/h/valp22',
-      detail:'3 quartos · 5 camas · 1,5 banheiros',
-      desc:'Apartamento recém renovado com 3 quartos e capacidade para 6 pessoas. Camas box novas, sala confortável, internet rápida, cozinha completa. Localização privilegiada a 3 quarteirões do metrô Campo Belo e 12 min do Aeroporto.',
-      rating:4.90, reviewsCount:42,
-      ratings:{limpeza:4.7,exatidao:4.7,checkin:4.9,comunicacao:4.9,localizacao:5.0,custo:4.6},
-      highlights:['🔑 Self check-in com fechadura inteligente','📍 Localização imbatível','🏠 Cozinha totalmente equipada'],
-      rooms:[{name:'Quarto 1',beds:'2 camas de solteiro'},{name:'Quarto 2',beds:'1 cama queen'},{name:'Quarto 3',beds:'2 camas de solteiro'}],
-      amenities:['🍳 Cozinha completa','📶 Wi-Fi fibra','🚗 Estacionamento gratuito','🐾 Permitido animais','📺 TV','🛗 Elevador','🫧 Máquina de lavar'],
-      rules:{checkin:'14:00 - 23:00',checkout:'Antes das 10:00',maxGuests:6},
-      reviewCards:[
-        {author:'Bruno Colladel',stars:5,date:'abr. 2025',text:'Me senti em casa. Fabiano foi muito solícito e atencioso desde o primeiro momento. O imóvel correspondia exatamente com todos os detalhes descritos.'},
-        {author:'Natália',stars:5,date:'set. 2025',text:'Bairro e condomínio bem tranquilos, próximo ao metrô e mercado. Lugar bom de ficar, exatamente como descrito no anúncio.'},
-        {author:'Eduardo Fellipe',stars:5,date:'ago. 2025',text:'Muito bem localizado, local seguro, ap confortável. Rápido nas respostas, ótimo custo-benefício.'},
-      ],
-      photos:[
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/d8b33807-985e-4105-ac11-9400e46a1eb6.jpeg',label:'Sala de Estar'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/7378bf12-e191-47fe-a0b4-7cf6f342da38.jpeg',label:'Sala de Estar'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/657bbe48-76dc-4549-9587-f12332c93977.jpeg',label:'Sala de Estar'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/294ca237-8c73-448b-b567-70b5b1639f65.jpeg',label:'Quarto 2'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/259ba243-a697-4a99-8846-2a24d2d7f59e.jpeg',label:'Sala de Jantar'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/db6801b1-e86d-4cf8-9ede-4eddf499452f.jpeg',label:'Banheiro'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/0e1bab2a-eb57-4e09-bc27-8d54b44f4954.jpeg',label:'Cozinha'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/ee9fa7ad-c2f1-43ae-a278-5f5592e99e2a.jpeg',label:'Cozinha'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/30f58084-7c46-41ab-9806-da32808d68f9.jpeg',label:'Lavanderia'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/1e4d9652-f979-48ad-b80a-b780dce8d1da.jpeg',label:'Quarto 1'},
-          {src:'https://a0.muscache.com/im/pictures/hosting/Hosting-1015112044391465037/original/ee887a47-95d2-4165-ab42-a6f165933b01.jpeg',label:'Quarto 3'}
-        ],
-    },
-    {
-      id:'apto-31', num:'31', name:'Apto 31',
-      type:'2q', guests:5, ac:false, sqm:89,
-      airbnb_url:'https://airbnb.com/h/valp31',
-      detail:'2 quartos · 3 camas + sofá-cama · 1 banheiro',
-      desc:'Apartamento recém renovado, ideal para família ou viagem de negócios até 5 pessoas. Localizado em ponto nobre da Zona Sul próximo ao aeroporto de Congonhas, metrô Campo Belo e Shopping Morumbi. Cozinha equipada e garagem gratuita.',
-      rating:4.90, reviewsCount:11,
-      ratings:{limpeza:4.6,exatidao:4.8,checkin:4.8,comunicacao:5.0,localizacao:4.9,custo:4.7},
-      highlights:['🔑 Self check-in com fechadura inteligente','🌿 Região tranquila','🏠 Cozinha totalmente equipada'],
-      rooms:[{name:'Quarto 1',beds:'1 cama queen'},{name:'Quarto 2',beds:'2 camas de solteiro'}],
-      amenities:['🍳 Cozinha completa','📶 Wi-Fi fibra','💼 Espaço de trabalho','🚗 Estacionamento gratuito','🐾 Permitido animais','📺 TV','🛗 Elevador','🫧 Máquina de lavar'],
-      rules:{checkin:'Após 14:00',checkout:'Antes das 10:00',maxGuests:5},
-      reviewCards:[
-        {author:'Lucas Gabriel',stars:5,date:'out. 2025',text:'Excelente estadia e imóvel! A comunicação com Fabiano foi perfeita e o espaço atendeu as minhas expectativas. Absolutamente recomendo.'},
-        {author:'Elisabete',stars:5,date:'nov. 2025',text:'Apartamento ótimo, limpeza impecável e ótima localização. O Fabiano é muito gentil e responde super rápido.'},
-        {author:'Lucas',stars:5,date:'nov. 2025',text:'Apartamento impecável, confortável, em bairro bonito, perto da estação e com restaurantes por perto. Fabiano muito gentil.'},
-      ],
-      photos:[
-          {src:'https://lh3.googleusercontent.com/d/1RFWVFTGVkixW_JANTLJUrBdH-A4OuFfk',label:'Sala de Estar'},
-          {src:'https://lh3.googleusercontent.com/d/1G7xM2HJv96HbaKaYx7K1rInqnXwFoPT7',label:'Sala de Jantar'},
-          {src:'https://lh3.googleusercontent.com/d/1yrG_ANVmVvRBh5YErc9yPuyLmgnytFcb',label:'Sala de Estar'},
-          {src:'https://lh3.googleusercontent.com/d/1UBWIP3MzYtht4dnyvw9ICFZfoq3-FIA8',label:'Cozinha'},
-          {src:'https://lh3.googleusercontent.com/d/1wo_4WL1V3bekLhiL8gnD_lKm_89VSrLj',label:'Cozinha'},
-          {src:'https://lh3.googleusercontent.com/d/1X1538FMxdvWfMXY9G7k8IEk8PTGBKKSk',label:'Lavanderia'},
-          {src:'https://lh3.googleusercontent.com/d/1J0_KYgqJCAVyc2HPwGatKA699PHz9sRx',label:'Quarto 3'},
-          {src:'https://lh3.googleusercontent.com/d/1HZk75CDuiGQB249YYnSFhsDpqKdqGVrl',label:'Lavabo'},
-          {src:'https://lh3.googleusercontent.com/d/18AScbGlisrBmpRMPzKv7n27MYBN3epbs',label:'Corredor'},
-          {src:'https://lh3.googleusercontent.com/d/1v6l6sR0ILQKVmbIwOTVKmVZk72QH1jw5',label:'Quarto 2'},
-          {src:'https://lh3.googleusercontent.com/d/180ErcjKOKqs0-PRSG0QGvG59QQS9BuYz',label:'Quarto 2'},
-          {src:'https://lh3.googleusercontent.com/d/1kKVA28qv9UsQUFJpcflueHab6YlAY52l',label:'Quarto 1'},
-          {src:'https://lh3.googleusercontent.com/d/1rCr87wLs4rpYaXaS9L_0M-ZR81MtIHF-',label:'Quarto 1'},
-          {src:'https://lh3.googleusercontent.com/d/1S8KHT67SNOiWLPCUeT9Oz9otY4Skj00Y',label:'Banheiro'},
-        ],
-    },
-    {
-      id:'apto-32', num:'32', name:'Apto 32',
-      type:'2q', guests:5, ac:false, sqm:89,
-      airbnb_url:'https://airbnb.com/h/valp32',
-      detail:'2 quartos · 3 camas + sofá-cama · 1,5 banheiros',
-      desc:'Apartamento recém reformado, amplo e bem arejado. Privacidade e conforto para quem vem a negócios ou família. Bairro nobre a 10 min do aeroporto de Congonhas e 3 quarteirões do metrô Campo Belo. Garagem coberta e gratuita.',
-      rating:4.90, reviewsCount:44,
-      ratings:{limpeza:4.7,exatidao:4.7,checkin:4.8,comunicacao:4.7,localizacao:5.0,custo:4.6},
-      highlights:['🔑 Self check-in com funcionários do prédio','📍 Localização imbatível','🏠 Cozinha totalmente equipada'],
-      rooms:[{name:'Quarto 1',beds:'1 cama queen'},{name:'Quarto 2',beds:'2 camas de solteiro'}],
-      amenities:['🍳 Cozinha completa','📶 Wi-Fi fibra','💼 Espaço de trabalho','🚗 Estacionamento gratuito','🐾 Permitido animais','📺 TV','🛗 Elevador','🫧 Máquina de lavar'],
-      rules:{checkin:'14:00 - 23:00',checkout:'Antes das 10:00',maxGuests:5},
-      reviewCards:[
-        {author:'Fernanda Silva',stars:5,date:'mar. 2025',text:'Ótima estádia. Boa localização, receptividade e espaço.'},
-        {author:'Bruno Henrique',stars:5,date:'jul. 2025',text:'Local conforme anúncio, resposta rápida e tudo muito tranquilo.'},
-        {author:'Andrea',stars:5,date:'mar. 2026',text:'Muito bom o custo-benefício.'},
-      ],
-      photos:[
-          {src:'https://lh3.googleusercontent.com/d/1dJT3Ewy6k5uzcBHQt6_1lYfz0iCZtMng',label:'Sala de Estar'},
-          {src:'https://lh3.googleusercontent.com/d/1uVHUi2q51FJoKTLiJh7QstFGoD2s6UPV',label:'Sala de Estar'},
-          {src:'https://lh3.googleusercontent.com/d/13UMi6qP3o8des-Ew2sRUZnV_hYPa4_zJ',label:'Sala de Jantar'},
-          {src:'https://lh3.googleusercontent.com/d/1Ca3fult9n2M7dHYj3L1r7ry2kFS3OLnC',label:'Cozinha'},
-          {src:'https://lh3.googleusercontent.com/d/1jSMa8Tc5jOfDXwFDUxLE1IzQH4UnSMuN',label:'Cozinha'},
-          {src:'https://lh3.googleusercontent.com/d/18suEu0iZsIkptR-Q7fBPRpaUmSSZ1ik5',label:'Lavanderia'},
-          {src:'https://lh3.googleusercontent.com/d/1nRpVc57-z2YudIBZY0w66nXfUjk9HnYk',label:'Lavanderia'},
-          {src:'https://lh3.googleusercontent.com/d/10sDdwN-rhM9Z9PfY4rmidiIEO_94e-8W',label:'Lavabo'},
-          {src:'https://lh3.googleusercontent.com/d/1kui3YxxGxTkC1wyLgQqvlOy5lH6AZjw2',label:'Corredor'},
-          {src:'https://lh3.googleusercontent.com/d/1k0IWnI-U7pQi0_WDjknQbHXHA4_xjnmh',label:'Quarto 1'},
-          {src:'https://lh3.googleusercontent.com/d/1qPqiJ-mqPy1YIOqyEgBS_fDVE75blFaz',label:'Quarto 2'},
-          {src:'https://lh3.googleusercontent.com/d/1wBqDEi4sslIYPofr3bJRLmPBxslV-MlE',label:'Banheiro'}
-        ],
-    },
-    {
-      id:'apto-41', num:'41', name:'Apto 41',
-      type:'2q', guests:5, ac:true, sqm:89,
-      airbnb_url:'https://airbnb.com/h/valp41',
-      detail:'2 quartos · 3 camas + sofá-cama · 1 banheiro',
-      desc:'Apartamento renovado em localização privilegiada da Zona Sul. 2 quartos com ar-condicionado, varanda, cozinha completa com airfryer e Wi-Fi VIVO Fibra. A menos de 15 min do Aeroporto de Congonhas e 10 min dos shoppings Morumbi e Ibirapuera.',
-      rating:4.90, reviewsCount:99,
-      ratings:{limpeza:4.6,exatidao:4.7,checkin:4.9,comunicacao:4.9,localizacao:4.9,custo:4.6},
-      highlights:['🔑 Self check-in com fechadura inteligente','📍 Ótima localização','💼 Espaço de trabalho exclusivo'],
-      rooms:[{name:'Quarto 1',beds:'1 cama queen'},{name:'Quarto 2',beds:'2 camas de solteiro'},{name:'Quarto 3',beds:'1 sofá-cama'}],
-      amenities:['🍳 Cozinha completa','📶 Wi-Fi fibra','💼 Espaço de trabalho','🚗 Estacionamento gratuito','🐾 Permitido animais','📺 TV','🛗 Elevador','🫧 Máquina de lavar','❄️ A/C nos quartos','🌅 Varanda'],
-      rules:{checkin:'Após 14:00',checkout:'Antes das 10:00',maxGuests:5},
-      reviewCards:[
-        {author:'Moacir',stars:5,date:'nov. 2025',text:'Ótima localização, perto do metrô, mercado e farmácias. Anfitrião muito prestativo. Nada a reclamar! Excelente custo-benefício.'},
-        {author:'Edson Raul',stars:5,date:'dez. 2025',text:'Lugar incrível, ótima localização, muito tranquilo, próximo à estação Campo Belo, menos de 500 metros, com estacionamento. Recomendo demais!'},
-        {author:'Flavio',stars:5,date:'out. 2025',text:'Tudo bem limpo, fácil acesso e Fabiano foi muito atencioso.'},
-      ],
-      photos:[
-          {src:'https://lh3.googleusercontent.com/d/1ZqmKNVR1dZLoDdUc03TOMZekTTYdpV9B',label:'Sala de Jantar'},
-          {src:'https://lh3.googleusercontent.com/d/1Bx85FPgjFvMLL5mns_uVM7MXpcTg7TeQ',label:'Sala de Estar'},
-          {src:'https://lh3.googleusercontent.com/d/1A-pRW0bAWI7p-NaPgZV8NwHTeTH5Qlfq',label:'Sala de Estar'},
-          {src:'https://lh3.googleusercontent.com/d/1qYED6tQLD5aCF_Agr7BmZ9BWrZEBKlnb',label:'Varanda'},
-          {src:'https://lh3.googleusercontent.com/d/1klE7ejGzOt8Q8afrHwTBn4faVjFiaSKF',label:'Sala de Estar'},
-          {src:'https://lh3.googleusercontent.com/d/1SUJmwfvFubK-6-BZqPQ7B8WmnagQnYHd',label:'Cozinha'},
-          {src:'https://lh3.googleusercontent.com/d/18PbtpzJPA4YC7EYsSR74h-GSU6ygDOw_',label:'Cozinha'},
-          {src:'https://lh3.googleusercontent.com/d/1pvBH9s9r1voNEdBvBO6SclGQvaSiib-Z',label:'Lavanderia'},
-          {src:'https://lh3.googleusercontent.com/d/1OE5FH100n61nU5XlmDJU_XJeKSZN08Sp',label:'Lavanderia'},
-          {src:'https://lh3.googleusercontent.com/d/11ZK7Ev24im7NZDR1kxl0blZqto3UOO-w',label:'Lavabo'},
-          {src:'https://lh3.googleusercontent.com/d/1h45kiM6VKcHA_rY11MdNQnqA0Evle9hr',label:'Corredor'},
-          {src:'https://lh3.googleusercontent.com/d/1nmGXonqkatApwyfCUsx98E8U70souJ-2',label:'Quarto 2'},
-          {src:'https://lh3.googleusercontent.com/d/1_pK8Ba_o0urQKeb2UcLbwg3KbUNA4uhF',label:'Quarto 2'},
-          {src:'https://lh3.googleusercontent.com/d/1sPpwD4iS0yXQJI_1c7ZLC5BKyLZ_7o4j',label:'Quarto 1'},
-          {src:'https://lh3.googleusercontent.com/d/1_30zyRKQK2ZUu0dJLvMY60pVha5pmLrQ',label:'Quarto 1'},
-          {src:'https://lh3.googleusercontent.com/d/1lW_rt-zYwruSOkc0_N4b25Cs-3PT_elD',label:'Banheiro'}
-        ],
-    },
-    {
-      id:'apto-42', num:'42', name:'Apto 42',
-      type:'3q', guests:5, ac:false, sqm:90,
-      airbnb_url:'https://airbnb.com/h/valp42',
-      detail:'3 quartos · 5 camas + sofá-cama · 1,5 banheiros',
-      desc:'Apartamento amplo com 3 quartos e capacidade para 5 hóspedes. Camas box novas (incluindo solteirão), sofá-cama de 2,50m, cozinha completa e lavanderia. Check-in e checkout flexíveis conforme disponibilidade.',
-      rating:4.90, reviewsCount:84,
-      ratings:{limpeza:4.7,exatidao:4.8,checkin:4.9,comunicacao:4.9,localizacao:5.0,custo:4.7},
-      highlights:['🔑 Self check-in com fechadura inteligente','🌿 Região tranquila','💼 Espaço de trabalho exclusivo'],
-      rooms:[{name:'Quarto 1',beds:'2 camas de solteiro'},{name:'Quarto 2',beds:'1 cama queen'},{name:'Quarto 3',beds:'1 cama de solteiro'},{name:'Quarto 4',beds:'1 sofá-cama 2,50m'}],
-      amenities:['🍳 Cozinha completa','📶 Wi-Fi fibra','💼 Espaço de trabalho','🚗 Estacionamento gratuito','🐾 Permitido animais','📺 TV','🛗 Elevador','🫧 Máquina de lavar','💇 Secador de cabelo','🍷 Taças de vinho'],
-      rules:{checkin:'Após 14:00',checkout:'Antes das 10:00',maxGuests:5},
-      reviewCards:[
-        {author:'Mariana',stars:5,date:'nov. 2025',text:'Apartamento amplo, bem conservado, espaçoso, com varandinha agradável. Check-in fácil, e o anfitrião responde com muita agilidade.'},
-        {author:'Clenilda',stars:5,date:'set. 2025',text:'Apartamento exatamente como no anúncio. Limpo, organizado e em ótima localização. A equipe me auxiliou muito. Recomendo muito.'},
-        {author:'Moni Praconi',stars:5,date:'nov. 2025',text:'Hospedagem confortável e funcional, com uma experiência bastante prática e eficiente. Com certeza recomendo.'},
-      ],
-      photos:[
-          {src:'https://lh3.googleusercontent.com/d/1Bk6zJZzDFY0nVu4gTnntphzMROn6dppm',label:'Sala de Jantar'},
-          {src:'https://lh3.googleusercontent.com/d/1_YcZxxLM__eL4_z3iYipSu2traPJRyPp',label:'Sala de Estar'},
-          {src:'https://lh3.googleusercontent.com/d/1ycFuWbS_eK56XNCRQzlNbLhKxx2F4QVk',label:'Sala de Estar'},
-          {src:'https://lh3.googleusercontent.com/d/1xoWPCLB1ndMZXN3jOLIIGas1DgxaxERI',label:'Sala de Jantar'},
-          {src:'https://lh3.googleusercontent.com/d/1d0vuF_x0e5PmUpaYQolyhdzY41K_W_t7',label:'Cozinha'},
-          {src:'https://lh3.googleusercontent.com/d/11ICAtkVs5sTbEdY9a_hlPZQQjO-ARxRF',label:'Cozinha'},
-          {src:'https://lh3.googleusercontent.com/d/13E4PTwr7mkOYalBwDs2rbOshZ7RGaiB0',label:'Lavanderia'},
-          {src:'https://lh3.googleusercontent.com/d/16YcPVxKxd1i3pYh_KpgVexZ5B80WkNe8',label:'Quarto 3'},
-          {src:'https://lh3.googleusercontent.com/d/1URsjPccyc7g-C444eX8LH49pSV8J2uY3',label:'Quarto 3'},
-          {src:'https://lh3.googleusercontent.com/d/1G-pvq6gxz8q0PCfkGD512uI6efvD1qYY',label:'Lavabo'},
-          {src:'https://lh3.googleusercontent.com/d/1RSWeZxnfwww2djzL6Tsy3GXlPOeJ8yhS',label:'Corredor'},
-          {src:'https://lh3.googleusercontent.com/d/1yFeWO_BLqc1qK41ndsjiaWG-K_RnqnJk',label:'Quarto 2'},
-          {src:'https://lh3.googleusercontent.com/d/1SVEb2TcESwXrOs3VpiYLCARV221yBYtw',label:'Quarto 1'},
-          {src:'https://lh3.googleusercontent.com/d/1jLe5IwD5PiC83o-BEsyaQIld0F9uW_Lb',label:'Banheiro'}
-        ],
-    },
-    {
-      id:'apto-51', num:'51', name:'Apto 51',
-      type:'2q', guests:5, ac:true, sqm:89, featured:true,
-      airbnb_url:'https://airbnb.com/h/valps51',
-      detail:'2 quartos · 3 camas + sofá-cama · 1,5 banheiros',
-      desc:'Nota 5,0 ★! Apartamento de 89m² com ar-condicionado nos dois quartos, smart TV, cozinha completa com airfryer e taças de vinho. Garagem gratuita. A 12 min do Aeroporto de Congonhas e 8 min dos shoppings Morumbi e Ibirapuera.',
-      rating:4.90, reviewsCount:10,
-      ratings:{limpeza:5.0,exatidao:4.9,checkin:5.0,comunicacao:5.0,localizacao:4.9,custo:4.9},
-      highlights:['🔑 Self check-in com fechadura inteligente','📍 Localização adorada pelos hóspedes','🏠 Cozinha totalmente equipada'],
-      rooms:[{name:'Quarto 1',beds:'1 cama queen'},{name:'Quarto 2',beds:'2 camas de solteiro'}],
-      amenities:['🍳 Cozinha completa','📶 Wi-Fi fibra','💼 Espaço de trabalho','🚗 Estacionamento gratuito','🐾 Permitido animais','📺 TV','🛗 Elevador','🫧 Máquina de lavar','❄️ A/C nos quartos','📷 Câmeras externas'],
-      rules:{checkin:'Após 14:00',checkout:'Antes das 10:00',maxGuests:5},
-      reviewCards:[
-        {author:'Gabriela',stars:5,date:'dez. 2025',text:'Apartamento espaçoso, roupas de cama e toalha de qualidade. Recomendo!'},
-        {author:'Noádia',stars:5,date:'nov. 2025',text:'Excelente apartamento e estadia. Fabiano um super anfitrião. Top!'},
-        {author:'Alexandre',stars:5,date:'set. 2025',text:'Sempre fico nessa acomodação, super vale a pena!'},
-      ],
-      photos:[
-          {src:'https://lh3.googleusercontent.com/d/1G8M61F44PRHsQTqAmVwKM2QTOp-DjuW-',label:'Sala de Estar'},
-          {src:'https://lh3.googleusercontent.com/d/1rAi6JNPYkzJXm4DkffogJfpF2Tn73My6',label:'Sala de Jantar'},
-          {src:'https://lh3.googleusercontent.com/d/16IBRjcSMchYsbDwh_rYYrtiAI3hu46MV',label:'Sala de Estar'},
-          {src:'https://lh3.googleusercontent.com/d/1JAd9nzdAOLIqCsMHnGeAAn1J-EeB4WO8',label:'Sala de Estar'},
-          {src:'https://lh3.googleusercontent.com/d/1hh75cqq-NAYMkeG6CiFAbXBW4_kcsvwu',label:'Corredor'},
-          {src:'https://lh3.googleusercontent.com/d/1XFJwhy4zuBEBBa34Ho0978RiXKs56EcW',label:'Quarto 1'},
-          {src:'https://lh3.googleusercontent.com/d/1y0aKW4bzABj7cxlmsETuGROGyzCqrw93',label:'Quarto 1'},
-          {src:'https://lh3.googleusercontent.com/d/1ASa03jvFurSHLNbxxnlDOWA1-n2ycErb',label:'Quarto 2'},
-          {src:'https://lh3.googleusercontent.com/d/1rSKF_lbqu87g5RhO1uDOyiInofFlWyVy',label:'Quarto 2'},
-          {src:'https://lh3.googleusercontent.com/d/1CYg5b_lytEeAVNFFnBFgSPhXW5AtGLkX',label:'Banheiro'},
-          {src:'https://lh3.googleusercontent.com/d/1BXYN7vXsRyx276vPkZQ4cCGhplwrHsxL',label:'Cozinha'},
-          {src:'https://lh3.googleusercontent.com/d/1mRmF3y6V-5bLnBxlWsrr9Wu_mc7Hhqcw',label:'Cozinha'},
-          {src:'https://lh3.googleusercontent.com/d/1_YKPqLj_pNHm2umcKoOPKK0UFtwwlP7l',label:'Lavanderia'},
-          {src:'https://lh3.googleusercontent.com/d/1LY6uDTNBKglUwLJ61BQzj-jFOMcmy9UJ',label:'Lavanderia'},
-          {src:'https://lh3.googleusercontent.com/d/1Y7ftq_Kwr4cDlOZQBfCseAgl9jO8u1yR',label:'Lavabo'}
-        ],
-    },
-    {
-      id:'apto-52', num:'52', name:'Apto 52',
-      type:'2q', guests:5, ac:false, sqm:89,
-      airbnb_url:'https://airbnb.com/h/valp52',
-      detail:'2 quartos · 3 camas + sofá-cama · 1,5 banheiros',
-      desc:'Apartamento amplo e completo na Zona Sul com móveis e camas box novas. Cozinha equipada com cafeteira, liquidificador, forno e taças de vinho. A menos de 4 min da estação de metrô Campo Belo e 12 min do Aeroporto de Congonhas.',
-      rating:4.90, reviewsCount:88,
-      ratings:{limpeza:4.8,exatidao:4.8,checkin:4.9,comunicacao:5.0,localizacao:4.9,custo:4.7},
-      highlights:['🔑 Self check-in com fechadura inteligente','📍 Localização adorada pelos hóspedes','💼 Espaço de trabalho exclusivo'],
-      rooms:[{name:'Quarto 1',beds:'1 cama queen'},{name:'Quarto 2',beds:'2 camas de solteiro'}],
-      amenities:['🍳 Cozinha completa','📶 Wi-Fi fibra','💼 Espaço de trabalho','🚗 Estacionamento gratuito','🐾 Permitido animais','📺 TV','🛗 Elevador','🫧 Máquina de lavar'],
-      rules:{checkin:'Após 14:00',checkout:'Antes das 10:00',maxGuests:5},
-      reviewCards:[
-        {author:'Mariana',stars:5,date:'jan. 2026',text:'Fabiano foi prestativo em todos os momentos. O local exatamente como nas fotos, limpo, organizado, tranquilo e bem localizado. Amamos a estadia!'},
-        {author:'Cléveston',stars:5,date:'dez. 2025',text:'Foi uma excelente relação custo-benefício. Destaque para a disponibilidade e pró-atividade do anfitrião. Recomendo fortemente!!!'},
-        {author:'Joao',stars:5,date:'dez. 2025',text:'O espaço é exatamente como descrito. A comunicação com o anfitrião foi rápida e eficiente. Tive uma ótima experiência.'},
-      ],
-      photos:[
-          {src:'https://lh3.googleusercontent.com/d/1AJGkIva4Pzel5LjaBebxOIDOooAD_x86',label:'Sala de Estar'},
-          {src:'https://lh3.googleusercontent.com/d/1LuTIpGpEIToFJSkHTM2DxH3Bx4kkUI4_',label:'Sala de Estar'},
-          {src:'https://lh3.googleusercontent.com/d/1oV3cXJF5QiFgEFKwoCgQ9ixaXmUDQ8pQ',label:'Sala de Jantar'},
-          {src:'https://lh3.googleusercontent.com/d/1A8es4kJfezju6_nfUvQ7tuRJrKQhSYqh',label:'Cozinha'},
-          {src:'https://lh3.googleusercontent.com/d/1AkxTGz4YD8qi7jBZ6fD4_4Zxy17IVpQq',label:'Cozinha'},
-          {src:'https://lh3.googleusercontent.com/d/1rYsUkDij9F-N814gxAMutrYQjq5KT7S9',label:'Lavanderia'},
-          {src:'https://lh3.googleusercontent.com/d/1j6nr_zhUfxSTlkyuPL2TJI10NtlCQd_Z',label:'Lavabo'},
-          {src:'https://lh3.googleusercontent.com/d/1Yg3JJ221zCblYfpodIJMxQy7Sn6YG3h5',label:'Lavanderia'},
-          {src:'https://lh3.googleusercontent.com/d/1GOKTqKmCfsUBu7LBiUZC2BqurjeuMte1',label:'Cozinha'},
-          {src:'https://lh3.googleusercontent.com/d/1Y4tE5Ngtz9vKBiDYeR2gHlcc66yJWW4l',label:'Corredor'},
-          {src:'https://lh3.googleusercontent.com/d/1engBAD5q-9UhTwSJczRn5WTferXqPpc1',label:'Quarto 1'},
-          {src:'https://lh3.googleusercontent.com/d/1IDG-MQl8zrTOWXJKZu8E70zMHPxZi3J1',label:'Quarto 1'},
-          {src:'https://lh3.googleusercontent.com/d/1DTM5wqm-cNKDLCWdTpxf0dpTwuePtg0C',label:'Quarto 2'},
-          {src:'https://lh3.googleusercontent.com/d/1z8D18DsvvQVTW5pF9K186uYlPNnUGjHR',label:'Quarto 2'},
-          {src:'https://lh3.googleusercontent.com/d/10-M-VZ5-CUHxZSMrhWqHxN_sxnPAH-wE',label:'Banheiro'}
-        ],
-    },
-    {
-      id:'apto-61', num:'61', name:'Duplex 61',
-      type:'duplex', guests:12, ac:true, sqm:170, featured:true,
-      airbnb_url:'https://airbnb.com/h/duplex61',
-      detail:'4 quartos · 9 camas + sofá-cama · 3 banheiros',
-      desc:'Duplex espaçoso de 190m² com 4 quartos e capacidade para 12 pessoas. Piso de madeira, enxovais novos, banheiros espaçosos, cozinha completa com Nespresso e taças de vinho. A 12 min do Aeroporto de Congonhas e 3 quarteirões do metrô.',
-      rating:4.90, reviewsCount:120,
-      ratings:{limpeza:4.8,exatidao:4.9,checkin:5.0,comunicacao:4.9,localizacao:4.9,custo:4.8},
-      highlights:['🔑 Self check-in com fechadura inteligente','🌿 Região tranquila e segura','💼 Espaço de trabalho exclusivo'],
-      rooms:[{name:'Quarto 1',beds:'1 cama queen'},{name:'Quarto 2',beds:'1 cama queen'},{name:'Quarto 3',beds:'3 camas de solteiro'},{name:'Quarto 4',beds:'2 camas de solteiro + 1 beliche'},{name:'Quarto 5',beds:'1 sofá-cama'}],
-      amenities:['🍳 Cozinha completa','📶 Wi-Fi fibra','💼 Espaço de trabalho','🚗 Estacionamento gratuito','🐾 Permitido animais','📺 HDTV com TV a cabo','🛗 Elevador','🫧 Máquina de lavar','❄️ A/C','☕ Nespresso','💇 Secador de cabelo','🍷 Taças de vinho','👔 Ferro de passar'],
-      rules:{checkin:'Após 14:00',checkout:'Antes das 10:00',maxGuests:12},
-      reviewCards:[
-        {author:'Lucas',stars:5,date:'nov. 2025',text:'Apartamento absolutamente espaçoso, muito fácil de chegar do aeroporto. Fabiano foi muito atencioso e passou todas as informações que precisávamos. Tudo arrumado e limpo.'},
-        {author:'Gustavo',stars:5,date:'nov. 2025',text:'Ótima estadia. O espaço atendeu bem os adultos, crianças e idosa. Toalhas, roupa de cama, tudo muito limpinho. O Fabiano foi um ótimo anfitrião.'},
-        {author:'Suely',stars:5,date:'jan. 2026',text:'Apartamento muito espaçoso com tudo que precisávamos. Localização privilegiada com ônibus e metrô muito perto. Adoramos tudo.'},
-      ],
-      photos:[
-          {src:'https://lh3.googleusercontent.com/d/1Tte1EHfEivYeBBGRCCLAS9hHw3Lby9uU',label:'Sala de Estar'},
-          {src:'https://lh3.googleusercontent.com/d/1D9Ma8QKce_orSdWHXtzm3Ld6anAGxjCf',label:'Sala de Estar'},
-          {src:'https://lh3.googleusercontent.com/d/1w_wBFjyycc33mch9FBV6Z5JN8B_sMoe0',label:'Sala de Jantar'},
-          {src:'https://lh3.googleusercontent.com/d/1jSrd59dSP74qavNhX8FKvsaVADyFVsIC',label:'Sala de Jantar'},
-          {src:'https://lh3.googleusercontent.com/d/1zp1MmAomPIt3QxaqlJ6Vq45akag2cggC',label:'Sala de Estar'},
-          {src:'https://lh3.googleusercontent.com/d/12lp_BUmxfOVniHJeuEeH6OMBtQJROVoy',label:'Quarto 2'},
-          {src:'https://lh3.googleusercontent.com/d/1Jhdgk4zcEnA28vGADiOGg05T-nqvtqNN',label:'Quarto 2'},
-          {src:'https://lh3.googleusercontent.com/d/1v6imBvDAgykIVj36efYRwhejWAJ6ZfNb',label:'Banheiro'},
-          {src:'https://lh3.googleusercontent.com/d/1kgfIGpMgue_55T36PDPlsTC2cgU1dh9W',label:'Cozinha'},
-          {src:'https://lh3.googleusercontent.com/d/1k0jwbI6N_ZFV7AeD-rTLM_qW01YxqFow',label:'Cozinha'},
-          {src:'https://lh3.googleusercontent.com/d/1IpPQy_F9YKBlby36pviQkrOYGZszvP35',label:'Lavanderia'},
-          {src:'https://lh3.googleusercontent.com/d/1xv_lQPfj0zmJruDeOPDZUT9bTSeyBpcR',label:'Banheiro 2'},
-          {src:'https://lh3.googleusercontent.com/d/1AjyWeZ8-Fndqiu4ewRYIzM38jiupHjRO',label:'Lavanderia'},
-          {src:'https://lh3.googleusercontent.com/d/17FBf2o-fey3EiX_m6lxcXC33nqjEP6gQ',label:'Corredor'},
-          {src:'https://lh3.googleusercontent.com/d/1ao22xqlKQ1LF-tlybD2Ri1I9GZP8IDhF',label:'Corredor'},
-          {src:'https://lh3.googleusercontent.com/d/1aHaQSzCyaixH_Br74v47vk6fpj8FDtC-',label:'Quarto 1'},
-          {src:'https://lh3.googleusercontent.com/d/177NzaQpSX7vCFibB7Iprc5rszvQHxQmu',label:'Quarto 1'},
-          {src:'https://lh3.googleusercontent.com/d/1DlyXSLwZoFQg56EeqZYEiFfidqGMZnqI',label:'Banheiro 2'},
-          {src:'https://lh3.googleusercontent.com/d/1PBM4nalLvt-rSFActtxUBmSX8ccdqkr9',label:'Quarto 3'},
-          {src:'https://lh3.googleusercontent.com/d/15WguOac-V28QJABlkHGc6GZOPPkao5fY',label:'Quarto 4'},
-          {src:'https://lh3.googleusercontent.com/d/1lKRHq5NNj1RxpKCiLPoFodGOj8gTTEkE',label:'Banheiro 3'}
-        ],
-    },
-    {
-      id:'apto-62', num:'62', name:'Duplex 62',
-      type:'duplex', guests:14, ac:true, sqm:180,
-      airbnb_url:'https://airbnb.com/h/apart62',
-      detail:'5 quartos · 9 camas + sofá-cama · 4,5 banheiros',
-      desc:'Duplex recém renovado de 180m² com 5 quartos e 2 suítes para até 14 pessoas. Tudo novo: móveis, camas box, acessórios e enxoval completo. Localização nobre a 10 min do Aeroporto de Congonhas e dos shoppings Morumbi e Ibirapuera.',
-      rating:4.90, reviewsCount:84,
-      ratings:{limpeza:4.8,exatidao:4.8,checkin:4.9,comunicacao:4.9,localizacao:4.9,custo:4.8},
-      highlights:['🔑 Self check-in com fechadura inteligente','🌿 Região tranquila e segura','🏠 Cozinha totalmente equipada'],
-      rooms:[{name:'Quarto 1',beds:'1 cama queen (suíte)'},{name:'Quarto 2',beds:'1 cama queen (suíte)'},{name:'Quarto 3',beds:'3 camas de solteiro'},{name:'Quarto 4',beds:'1 cama de solteiro + beliche'},{name:'Quarto 5',beds:'1 cama queen'}],
-      amenities:['🍳 Cozinha completa','📶 Wi-Fi fibra','💼 Espaço de trabalho','🚗 Estacionamento gratuito','🐾 Permitido animais','📺 TV','🛗 Elevador','🫧 Máquina de lavar','❄️ A/C em 2 suítes','🌀 Ventilador de teto','☕ Cafeteira Nespresso','🌙 Cortinas blackout'],
-      rules:{checkin:'Após 14:00',checkout:'Antes das 10:00',maxGuests:15},
-      reviewCards:[
-        {author:'Valeria',stars:5,date:'fev. 2026',text:'Tivemos uma ótima experiência! Tudo estava muito limpo, organizado e exatamente como descrito. A comunicação com o anfitrião foi rápida e atenciosa.'},
-        {author:'Ludmilla',stars:5,date:'nov. 2025',text:'O apartamento correspondeu às nossas expectativas. Estávamos em muitas pessoas por 4 dias. O local estava bem limpo, banheiros espaçosos e em quantidade suficiente.'},
-        {author:'Vera',stars:5,date:'out. 2025',text:'Nossa estadia foi excelente!!! Fabiano foi atencioso. O apartamento é muito fiel às fotos, tudo funcionando. Todos saímos muito satisfeitos!'},
-      ],
-      photos:[
-          {src:'https://lh3.googleusercontent.com/d/1UsLYw5zUBTIMHYKWqfI1FeobMBSSgRXj',label:'Sala de Estar'},
-          {src:'https://lh3.googleusercontent.com/d/1BVmvGlJczk5cmBOOBmhhtMEnDLKzhD2O',label:'Sala de Jantar'},
-          {src:'https://lh3.googleusercontent.com/d/1JrdLwRvAPh2_48ksaufWKIuKg1jO0X-f',label:'Quarto 1'},
-          {src:'https://lh3.googleusercontent.com/d/1uC45_EEAyYogFpmndngQg8rkCmVrm6Ut',label:'Quarto 1'},
-          {src:'https://lh3.googleusercontent.com/d/1j6ZN_D45U5INBBUXJTD9WCwrD9DtlF2l',label:'Banheiro'},
-          {src:'https://lh3.googleusercontent.com/d/1UV6MdLrbgYnebj4PWvtCCp4gKwQzVIfa',label:'Cozinha'},
-          {src:'https://lh3.googleusercontent.com/d/1oyUvDiqwuCxDcpqhLqA8FdJZVk7RwtTE',label:'Cozinha'},
-          {src:'https://lh3.googleusercontent.com/d/1f-RsMCpd5HIDocpmscWHsDtgIyUb_hgH',label:'Lavanderia'},
-          {src:'https://lh3.googleusercontent.com/d/1pIVWhjIFDA7oJx-8Xbp-u4to19pnh9sB',label:'Lavabo'},
-          {src:'https://lh3.googleusercontent.com/d/1k7cxYR8ndHwfwhqcOF9y4CXXJKmM4Qqw',label:'Lavanderia'},
-          {src:'https://lh3.googleusercontent.com/d/1JKldc8j6Itdu4O-_iszRqAEw3GR6ohjv',label:'Corredor'},
-          {src:'https://lh3.googleusercontent.com/d/1AxHAsLPJVZjXczraCbs8QAf8xXbWea-K',label:'Corredor'},
-          {src:'https://lh3.googleusercontent.com/d/1rll0BOkHNq4JWorN_LcKplL2upZNxEkk',label:'Quarto 2'},
-          {src:'https://lh3.googleusercontent.com/d/1I8Rcv2E4IT4WZ6WTK9M0UqnpVWqdmMV_',label:'Quarto 3'},
-          {src:'https://lh3.googleusercontent.com/d/1xTvyjBCcYz1vjKAABQUbeo_XFy5aS0Nb',label:'Banheiro 2'},
-          {src:'https://lh3.googleusercontent.com/d/11XfaD68uu5-UyI8UauJ4l2PBG_jAtV2C',label:'Quarto 4'},
-          {src:'https://lh3.googleusercontent.com/d/19OobGHsyufoApyZZX8BaUcAnSf9KGaOP',label:'Lavanderia'},
-          {src:'https://lh3.googleusercontent.com/d/1MszpFOTdpyOp0R_zVBAxSDIHXFRYXaFi',label:'Quarto 4'},
-          {src:'https://lh3.googleusercontent.com/d/1asnDgkKjP8480ETtB1qnO2LjjfIAACXS',label:'Banheiro 3'},
-          {src:'https://lh3.googleusercontent.com/d/1uRTSMZKY8N-SSucy5CPdhRN3BB_tU_L-',label:'Banheiro 4'},
-          {src:'https://lh3.googleusercontent.com/d/1fiII1mC8Pvfjz8IEKMPGIT4YrpoE3IAi',label:'Quarto 5'},
-          {src:'https://lh3.googleusercontent.com/d/1uLuxnjQsf8M5ncz-ygp_t4x5duvFpP65',label:'Quarto 5'}
-        ],
-    },
-    {
-      id:'apto-001', num:'001', name:'Apto 001',
-      type:'3q', guests:7, ac:true, sqm:64,
-      airbnb_url:'https://airbnb.com/h/valp001',
-      detail:'3 quartos · 5 camas + sofá-cama · 2 banheiros',
-      desc:'Hospedagem prática e completa com 3 quartos e ar-condicionado para até 7 pessoas. Wi-Fi fibra, cozinha equipada com airfryer, máquina de café expresso e sanduicheira. A 2 quarteirões do metrô e 10 min do Aeroporto de Congonhas.',
-      rating:4.90, reviewsCount:22,
-      ratings:{limpeza:4.8,exatidao:4.7,checkin:4.9,comunicacao:4.9,localizacao:4.8,custo:4.6},
-      highlights:['🔑 Self check-in com teclado numérico','🏠 Cozinha totalmente equipada','💬 Ótima comunicação com o anfitrião'],
-      rooms:[{name:'Quarto 1',beds:'1 cama queen + 2 camas solteiro'},{name:'Quarto 2',beds:'1 cama queen'},{name:'Quarto 3',beds:'1 cama de solteiro'}],
-      amenities:['🍳 Cozinha completa','📶 Wi-Fi fibra','💼 Espaço de trabalho','🚗 Estacionamento gratuito','🐾 Permitido animais','📺 TV','❄️ A/C em todos os quartos','☕ Cafeteira expresso','🥘 Airfryer','🥪 Sanduicheira','🍷 Taças de vinho'],
-      rules:{checkin:'Após 14:00',checkout:'Antes das 10:00',maxGuests:7},
-      reviewCards:[
-        {author:'Teresa',stars:5,date:'out. 2025',text:'Nos encantou como tudo é bem novo, bem cuidado. As cores combinando, tudo novinho. Quando voltarmos para essa região de SP com certeza é o lugar que iremos ficar!'},
-        {author:'Flavia',stars:5,date:'fev. 2026',text:'Adoramos a hospedagem. Fabiano muito atencioso desde a reserva, com instruções claras e respondia todas as perguntas. Ambiente limpo e aconchegante.'},
-        {author:'Renata',stars:5,date:'nov. 2025',text:'O apto foi reservado para representantes da empresa de 4 estados. Todos elogiaram e já pediram para reservar o mesmo apto para 2026!'},
-      ],
-      photos:[
-          {src:'https://lh3.googleusercontent.com/d/1hG0gTF0HdYGr7ENdSp2M_Rszl3_npiDG',label:'Corredor'},
-          {src:'https://lh3.googleusercontent.com/d/1ShiuZ06DAh0WeBhJm2LyY8YaaFbBwKLS',label:'Sala de Jantar'},
-          {src:'https://lh3.googleusercontent.com/d/1Z8NWKbzaQrKdgYw7xprRTWogJN-nBWGX',label:'Sala de Estar'},
-          {src:'https://lh3.googleusercontent.com/d/1zu5UpfQ-GA5Zui8c62yPSDI1m62cvgCD',label:'Sala de Estar'},
-          {src:'https://lh3.googleusercontent.com/d/19L7Rzk_4pPeYrW0J1rEfxJ9scdN-0Cv3',label:'Quarto 1'},
-          {src:'https://lh3.googleusercontent.com/d/165xJ7XGHHPn8L1ntBX5QSnhXKFsvz7TB',label:'Cozinha'},
-          {src:'https://lh3.googleusercontent.com/d/1NBRMnc6g58W_Qv3EheJDXz7snZmsonS5',label:'Cozinha'},
-          {src:'https://lh3.googleusercontent.com/d/1gUOuJWkntPuXsT7jTZySDqWSjRktEVeB',label:'Quarto 2'},
-          {src:'https://lh3.googleusercontent.com/d/1S1Bo1RMJQbc4Nh7Yy5XXkqUUwYDeB5eK',label:'Quarto 3'},
-          {src:'https://lh3.googleusercontent.com/d/17d_mtvUzM2mQmY9MrAxkMcK_KNh5Q76k',label:'Banheiro'},
-          {src:'https://lh3.googleusercontent.com/d/1poHoQLTcwEddjdEIUojbeMGPurkr7Oek',label:'Banheiro 2'},
-        ],
-    },
-  ];
+/* ── BARRA DE PROGRESSO (topo) ── */
+#progress{position:fixed;top:0;left:0;height:2px;width:100%;z-index:500;background:transparent;}
+#progress i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--golddeep),var(--gold),var(--goldb));transform-origin:left;transform:scaleX(0);}
 
-'use strict';
-const WA = '5585999696377';
-const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* ── O FIO (linha que acompanha o scroll) ── */
+#thread{position:absolute;top:0;left:0;width:100%;z-index:60;pointer-events:none;overflow:visible;mix-blend-mode:normal;}
+#thread .t-base{stroke:rgba(201,168,76,.13);}
+#thread .t-draw{stroke:url(#goldgrad);filter:drop-shadow(0 0 6px rgba(201,168,76,.45));}
+#thread path{fill:none;stroke-width:1.6;stroke-linecap:round;}
+#thread .t-tip{fill:var(--goldb);filter:drop-shadow(0 0 8px rgba(227,200,125,.9));}
+#thread .t-tip2{fill:none;stroke:var(--gold);stroke-width:1;opacity:.5;}
+.t-node{fill:none;stroke:var(--gold);stroke-width:1.4;}
+@media(max-width:960px){#thread{display:none;}}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:400;display:flex;align-items:center;justify-content:space-between;
+  padding:14px var(--px);transition:all .4s var(--ease);}
+nav.solid{background:rgba(10,17,13,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--linesoft);padding:8px var(--px);}
+.nav-logo{cursor:pointer;display:flex;}
+.nav-logo svg{height:54px;display:block;transition:height .35s var(--ease);}
+nav.solid .nav-logo svg{height:44px;}
+nav ul{list-style:none;display:flex;gap:34px;align-items:center;}
+nav ul a{position:relative;text-decoration:none;font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--mut);cursor:pointer;transition:color .25s;padding:4px 0;}
+nav ul a:not(.cta)::after{content:'';position:absolute;left:0;bottom:0;width:100%;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:right;transition:transform .35s var(--ease);}
+nav ul a:not(.cta):hover{color:var(--cream);}
+nav ul a:not(.cta):hover::after{transform:scaleX(1);transform-origin:left;}
+nav ul a.cta{background:var(--gold);color:var(--pine);padding:11px 26px;transition:all .3s var(--ease);}
+nav ul a.cta:hover{background:var(--goldb);letter-spacing:.24em;}
+@media(max-width:960px){nav ul{display:none;}}
+.burger{display:none;appearance:none;background:none;border:1px solid var(--line);width:46px;height:46px;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px;transition:border-color .25s;}
+.burger:hover{border-color:var(--gold);}
+.burger i{display:block;width:18px;height:1.5px;background:var(--gold);}
+@media(max-width:960px){.burger{display:flex;}}
+#mnav{position:fixed;inset:0;z-index:950;background:rgba(7,12,9,.97);backdrop-filter:blur(12px);display:none;flex-direction:column;align-items:center;justify-content:center;gap:4px;}
+#mnav.open{display:flex;animation:fadeIn .25s ease;}
+#mnav a{font-family:var(--disp);font-size:1.6rem;font-weight:300;color:var(--cream);text-decoration:none;padding:9px 16px;cursor:pointer;transition:color .2s;}
+#mnav a:hover{color:var(--goldb);}
+#mnav a em{font-style:italic;color:var(--goldb);}
+#mnav .cta-m{margin-top:22px;background:var(--gold);color:var(--pine);font-family:var(--sans);font-size:.76rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:17px 42px;}
+#mnav .mclose{position:absolute;top:18px;right:20px;width:44px;height:44px;border-radius:50%;background:none;border:1px solid var(--line);color:var(--cream);font-size:1.1rem;cursor:pointer;}
+#mnav .mfoot{position:absolute;bottom:30px;font-family:var(--mono);font-size:.58rem;letter-spacing:.26em;text-transform:uppercase;color:var(--mut);}
+
+/* ── WA FLOAT ── */
+.wa-float{position:fixed;bottom:30px;right:30px;z-index:450;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 32px rgba(37,211,102,.38);text-decoration:none;transition:transform .3s var(--ease);}
+.wa-float:hover{transform:scale(1.1) rotate(8deg);}
+
+/* ── HERO ── */
+#hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:150px var(--px) 90px;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:
+  radial-gradient(ellipse 90% 70% at 75% 0%,#15251A 0%,transparent 55%),
+  radial-gradient(ellipse 70% 55% at 12% 100%,#121F16 0%,transparent 60%),
+  var(--pine);}
+.hero-bg::before{content:'';position:absolute;inset:0;
+  background-image:repeating-linear-gradient(90deg,rgba(201,168,76,.045) 0 1px,transparent 1px 140px);
+  mask-image:linear-gradient(to bottom,transparent,black 25%,black 80%,transparent);
+  -webkit-mask-image:linear-gradient(to bottom,transparent,black 25%,black 80%,transparent);}
+.hero-bg::after{content:'';position:absolute;right:-12vw;top:50%;transform:translateY(-50%);width:46vw;aspect-ratio:1;border:1px solid rgba(201,168,76,.12);border-radius:50%;
+  background:radial-gradient(circle at 38% 32%,rgba(201,168,76,.07),transparent 65%);}
+.hero-inner{position:relative;z-index:2;max-width:1280px;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:14px;font-family:var(--mono);font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:34px;}
+.hero-eyebrow::before{content:'';width:46px;height:1px;background:var(--gold);}
+.hero-h1{font-family:var(--disp);font-weight:300;font-size:clamp(2.6rem,7.2vw,6.4rem);line-height:1.02;letter-spacing:-.015em;}
+.hero-h1 em{font-style:italic;font-weight:400;color:var(--goldb);}
+.hero-row{display:flex;align-items:flex-end;justify-content:space-between;gap:48px;margin-top:46px;flex-wrap:wrap;}
+.hero-sub{font-size:1.04rem;font-weight:300;line-height:1.85;color:var(--mut);max-width:46ch;}
+.hero-sub b{color:var(--cream);font-weight:500;}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:12px;text-decoration:none;cursor:pointer;border:none;
+  font-size:.74rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:18px 34px;transition:all .3s var(--ease);}
+.btn-gold{background:var(--gold);color:var(--pine);}
+.btn-gold:hover{background:var(--goldb);transform:translateY(-2px);box-shadow:0 14px 36px rgba(201,168,76,.25);}
+.btn-ghost{background:transparent;color:var(--cream);border:1px solid var(--line);}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+.btn-wa{background:#25D366;color:#fff;}
+.btn-wa:hover{background:#1EBF5A;transform:translateY(-2px);box-shadow:0 14px 36px rgba(37,211,102,.25);}
+.hero-stats{position:relative;z-index:2;display:flex;gap:0;margin-top:72px;border-top:1px solid var(--linesoft);padding-top:34px;flex-wrap:wrap;}
+.hstat{padding-right:56px;margin-right:56px;border-right:1px solid var(--linesoft);}
+.hstat:last-child{border-right:none;}
+.hstat-n{font-family:var(--mono);font-size:2rem;color:var(--goldb);}
+.hstat-l{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mut);margin-top:6px;}
+.scroll-cue{position:absolute;bottom:30px;right:var(--px);left:auto;z-index:2;display:flex;flex-direction:column;align-items:center;gap:10px;font-family:var(--mono);font-size:.56rem;letter-spacing:.34em;text-transform:uppercase;color:var(--mut);}
+.scroll-cue i{width:1px;height:52px;background:linear-gradient(to bottom,var(--gold),transparent);display:block;animation:cue 2.2s var(--ease) infinite;}
+@keyframes cue{0%{transform:scaleY(0);transform-origin:top;}45%{transform:scaleY(1);transform-origin:top;}55%{transform:scaleY(1);transform-origin:bottom;}100%{transform:scaleY(0);transform-origin:bottom;}}
 
 /* ── MARQUEE ── */
-(function(){
-  const itens = [
-    ['Congonhas','10 min'],['Metrô Campo Belo','200 m'],['São Paulo Expo','7 min'],
-    ['Interlagos · F1','12 min'],['Consulado dos EUA','7 min'],['MorumbiShopping','7 min'],
-    ['Av. Berrini','15 min'],['Parque do Ibirapuera','15 min']
-  ];
-  const html = itens.map(([n,d])=>`<span>${n} a <b>${d}</b></span>`).join('');
-  document.getElementById('mq-track').innerHTML = html + html;
-})();
+.marquee{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--moss);padding:16px 0;position:relative;z-index:2;}
+.mq-track{display:flex;width:max-content;animation:mq 36s linear infinite;}
+.marquee:hover .mq-track{animation-play-state:paused;}
+.mq-track span{font-family:var(--mono);font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--mut);white-space:nowrap;padding:0 30px;position:relative;}
+.mq-track span::after{content:'◆';position:absolute;right:-6px;top:2px;font-size:.5rem;color:var(--gold);}
+.mq-track b{color:var(--goldb);font-weight:400;}
+@keyframes mq{to{transform:translateX(-50%);}}
 
-/* ── O EDIFÍCIO ── */
-(function(){
-  const byNum = n => APTS.find(a=>a.num===n);
-  const FLOORS = [
-    ['6º','Duplex',['61','62']],
-    ['5º','Andar',['51','52']],
-    ['4º','Andar',['41','42']],
-    ['3º','Andar',['31','32']],
-    ['2º','Andar',['21','22']],
-    ['1º','Andar',['11','12']],
-    ['T','Térreo',['001']],
-  ];
-  const b = document.getElementById('building');
-  let html = `
-    <div class="b-roof"><svg viewBox="0 0 240 60" style="overflow:visible">
-      <path d="M28,46 L120,6 L212,46" fill="none" stroke="#C9A84C" stroke-width="1.8" stroke-linecap="round"/>
-      <circle cx="120" cy="6" r="2.8" fill="#C9A84C"/>
-    </svg></div>
-    <div class="b-head"><span class="b-head-l">◇ Diretório do edifício</span><span class="b-head-r">Rua Álvaro L. R. de Assumpção, 73</span></div>`;
-  FLOORS.forEach(([lvl,lbl,nums])=>{
-    html += `<div class="b-floor"><div class="b-label"><b>${lvl}</b> ${lbl}</div><div class="b-units">`;
-    nums.forEach(n=>{
-      const a = byNum(n);
-      if(!a) return;
-      const soon = a.id==='apto-41';
-      const meta = soon ? 'Em projeto' : `${a.type==='duplex'?'Duplex · ':''}${a.sqm}m² · até ${a.guests} hóspedes`;
-      html += soon
-        ? `<button class="b-unit soon" tabindex="-1" aria-disabled="true"><span class="b-num">${a.num}</span><span class="b-meta">${meta}</span></button>`
-        : `<button class="b-unit" onclick="abrirModal('${a.id}')"><span class="b-num">${a.num}</span><span class="b-meta">${meta}</span></button>`;
-    });
-    html += `</div></div>`;
-  });
-  html += `<div class="b-ground">Térreo · Garagem · Self check-in com fechadura inteligente</div>`;
-  b.innerHTML = html;
-})();
+/* ── SEÇÕES ── */
+section{position:relative;padding:130px var(--px);z-index:2;}
+section.light{background:var(--cream);color:var(--inkg);}
+section.light .sec-kicker{color:var(--golddeep);}
+section.light .sec-kicker::before{background:var(--golddeep);}
+section.light .sec-h em{color:var(--golddeep);}
+section.light .sec-p{color:var(--mutl);}
+.sec-kicker{font-family:var(--mono);font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:14px;margin-bottom:22px;}
+.sec-kicker::before{content:'';width:40px;height:1px;background:var(--gold);}
+.sec-h{font-family:var(--disp);font-weight:300;font-size:clamp(2.1rem,4.4vw,3.9rem);line-height:1.06;letter-spacing:-.01em;margin-bottom:22px;}
+.sec-h em{font-style:italic;font-weight:400;color:var(--goldb);}
+.sec-p{font-size:.97rem;font-weight:300;line-height:1.9;color:var(--mut);max-width:56ch;}
+.sec-top{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:64px;flex-wrap:wrap;}
 
-/* ── CARDS DAS UNIDADES ── */
-function fotoCapa(a){
-  if(!a.photos || !a.photos.length) return null;
-  return a.photos.find(p=>p&&p.src&&p.label==='Sala de Estar') || a.photos.find(p=>p&&p.src) || null;
-}
-(function(){
-  const g = document.getElementById('ugrid');
-  g.innerHTML = APTS.map((a,i)=>{
-    const capa = fotoCapa(a);
-    const soon = a.id==='apto-41';
-    const img = capa
-      ? `<img src="${capa.src}" alt="${a.name}" loading="lazy" onerror="this.style.display='none'">`
-      : '';
-    const tag = soon ? '' : `<span class="utag ${a.ac?'ac':'noac'}">${a.ac?'❄ Com A/C':'Sem A/C'}</span>`;
-    const ph = `<div class="ph"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#15211A" stroke-width="1"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>`;
-    if(soon){
-      return `<div class="ucard hide-soon" data-type="${a.type}" style="cursor:default;">
-        <div class="uimg">${ph}<span class="uplq">Nº ${a.num}</span>
-          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
-            <span style="font-family:var(--mono);font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;border:1px solid rgba(21,33,26,.3);padding:5px 14px;color:#5E6B4F;">Em projeto</span>
-            <span style="font-family:var(--disp);font-style:italic;font-size:1.5rem;color:#3A4636;">Coming soon</span>
-          </div>
-        </div>
-        <div class="uinfo" style="opacity:.55;"><div class="uname">${a.name}<i>${a.sqm}m²</i></div><div class="udet">${a.detail}</div></div>
-      </div>`;
-    }
-    return `<button class="ucard" data-type="${a.type}" onclick="abrirModal('${a.id}')">
-      <div class="uimg">${ph}${img}<span class="uplq">Nº ${a.num}</span>${tag}</div>
-      <div class="uinfo">
-        <div class="uname">${a.name}<i>${a.sqm}m² · ${a.guests} hósp.</i></div>
-        <div class="udet">${a.detail}</div>
-        <span class="ulink">Ver por dentro →</span>
-      </div>
-    </button>`;
-  }).join('');
-})();
-
-function filtrar(tipo, btn){
-  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  document.querySelectorAll('.ucard').forEach(c=>{
-    c.style.display = (tipo==='all' || c.dataset.type===tipo) ? '' : 'none';
-  });
+/* ── EDIFÍCIO (corte do prédio) ── */
+#edificio{background:var(--pine);}
+.building{max-width:980px;margin:0 auto;border:1px solid var(--line);background:linear-gradient(170deg,var(--moss),var(--pine) 70%);position:relative;}
+.building::before{content:'';position:absolute;left:50%;top:-44px;transform:translateX(-50%);width:0;height:0;
+  border-left:120px solid transparent;border-right:120px solid transparent;border-bottom:44px solid transparent;
+  border-bottom-color:rgba(201,168,76,0);}
+.b-roof{display:flex;justify-content:center;padding:26px 0 8px;}
+.b-roof svg{width:200px;overflow:visible;}
+.b-head{display:flex;align-items:center;justify-content:space-between;padding:10px 30px 20px;border-bottom:1px solid var(--linesoft);}
+.b-head-l{font-family:var(--mono);font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);}
+.b-head-r{font-family:var(--disp);font-style:italic;font-size:.84rem;color:var(--mut);}
+.b-floor{display:grid;grid-template-columns:120px 1fr;border-bottom:1px solid var(--linesoft);}
+.b-floor:last-child{border-bottom:none;}
+.b-label{display:flex;align-items:center;gap:10px;padding:0 0 0 30px;font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mut);border-right:1px solid var(--linesoft);}
+.b-label b{font-size:1.2rem;font-weight:400;color:var(--cream);}
+.b-units{display:flex;}
+.b-unit{flex:1;appearance:none;background:none;border:none;border-left:1px solid var(--linesoft);cursor:pointer;
+  display:flex;flex-direction:column;align-items:flex-start;gap:5px;padding:24px 28px;text-align:left;position:relative;overflow:hidden;
+  transition:background .3s;}
+.b-unit:first-child{border-left:none;}
+.b-unit::before{content:'';position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(201,168,76,.1) 50%,transparent 70%);transform:translateX(-110%);transition:transform .7s var(--ease);}
+.b-unit:hover::before{transform:translateX(110%);}
+.b-num{font-family:var(--mono);font-size:1.3rem;color:var(--cream);letter-spacing:.08em;transition:color .25s;}
+.b-meta{font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);transition:color .25s;}
+.b-unit:hover{background:rgba(201,168,76,.05);}
+.b-unit:hover .b-num{color:var(--goldb);}
+.b-unit:hover .b-meta{color:var(--gold);}
+.b-unit.soon{cursor:default;opacity:.45;}
+.b-unit.soon::before{display:none;}
+.b-unit.soon:hover{background:none;}
+.b-unit.soon:hover .b-num{color:var(--cream);}
+.b-unit.soon:hover .b-meta{color:var(--mut);}
+.b-ground{padding:14px 30px;font-family:var(--mono);font-size:.58rem;letter-spacing:.26em;text-transform:uppercase;color:var(--mut);border-top:1px solid var(--line);background:rgba(201,168,76,.04);text-align:center;}
+@media(max-width:700px){
+  .b-floor{grid-template-columns:74px 1fr;}
+  .b-label{padding-left:16px;}
+  .b-unit{padding:18px 16px;}
+  .b-head{padding:10px 16px 16px;flex-direction:column;gap:4px;align-items:flex-start;}
 }
 
-/* ── POIs ── */
-(function(){
-  const ORIG = 'Rua+%C3%81lvaro+Luis+Roberto+de+Assump%C3%A7%C3%A3o+73+S%C3%A3o+Paulo+SP';
-  const dir = (dest,pid)=>`https://www.google.com/maps/dir/?api=1&origin=${ORIG}&destination=${dest}${pid?`&destination_place_id=${pid}`:''}`;
-  const CATS = [
-    ['🎉 Eventos & Entretenimento',[
-      ['São Paulo Expo','Expo Imigrantes — feiras, congressos e shows','~7 min',dir('S%C3%A3o+Paulo+Expo+Rod.+dos+Imigrantes+S%C3%A3o+Paulo','ChIJlcvDpN1azpQRZ5Fxj-VskTE')],
-      ['Autódromo de Interlagos','F1 · Lollapalooza · Rock in Rio SP','~12 min',dir('Aut%C3%B3dromo+Jos%C3%A9+Carlos+Pace+Interlagos+S%C3%A3o+Paulo','ChIJr4SVPshPzpQRwKUs2gfc_C8')],
-      ['Allianz Parque','Shows internacionais · Jogos do Palmeiras','~25 min',dir('Allianz+Parque+S%C3%A3o+Paulo','ChIJRV1xHf1XzpQRsVwZ1iFUToY')],
-    ]],
-    ['💼 Negócios & Serviços',[
-      ['Consulado dos EUA','Entrevistas de visto B1/B2 ✅','~7 min',dir('Consulado+Geral+dos+Estados+Unidos+S%C3%A3o+Paulo','ChIJZ9eEQOhQzpQR-myLn_2Lby0')],
-      ['Avenida Berrini','Polo corporativo da Zona Sul','~15 min',dir('Avenida+Engenheiro+Lu%C3%ADs+Carlos+Berrini+S%C3%A3o+Paulo','ChIJh0-W7TRXzpQR1BqPtqxOO80')],
-      ['MorumbiShopping','Lojas · Gastronomia · Cinema','~7 min',dir('MorumbiShopping+S%C3%A3o+Paulo','ChIJq6omp8RQzpQRyCoIvgF3s6Y')],
-    ]],
-    ['📍 No entorno imediato',[
-      ['Padaria Santa Marcelina','Café, pães e salgados · 6h às 22h','~3 min',dir('Padaria+Santa+Marcelina+Vieira+de+Morais+S%C3%A3o+Paulo','ChIJHZoiU6JQzpQRckTyrTZt24k')],
-      ['Hirota Food','Supermercado japonês a poucos passos','~2 min',dir('Hirota+Food+Vieira+de+Morais+S%C3%A3o+Paulo','ChIJM2BJCKNQzpQRlIaug_JjCG0')],
-      ['Bar Dois Irmãos','Pizza · Chopp · Música ao vivo','~5 min',dir('Bar+Dois+Irm%C3%A3os+Campo+Belo+S%C3%A3o+Paulo','ChIJZY4-VaRQzpQRwhzspNmrlls')],
-      ['Drogaria São Paulo','Farmácia 24 horas','~3 min',dir('Drogaria+S%C3%A3o+Paulo+Vieira+de+Morais+Campo+Belo','ChIJo-FXI3ZRzpQR6EN1oVxCC2o')],
-      ['Parque do Ibirapuera','Museus, lagos e muito verde','~15 min',dir('Parque+do+Ibirapuera+S%C3%A3o+Paulo','ChIJ0RGdBvFZzpQRQeWcrwlhk8s')],
-      ['Aeroporto de Congonhas','CGH — voos domésticos','~10 min',dir('Aeroporto+de+Congonhas+S%C3%A3o+Paulo','ChIJ8wDUuXpazpQRhXBN5pcG5zo')],
-    ]],
-  ];
-  document.getElementById('poi-block').innerHTML = CATS.map(([cat,rows])=>`
-    <div class="poi-cat">${cat}</div>
-    ${rows.map(([n,s,d,url])=>`
-      <a class="poi-row" href="${url}" target="_blank">
-        <span class="poi-nm">${n}<small>${s}</small></span>
-        <span style="display:flex;align-items:baseline;gap:16px;"><span class="poi-d">${d}</span><span class="poi-go">Como chegar →</span></span>
-      </a>`).join('')}
-  `).join('') + `
-    <a class="btn btn-wa" style="margin-top:30px;" href="https://wa.me/${WA}?text=Olá! Gostaria de indicações sobre os pontos de interesse próximos ao Valps Residence." target="_blank">Pedir indicações ao proprietário</a>`;
-})();
+/* ── UNIDADES (claro) ── */
+#unidades.light .filtros{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:48px;}
+.fbtn{background:transparent;border:1px solid var(--linelight);color:var(--mutl);padding:11px 26px;font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;transition:all .25s;}
+.fbtn:hover{border-color:var(--golddeep);color:var(--golddeep);}
+.fbtn.on{background:var(--inkg);border-color:var(--inkg);color:var(--cream);}
+.ugrid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+.ucard{cursor:pointer;background:transparent;border:none;text-align:left;padding:0;font-family:inherit;color:inherit;}
+.uimg{position:relative;aspect-ratio:4/3;overflow:hidden;background:linear-gradient(150deg,#DCD2B8,#CBBE9D);}
+.uimg img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s var(--ease),filter .5s;}
+.ucard:hover .uimg img{transform:scale(1.06);}
+.uimg::after{content:'';position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(21,33,26,.12);pointer-events:none;}
+.uplq{position:absolute;top:14px;left:14px;z-index:2;background:rgba(21,33,26,.85);backdrop-filter:blur(6px);color:var(--goldb);font-family:var(--mono);font-size:.64rem;letter-spacing:.16em;padding:7px 13px;}
+.utag{position:absolute;top:14px;right:14px;z-index:2;font-size:.56rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:6px 11px;backdrop-filter:blur(6px);}
+.utag.ac{background:rgba(201,168,76,.92);color:var(--pine);}
+.utag.noac{background:rgba(242,235,218,.88);color:var(--inkg);}
+.uinfo{padding:20px 4px 0;}
+.uname{font-family:var(--disp);font-weight:400;font-size:1.45rem;display:flex;align-items:baseline;justify-content:space-between;gap:12px;}
+.uname i{font-style:normal;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;color:var(--mutl);}
+.udet{font-size:.8rem;color:var(--mutl);margin-top:6px;}
+.ulink{display:inline-flex;align-items:center;gap:10px;margin-top:14px;font-size:.66rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--golddeep);border-bottom:1px solid rgba(143,114,44,.4);padding-bottom:3px;transition:gap .25s var(--ease);}
+.ucard:hover .ulink{gap:18px;}
+.ucard.hide{display:none;}
+.uimg .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.uimg .ph svg{opacity:.25;}
+@media(max-width:1100px){.ugrid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:640px){.ugrid{grid-template-columns:1fr;gap:36px;}}
 
-/* ── FAQ ── */
-(function(){
-  const FAQS = [
-    ['Como faço para reservar diretamente?','Preencha o formulário de reserva nesta página ou entre em contato pelo WhatsApp. Respondemos em até 2 horas para confirmar a disponibilidade e enviar as instruções de pagamento.'],
-    ['Quais formas de pagamento são aceitas?','Aceitamos PIX, Transferência Bancária, Link de Pagamento (enviado pelo proprietário via WhatsApp) e Criptomoedas (Bitcoin, Ethereum e Solana). Todos os pagamentos são realizados diretamente com o proprietário, sem taxas de intermediários.'],
-    ['Qual é a política de cancelamento?','Cancelamentos com mais de 30 dias: reembolso integral. Até 15 dias: reembolso de 50%. Após isso, sem reembolso.'],
-    ['Os apartamentos são mobiliados?','Sim! Todas as unidades são completamente mobiliadas com cozinha equipada, utensílios, roupa de cama, toalhas, Wi-Fi e TV. Você só precisa chegar com a mala.'],
-    ['Qual é o horário de check-in e check-out?','Check-in a partir das 14h e check-out até as 10h da manhã. Early check-in e late check-out podem ser solicitados mediante disponibilidade.'],
-    ['É permitido pets?','Aceitamos pets de pequeno porte (até 10kg) com consulta prévia e taxa de limpeza de R$ 180. Informe na solicitação de reserva.'],
-    ['Por que reservar direto ao invés da Booking ou Airbnb?','Reservando diretamente você economiza entre 10% e 20% em taxas de serviço. Além disso, tem atendimento personalizado e direto com o anfitrião.'],
-    ['Tem estacionamento disponível?','Sim, há vagas rotativas para todos os apartamentos.'],
-  ];
-  document.getElementById('faq-wrap').innerHTML = FAQS.map(([q,a],i)=>`
-    <div class="fq rv" style="--d:${i*0.05}s" onclick="this.classList.toggle('open')">
-      <div class="fq-q"><span>${q}</span><span class="fq-i">+</span></div>
-      <div class="fq-a">${a}</div>
-    </div>`).join('');
-})();
+/* ── LOCALIZAÇÃO ── */
+#local{background:var(--pine);}
+.loc-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:start;}
+.loc-addr{display:flex;align-items:center;gap:12px;padding:17px 20px;margin-bottom:16px;background:var(--moss);border-left:2px solid var(--gold);font-family:var(--mono);font-size:.86rem;letter-spacing:.05em;color:var(--txt);}
+.loc-map{position:relative;border:1px solid var(--line);overflow:hidden;}
+.loc-map iframe{display:block;width:100%;height:420px;border:none;filter:grayscale(40%) sepia(10%) contrast(1.05);}
+.loc-map::after{content:'';position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 70px rgba(10,17,13,.55);}
+.loc-actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;}
+.loc-actions .btn{padding:13px 22px;font-size:.66rem;}
+.loc-feats{list-style:none;margin-top:34px;}
+.loc-feats li{display:flex;align-items:center;gap:18px;padding:19px 0;border-bottom:1px solid var(--linesoft);font-size:1.05rem;color:var(--txt);font-weight:300;}
+.loc-feats li:first-child{border-top:1px solid var(--linesoft);}
+.loc-feats li b{font-family:var(--mono);font-size:.88rem;color:var(--goldb);font-weight:400;letter-spacing:.05em;min-width:86px;}
+.poi-block{margin-top:48px;}
+.poi-cat{font-family:var(--mono);font-size:.74rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin:34px 0 8px;padding-bottom:12px;border-bottom:1px solid var(--line);}
+.poi-row{display:flex;align-items:baseline;justify-content:space-between;gap:14px;padding:17px 0;border-bottom:1px solid var(--linesoft);text-decoration:none;transition:padding .25s var(--ease);}
+.poi-row:hover{padding-left:10px;}
+.poi-nm{font-size:1.12rem;color:var(--cream);font-weight:600;}
+.poi-nm small{display:block;font-size:.84rem;color:var(--mut);font-weight:300;margin-top:4px;letter-spacing:.02em;}
+.poi-d{font-family:var(--mono);font-size:.86rem;color:var(--goldb);white-space:nowrap;}
+.poi-go{font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);white-space:nowrap;transition:color .2s;}
+.poi-row:hover .poi-go{color:var(--gold);}
+@media(max-width:1000px){.loc-grid{grid-template-columns:1fr;gap:44px;}}
 
-/* ── FORM ── */
-(function(){
-  const sel = document.getElementById('f-apt');
-  APTS.filter(a=>a.id!=='apto-41').forEach(a=>{
-    const o = document.createElement('option'); o.value=a.name; o.textContent=a.name; sel.appendChild(o);
-  });
-  const g = document.getElementById('f-g');
-  for(let i=1;i<=14;i++){ const o=document.createElement('option'); o.value=i; o.textContent=`${i} hóspede${i>1?'s':''}`; g.appendChild(o); }
-  const mg = document.getElementById('m-g');
-  for(let i=1;i<=14;i++){ const o=document.createElement('option'); o.value=i; o.textContent=`${i} hóspede${i>1?'s':''}`; mg.appendChild(o); }
-})();
-function fmtData(v){ if(!v) return '—'; const [y,m,d]=v.split('-'); return `${d}/${m}/${y}`; }
-function enviarWA(e){
-  e.preventDefault();
-  const nome=document.getElementById('f-nome').value,
-        tel=document.getElementById('f-tel').value,
-        email=document.getElementById('f-email').value,
-        ci=document.getElementById('f-in').value, co=document.getElementById('f-out').value,
-        apt=document.getElementById('f-apt').value||'A definir',
-        g=document.getElementById('f-g').value,
-        msg=document.getElementById('f-msg').value;
-  const texto=`Olá! Gostaria de solicitar uma reserva no *Valps Residence* 🏠%0A%0A`+
-    `*Nome:* ${nome}%0A*Telefone:* ${tel||'—'}%0A*E-mail:* ${email||'—'}%0A`+
-    `*Acomodação:* ${apt}%0A*Check-in:* ${fmtData(ci)}%0A*Check-out:* ${fmtData(co)}%0A*Hóspedes:* ${g}`+
-    (msg?`%0A%0A*Mensagem:* ${msg}`:'');
-  window.open(`https://wa.me/${WA}?text=${texto}`,'_blank');
-  const btn=document.querySelector('.ct-submit');
-  if(btn){const o=btn.textContent;btn.textContent='✅ Enviando...';btn.disabled=true;
-    setTimeout(()=>{btn.textContent=o;btn.disabled=false;},3000);}
-  salvarNoFirebase({
-    nome: nome||'', telefone: tel||'', email: email||'',
-    apartamento: apt||'', checkin: ci?fmtData(ci):'', checkout: co?fmtData(co):'',
-    hospedes: g||'', mensagem: msg||'', canal:'site', formulario:'contato'
-  });
-}
+/* ── OFERTAS (claro) ── */
+.of-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+.of-card{position:relative;border:1px solid var(--linelight);background:var(--paper);padding:48px 44px;overflow:hidden;transition:transform .35s var(--ease),box-shadow .35s;}
+.of-card.dk{background:linear-gradient(160deg,#13211A,#0A110D 75%);border-color:var(--pine);color:var(--cream);}
+.of-card.dk .of-name{color:var(--cream);}
+.of-card.dk .of-desc{color:var(--mut);}
+.of-card.dk .of-pill{background:var(--gold);color:var(--pine);}
+.of-card.dk .of-amount{color:var(--goldb);}
+.of-card.dk .of-amount small{color:var(--mut);}
+.of-card.dk .of-link{color:var(--goldb);border-color:rgba(227,200,125,.5);}
+.of-card.dk .of-link:hover{color:var(--gold);border-color:var(--gold);}
+.of-card.dk::after{border-color:rgba(201,168,76,.3);}
+.of-card.gd{background:linear-gradient(160deg,#D9B85C,#C9A84C 60%,#B5933A);border-color:#B5933A;color:var(--pine);}
+.of-card.gd .of-name{color:var(--pine);}
+.of-card.gd .of-desc{color:rgba(21,33,26,.75);}
+.of-card.gd .of-pill{background:var(--pine);color:var(--goldb);}
+.of-card.gd .of-amount{color:var(--pine);}
+.of-card.gd .of-amount small{color:rgba(21,33,26,.65);}
+.of-card.gd .of-link{color:var(--pine);border-color:rgba(21,33,26,.55);}
+.of-card.gd .of-link:hover{color:#070C09;border-color:#070C09;}
+.of-card.gd::after{border-color:rgba(21,33,26,.25);}
+.of-card:hover{transform:translateY(-5px);box-shadow:0 28px 60px rgba(21,33,26,.14);}
+.of-card::after{content:'';position:absolute;right:-60px;bottom:-60px;width:200px;height:200px;border:1px solid rgba(143,114,44,.25);border-radius:50%;}
+.of-pill{display:inline-block;font-family:var(--mono);font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;background:var(--inkg);color:var(--goldb);padding:7px 15px;margin-bottom:22px;}
+.of-name{font-family:var(--disp);font-weight:400;font-size:1.9rem;margin-bottom:10px;}
+.of-desc{font-size:.9rem;color:var(--mutl);line-height:1.75;max-width:40ch;margin-bottom:20px;}
+.of-amount{font-family:var(--disp);font-style:italic;font-size:2.5rem;color:var(--golddeep);line-height:1;}
+.of-amount small{font-family:var(--mono);font-style:normal;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mutl);display:block;margin-top:8px;}
+.of-link{display:inline-flex;align-items:center;gap:10px;margin-top:26px;font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--inkg);border-bottom:1px solid var(--inkg);padding-bottom:3px;text-decoration:none;transition:gap .25s var(--ease),color .2s,border-color .2s;}
+.of-link:hover{gap:18px;color:var(--golddeep);border-color:var(--golddeep);}
+.avail{margin-top:28px;border:1px dashed rgba(143,114,44,.4);padding:30px 34px;display:flex;align-items:center;justify-content:space-between;gap:26px;flex-wrap:wrap;background:rgba(233,224,202,.5);}
+.avail p{font-size:.88rem;color:var(--mutl);line-height:1.75;max-width:62ch;}
+.avail p b{color:var(--inkg);}
+@media(max-width:880px){.of-grid{grid-template-columns:1fr;}}
 
-/* ── MODAL ── */
-let mApt=null, mIdx=0, mPhotos=[], autoTimer=null;
-function startAuto(){
-  stopAuto();
-  if(reduced || mPhotos.length<2) return;
-  autoTimer=setInterval(()=>galGo(mIdx+1),4500);
-}
-function stopAuto(){ if(autoTimer){clearInterval(autoTimer);autoTimer=null;} }
-const LABEL_ORDER=['Sala de Estar','Sala de Jantar','Cozinha','Quarto 1','Quarto 2','Quarto 3','Quarto 4','Quarto 5','Suíte','Suite','Banheiro','Banheiro 2','Banheiro 3','Banheiro 4','Lavabo','Lavanderia','Varanda','Área externa','Vista','Corredor','Detalhe','Outro'];
-function abrirModal(id){
-  const a = APTS.find(x=>x.id===id); if(!a) return;
-  mApt=a;
-  mPhotos=(a.photos||[]).filter(p=>p&&p.src).sort((x,y)=>{
-    const ix=LABEL_ORDER.indexOf(x.label), iy=LABEL_ORDER.indexOf(y.label);
-    return (ix<0?99:ix)-(iy<0?99:iy);
-  });
-  mIdx=Math.max(0,mPhotos.findIndex(p=>p.label==='Sala de Estar'));
-  document.getElementById('m-plq').textContent=`Nº ${a.num} · Valps Residence`;
-  document.getElementById('m-name').textContent=a.name;
-  document.getElementById('m-desc').textContent=a.desc||'';
-  document.getElementById('m-badges').innerHTML=[
-    `<span class="m-bdg g">${a.sqm}m²</span>`,
-    `<span class="m-bdg">${a.detail}</span>`,
-    `<span class="m-bdg">Até ${a.guests} hóspedes</span>`,
-    `<span class="m-bdg ${a.ac?'g':''}">${a.ac?'❄ Com ar-condicionado':'Sem ar-condicionado'}</span>`,
-    a.rating?`<span class="m-bdg g">★ ${a.rating} · ${a.reviewsCount||''} avaliações</span>`:''
-  ].join('');
-  const hl=document.getElementById('m-hl');
-  if(a.highlights&&a.highlights.length){document.getElementById('m-hl-wrap').style.display='';hl.innerHTML=a.highlights.map(h=>`<div>${h}</div>`).join('');}
-  else document.getElementById('m-hl-wrap').style.display='none';
-  const rw=document.getElementById('m-rooms');
-  if(a.rooms&&a.rooms.length){
-    document.getElementById('m-rooms-wrap').style.display='';
-    rw.innerHTML=a.rooms.map(r=>{
-      const fi=mPhotos.findIndex(p=>p.label===r.name||p.label===r.name.replace('í','i'));
-      const ph=fi>=0?`<div class="m-rph" style="background-image:url(${mPhotos[fi].src})" onclick="abrirLightbox(${fi})" title="Ver foto de ${r.name}"></div>`:'';
-      return `<div class="m-room">${ph}<b>${r.name}</b><span>${r.beds}</span></div>`;
-    }).join('');
-  }
-  else document.getElementById('m-rooms-wrap').style.display='none';
-  document.getElementById('m-amen').innerHTML=(a.amenities||[]).map(x=>`<div>${x}</div>`).join('');
-  const revs=a.reviewCards||[];
-  if(revs.length){
-    document.getElementById('m-rev-wrap').style.display='';
-    document.getElementById('m-rev-title').textContent=`Avaliações ${a.rating?`· ★ ${a.rating}`:''}`;
-    document.getElementById('m-revs').innerHTML=revs.slice(0,3).map(r=>
-      `<div class="m-rev"><b>${r.author}</b> <span style="font-size:.7rem;color:var(--mut);">· ${r.date||''}</span><div class="st">${'★'.repeat(r.stars||5)}</div><p>${r.text}</p></div>`).join('');
-  } else document.getElementById('m-rev-wrap').style.display='none';
-  document.getElementById('m-rate').innerHTML=a.rating?`<b>${a.rating}</b><span>${'★'.repeat(Math.round(a.rating))} · ${a.reviewsCount||''} avaliações</span>`:`<b style="font-size:1.2rem;">Valps</b><span>Residence</span>`;
-  document.getElementById('m-ask').href=`https://wa.me/${WA}?text=Olá! Tenho uma dúvida sobre o *${a.name}* no Valps Residence.`;
-  const mgSel=document.getElementById('m-g');
-  if(mgSel)mgSel.value=Math.min(a.guests||2,14);
-  const ab=document.getElementById('m-airbnb');
-  if(a.airbnb_url){ab.style.display='inline-flex';ab.href=a.airbnb_url;}else ab.style.display='none';
-  document.getElementById('m-feats').innerHTML=[`${a.sqm}m² — área total`,'Wi-Fi de alta velocidade','Cozinha completa','Vaga de garagem inclusa',a.ac?'Ar-condicionado':null].filter(Boolean).map(x=>`<span>${x}</span>`).join('');
-  const th=document.getElementById('m-thumbs');
-  th.innerHTML=mPhotos.map((p,i)=>`<div class="m-th ${i===mIdx?'on':''}" style="background-image:url(${p.src})" onclick="galGo(${i})" title="${p.label}"></div>`).join('');
-  // galeria completa
-  const fg=document.getElementById('m-fullgal');
-  if(mPhotos.length){
-    document.getElementById('m-fullgal-wrap').style.display='';
-    fg.innerHTML=mPhotos.map((p,i)=>`<div class="mfg" style="background-image:url(${p.src})" onclick="abrirLightbox(${i})"><i>${p.label||''}</i></div>`).join('');
-  } else document.getElementById('m-fullgal-wrap').style.display='none';
-  galGo(mIdx);
-  startAuto();
-  document.getElementById('modal').classList.add('open');
-  document.body.style.overflow='hidden';
-  document.querySelector('.m-panel').scrollTop=0;
-}
-function galGo(i){
-  if(!mPhotos.length){document.getElementById('m-img').style.display='none';document.getElementById('m-ct').textContent='—';document.getElementById('m-lb').textContent='Fotos em breve';return;}
-  mIdx=(i+mPhotos.length)%mPhotos.length;
-  const img=document.getElementById('m-img');
-  img.style.display='';img.src=mPhotos[mIdx].src;img.alt=mPhotos[mIdx].label||'';
-  document.getElementById('m-ct').textContent=`${mIdx+1} / ${mPhotos.length}`;
-  document.getElementById('m-lb').textContent=mPhotos[mIdx].label||'';
-  document.querySelectorAll('.m-th').forEach((t,j)=>t.classList.toggle('on',j===mIdx));
-}
-function galNav(d){galGo(mIdx+d);startAuto();}
-function fecharModal(){
-  stopAuto();
-  document.getElementById('modal').classList.remove('open');
-  document.body.style.overflow='';
-}
-// pausa o autoplay quando o mouse está sobre a foto
-(function(){
-  const g=document.querySelector('.m-gal');
-  if(g){
-    g.addEventListener('mouseenter',stopAuto);
-    g.addEventListener('mouseleave',()=>{if(document.getElementById('modal').classList.contains('open'))startAuto();});
-  }
-})();
+/* ── PAGAMENTOS ── */
+#pag{background:var(--pine);}
+.pay-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-bottom:22px;}
+.pay-card{border:1px solid var(--linesoft);background:var(--moss);padding:38px 32px;display:flex;flex-direction:column;gap:14px;transition:border-color .3s,transform .3s var(--ease);}
+.pay-card:hover{border-color:var(--line);transform:translateY(-4px);}
+.pay-ic{width:46px;height:46px;border:1px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--goldb);}
+.pay-t{font-family:var(--disp);font-weight:400;font-size:1.35rem;}
+.pay-d{font-size:.88rem;color:var(--mut);line-height:1.8;font-weight:300;flex:1;}
+.pay-a{display:inline-flex;align-items:center;gap:9px;width:fit-content;font-size:.66rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--pine);background:var(--gold);padding:11px 19px;text-decoration:none;transition:background .2s,transform .2s var(--ease);}
+.pay-a:hover{background:var(--goldb);transform:translateX(4px);}
+.crypto{border:1px solid var(--line);background:linear-gradient(150deg,var(--moss),var(--pine) 70%);padding:46px;position:relative;overflow:hidden;}
+.crypto::before{content:'';position:absolute;right:-80px;top:-80px;width:260px;height:260px;border:1px solid rgba(201,168,76,.16);border-radius:50%;}
+.crypto-h{font-family:var(--disp);font-weight:300;font-size:2.2rem;margin-bottom:10px;}
+.crypto-h em{font-style:italic;color:var(--goldb);}
+.crypto-s{font-size:1rem;color:var(--mut);font-weight:300;margin-bottom:38px;max-width:72ch;line-height:1.8;}
+.crypto-g{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.c-card{background:rgba(10,17,13,.55);border:1px solid var(--linesoft);padding:34px 30px;display:flex;align-items:center;gap:24px;transition:border-color .25s,transform .3s var(--ease);}
+.c-card:hover{transform:translateY(-3px);}
+.c-card:hover{border-color:var(--line);}
+.c-logo{width:68px;height:68px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.c-n{font-family:var(--disp);font-size:1.5rem;}
+.c-tk{font-family:var(--mono);font-size:.78rem;letter-spacing:.24em;color:var(--goldb);margin:4px 0 10px;}
+.c-a{font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,.35);padding-bottom:3px;}
+.c-a:hover{color:var(--goldb);}
+.crypto-note{margin-top:28px;font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mut);display:flex;align-items:center;gap:10px;}
+.crypto-note::before{content:'';width:26px;height:1px;background:var(--gold);}
+@media(max-width:980px){.pay-grid,.crypto-g{grid-template-columns:1fr;}.crypto{padding:30px 22px;}}
 
-/* ── LIGHTBOX ── */
-let lbIdx=0;
-function abrirLightbox(i){
-  if(!mPhotos.length)return;
-  stopAuto();
-  lbIdx=(i+mPhotos.length)%mPhotos.length;
-  mostrarLb();
-  document.getElementById('lb').style.display='flex';
-}
-function mostrarLb(){
-  const p=mPhotos[lbIdx];
-  document.getElementById('lb-img').src=p.src;
-  document.getElementById('lb-img').alt=p.label||'';
-  document.getElementById('lb-cap').textContent=p.label||'';
-  document.getElementById('lb-ct').textContent=`${lbIdx+1} / ${mPhotos.length}`;
-}
-function lbNav(d){lbIdx=(lbIdx+d+mPhotos.length)%mPhotos.length;mostrarLb();}
-function fecharLb(){
-  document.getElementById('lb').style.display='none';
-  if(document.getElementById('modal').classList.contains('open'))startAuto();
-}
-document.addEventListener('keydown',e=>{
-  const lbAberto=document.getElementById('lb').style.display==='flex';
-  if(lbAberto){
-    if(e.key==='Escape')fecharLb();
-    if(e.key==='ArrowLeft')lbNav(-1);
-    if(e.key==='ArrowRight')lbNav(1);
-    return;
-  }
-  if(!document.getElementById('modal').classList.contains('open'))return;
-  if(e.key==='Escape')fecharModal();
-  if(e.key==='ArrowLeft')galNav(-1);
-  if(e.key==='ArrowRight')galNav(1);
-});
+/* ── CALENDÁRIO ── */
+#calendario{background:var(--pine);border-top:1px solid var(--linesoft);}
+.cal-wrap{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:26px;}
+.cal-panel{border:1px solid var(--line);background:var(--moss);padding:30px;}
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.cal-mname{font-family:var(--disp);font-style:italic;font-size:1.25rem;color:var(--cream);text-transform:capitalize;}
+.cal-navs{display:flex;gap:8px;}
+.cal-nv{width:34px;height:34px;border:1px solid var(--linesoft);background:none;color:var(--mut);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.cal-nv:hover{border-color:var(--gold);color:var(--gold);}
+.cal-dow{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin-bottom:10px;}
+.cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.cal-d{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.86rem;color:var(--txt);transition:background .15s;}
+.cal-d.free:hover{background:var(--moss2);}
+.cal-d.occ{background:rgba(201,168,76,.18);color:var(--goldb);text-decoration:line-through;text-decoration-color:rgba(227,200,125,.5);}
+.cal-d.today{border:1px solid var(--gold);color:var(--goldb);}
+.cal-d.empty{visibility:hidden;}
+.cal-legend{display:flex;gap:26px;align-items:center;margin-top:18px;padding-top:16px;border-top:1px solid var(--linesoft);font-size:.74rem;color:var(--mut);flex-wrap:wrap;}
+.cal-legend i{display:inline-block;width:13px;height:13px;margin-right:8px;vertical-align:-2px;}
+.cal-legend .lg-occ i{background:rgba(201,168,76,.18);border:1px solid rgba(201,168,76,.4);}
+.cal-legend .lg-free i{border:1px solid var(--linesoft);}
+.cal-note{border:1px dashed rgba(201,168,76,.4);background:rgba(201,168,76,.04);padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:26px;flex-wrap:wrap;}
+.cal-note p{font-size:.92rem;color:var(--mut);line-height:1.85;max-width:64ch;}
+.cal-note p b{color:var(--goldb);font-weight:600;}
+@media(max-width:880px){.cal-wrap{grid-template-columns:1fr;}#cal-p2{display:none;}}
 
-/* ── CALENDÁRIO (ilustrativo) ── */
-let calY, calM;
-(function(){const t=new Date();calY=t.getFullYear();calM=t.getMonth();})();
-const MESES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
-function ocupados(y,m){
-  // pseudo-aleatório determinístico por mês (apenas ilustrativo)
-  const occ=new Set();let s=y*12+m;
-  for(let i=0;i<10;i++){s=(s*9301+49297)%233280;occ.add(1+(s%28));}
-  return occ;
-}
-function renderMes(y,m,elDays,elName){
-  elName.textContent=`${MESES[m]} ${y}`;
-  const first=new Date(y,m,1).getDay(), nd=new Date(y,m+1,0).getDate();
-  const hoje=new Date(); const occ=ocupados(y,m);
-  let html='';
-  for(let i=0;i<first;i++)html+='<span class="cal-d empty"></span>';
-  for(let d=1;d<=nd;d++){
-    const isToday=d===hoje.getDate()&&m===hoje.getMonth()&&y===hoje.getFullYear();
-    const isOcc=occ.has(d);
-    html+=`<span class="cal-d ${isOcc?'occ':'free'} ${isToday?'today':''}">${d}</span>`;
-  }
-  elDays.innerHTML=html;
-}
-function renderCalendarios(){
-  renderMes(calY,calM,document.getElementById('cal-d1'),document.getElementById('cal-n1'));
-  const y2=calM===11?calY+1:calY, m2=(calM+1)%12;
-  renderMes(y2,m2,document.getElementById('cal-d2'),document.getElementById('cal-n2'));
-  if(typeof buildThread==='function')setTimeout(buildThread,50);
-}
-function calMove(d){
-  calM+=d; if(calM<0){calM=11;calY--;} if(calM>11){calM=0;calY++;}
-  renderCalendarios();
-}
-renderCalendarios();
+/* ── FAQ (claro) ── */
+#faq.light .faq-wrap{max-width:860px;margin:0 auto;}
+.fq{border-bottom:1px solid var(--linelight);cursor:pointer;padding:28px 6px;transition:padding .25s var(--ease);}
+.fq:first-of-type{border-top:1px solid var(--linelight);}
+.fq:hover{padding-left:16px;}
+.fq-q{display:flex;justify-content:space-between;align-items:center;gap:20px;font-family:var(--disp);font-weight:400;font-size:1.18rem;color:var(--inkg);}
+.fq-i{width:30px;height:30px;border:1px solid rgba(143,114,44,.45);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--golddeep);flex-shrink:0;transition:transform .4s var(--ease),background .25s;font-size:1rem;font-family:var(--sans);}
+.fq.open .fq-i{transform:rotate(45deg);background:rgba(143,114,44,.12);}
+.fq-a{max-height:0;overflow:hidden;transition:max-height .5s var(--ease),margin-top .3s;font-size:.92rem;color:var(--mutl);line-height:1.85;font-weight:300;max-width:70ch;}
+.fq.open .fq-a{max-height:280px;margin-top:16px;}
 
-/* ── MENU MOBILE ── */
-function abrirMenu(){document.getElementById('mnav').classList.add('open');document.body.style.overflow='hidden';}
-function fecharMenu(){document.getElementById('mnav').classList.remove('open');document.body.style.overflow='';}
-function navTo(id){fecharMenu();setTimeout(()=>scrollToId(id),60);}
+/* ── CONTATO ── */
+#contato{background:var(--pine);}
+.ct-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:72px;align-items:start;}
+.ct-side .sec-p{margin-bottom:34px;}
+.ct-wa{display:flex;align-items:center;gap:18px;padding:24px;border:1px solid var(--linesoft);background:var(--moss);text-decoration:none;transition:border-color .25s;}
+.ct-wa:hover{border-color:rgba(37,211,102,.5);}
+.ct-wa-ic{width:50px;height:50px;border-radius:50%;background:rgba(37,211,102,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ct-wa-t{font-size:.95rem;font-weight:600;color:var(--cream);}
+.ct-wa-s{font-size:.74rem;color:var(--mut);margin-top:3px;}
+.ct-form{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--linesoft);border:1px solid var(--line);}
+.fg{background:var(--moss);padding:20px 24px;display:flex;flex-direction:column;gap:7px;transition:background .25s;position:relative;}
+.fg:focus-within{background:var(--moss2);}
+.fg.full{grid-column:1/-1;}
+.fg label{font-family:var(--mono);font-size:.56rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);}
+.fg input,.fg select,.fg textarea{background:none;border:none;outline:none;color:var(--txt);font-family:var(--sans);font-size:.92rem;width:100%;}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--mut);}
+.fg select option{background:var(--moss);}
+.fg textarea{resize:vertical;min-height:84px;}
+.fg input[type="date"]{color-scheme:dark;}
+.ct-submit{grid-column:1/-1;background:var(--gold);color:var(--pine);border:none;padding:21px;font-size:.76rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;transition:background .25s,letter-spacing .3s var(--ease);}
+.ct-submit:hover{background:var(--goldb);letter-spacing:.3em;}
+@media(max-width:1000px){.ct-grid{grid-template-columns:1fr;gap:44px;}}
+@media(max-width:640px){.ct-form{grid-template-columns:1fr;}}
 
-/* ── UTIL ── */
-function scrollToId(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:reduced?'auto':'smooth'});}
+/* ── FOOTER ── */
+footer{background:#070C09;border-top:1px solid var(--line);padding:64px var(--px) 44px;position:relative;z-index:2;}
+.ft-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;padding-bottom:40px;border-bottom:1px solid var(--linesoft);}
+.ft-addr{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;color:var(--mut);line-height:2;}
+.ft-links{display:flex;gap:30px;}
+.ft-links a{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);text-decoration:none;transition:color .2s;}
+.ft-links a:hover{color:var(--gold);}
+.ft-bottom{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-top:26px;font-size:.72rem;color:var(--mut);flex-wrap:wrap;}
+@media(max-width:700px){.ft-top,.ft-bottom{flex-direction:column;align-items:center;text-align:center;}}
 
-/* ── NAV + PROGRESSO ── */
-const navEl=document.getElementById('nav');
-const progEl=document.querySelector('#progress i');
+/* ── MODAL DA UNIDADE ── */
+#modal{position:fixed;inset:0;z-index:1500;display:none;}
+#modal.open{display:block;}
+.m-back{position:absolute;inset:0;background:rgba(7,12,9,.9);backdrop-filter:blur(8px);animation:fadeIn .3s ease;}
+.m-panel{position:absolute;top:0;right:0;bottom:0;width:min(1080px,100%);background:var(--pine);border-left:1px solid var(--line);overflow-y:auto;overflow-x:hidden;animation:slideIn .5s var(--ease);}
+@keyframes slideIn{from{transform:translateX(60px);opacity:0;}to{transform:translateX(0);opacity:1;}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.m-close{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:18px 30px;background:rgba(10,17,13,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--linesoft);}
+.m-close b{font-family:var(--mono);font-size:.66rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:400;}
+.m-x{appearance:none;background:none;border:1px solid var(--line);color:var(--cream);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem;transition:all .25s;}
+.m-x:hover{background:var(--gold);color:var(--pine);transform:rotate(90deg);}
+.m-gal{position:relative;height:46vh;min-height:300px;background:var(--moss);overflow:hidden;}
+.m-gal img{width:100%;height:100%;object-fit:cover;}
+.m-gal-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;background:rgba(10,17,13,.6);backdrop-filter:blur(6px);border:1px solid var(--line);color:var(--goldb);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s;}
+.m-gal-nav:hover{background:var(--gold);color:var(--pine);}
+.m-gal-nav.p{left:18px;}.m-gal-nav.n{right:18px;}
+.m-gal-ct{position:absolute;top:16px;right:18px;font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;color:var(--goldb);background:rgba(10,17,13,.7);border:1px solid var(--line);padding:6px 12px;}
+.m-gal-lb{position:absolute;bottom:16px;left:18px;font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cream);background:rgba(10,17,13,.7);padding:6px 12px;}
+.m-thumbs{display:flex;gap:6px;padding:12px 18px;overflow-x:auto;background:var(--moss);border-bottom:1px solid var(--linesoft);scrollbar-width:thin;}
+.m-th{width:62px;height:44px;flex-shrink:0;cursor:pointer;opacity:.5;border:1px solid transparent;transition:all .2s;background-size:cover;background-position:center;background-color:var(--moss2);}
+.m-th.on{opacity:1;border-color:var(--gold);}
+.m-th:hover{opacity:1;}
+.m-body{padding:40px;display:grid;grid-template-columns:1.2fr .8fr;gap:44px;}
+.m-body>*{min-width:0;}
+.m-bk .fg input,.m-bk .fg select,.fg input,.fg select{min-width:0;max-width:100%;}
+.m-name{font-family:var(--disp);font-weight:300;font-size:2.4rem;margin-bottom:10px;}
+.m-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px;}
+.m-bdg{font-size:.66rem;letter-spacing:.08em;padding:7px 13px;border:1px solid var(--linesoft);color:var(--mut);}
+.m-bdg.g{border-color:var(--line);color:var(--goldb);}
+.m-desc{font-size:.94rem;font-weight:300;line-height:1.9;color:var(--mut);margin-bottom:30px;}
+.m-sub{font-family:var(--disp);font-size:1.2rem;font-weight:400;margin:28px 0 16px;padding-top:26px;border-top:1px solid var(--linesoft);}
+.m-hl{display:flex;flex-direction:column;gap:10px;}
+.m-hl div{padding:13px 16px;background:var(--moss);border-left:2px solid var(--gold);font-size:.86rem;color:var(--mut);}
+.m-rooms{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;}
+.m-room{background:var(--moss);border:1px solid var(--linesoft);padding:15px;overflow:hidden;}
+.m-rph{height:140px;margin:-15px -15px 13px;background-size:cover;background-position:center;cursor:pointer;position:relative;transition:filter .3s;}
+.m-rph:hover{filter:brightness(1.12);}
+.m-fullgal{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.mfg{aspect-ratio:4/3;background-size:cover;background-position:center;background-color:var(--moss2);cursor:pointer;border:1px solid var(--linesoft);position:relative;overflow:hidden;transition:transform .3s var(--ease),border-color .25s;}
+.mfg:hover{transform:scale(1.02);border-color:var(--line);z-index:1;}
+.mfg:first-child{grid-column:span 2;grid-row:span 2;}
+.mfg i{position:absolute;left:8px;bottom:8px;font-style:normal;font-family:var(--mono);font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cream);background:rgba(10,17,13,.72);padding:4px 9px;opacity:0;transition:opacity .25s;}
+.mfg:hover i{opacity:1;}
+.m-room b{display:block;font-family:var(--mono);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:400;margin-bottom:6px;}
+.m-room span{font-size:.8rem;color:var(--mut);}
+.m-amen{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.m-amen div{font-size:.8rem;color:var(--mut);padding:11px 13px;background:var(--moss);border:1px solid var(--linesoft);}
+.m-rev{background:var(--moss);border:1px solid var(--linesoft);padding:20px;margin-bottom:10px;}
+.m-rev b{font-size:.84rem;color:var(--cream);}
+.m-rev .st{color:var(--goldb);font-size:.72rem;letter-spacing:.12em;margin:4px 0 8px;}
+.m-rev p{font-size:.82rem;color:var(--mut);line-height:1.7;font-weight:300;}
+.m-aside{position:sticky;top:90px;align-self:start;border:1px solid var(--line);background:var(--moss);padding:28px;}
+.m-rate{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;}
+.m-rate b{font-family:var(--disp);font-style:italic;font-size:2rem;color:var(--goldb);font-weight:400;}
+.m-rate span{font-size:.74rem;color:var(--mut);}
+.m-price-note{font-size:.78rem;color:var(--mut);line-height:1.7;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--linesoft);}
+.m-aside .btn{width:100%;justify-content:center;margin-bottom:10px;padding:16px;}
+.btn-abnb{background:transparent;color:#FF5A5F;border:1px solid rgba(255,90,95,.55);}
+.btn-abnb:hover{background:rgba(255,90,95,.1);border-color:#FF5A5F;transform:translateY(-2px);}
+.m-bk{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--linesoft);border:1px solid var(--linesoft);margin-bottom:14px;}
+.m-bk .fg{padding:13px 15px;}
+.m-bk .fg.full{grid-column:1/-1;}
+.m-feats{margin-top:18px;padding-top:18px;border-top:1px solid var(--linesoft);display:flex;flex-direction:column;gap:9px;}
+.m-feats span{font-size:.78rem;color:var(--mut);display:flex;gap:10px;align-items:center;}
+.m-feats span::before{content:'✓';color:var(--gold);font-size:.7rem;}
+@media(max-width:880px){.m-body{grid-template-columns:1fr;padding:26px 20px;}.m-aside{position:static;}.m-name{font-size:1.8rem;}}
 
-/* ── REVEALS ── */
-const io=new IntersectionObserver(es=>{
-  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
-},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
-document.querySelectorAll('.rv,.rv-l,.rv-r,.rv-clip,.rv-scale,.rv-line').forEach(el=>io.observe(el));
+/* ── REVEAL SYSTEM ── */
+.rv{opacity:0;transform:translateY(42px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:var(--d,0s);}
+.rv.in{opacity:1;transform:none;}
+.rv-l{opacity:0;transform:translateX(-46px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:var(--d,0s);}
+.rv-l.in{opacity:1;transform:none;}
+.rv-r{opacity:0;transform:translateX(46px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:var(--d,0s);}
+.rv-r.in{opacity:1;transform:none;}
+.rv-clip{clip-path:inset(0 0 100% 0);transition:clip-path 1.1s var(--ease);transition-delay:var(--d,0s);}
+.rv-clip.in{clip-path:inset(0 0 0% 0);}
+.rv-scale{opacity:0;transform:scale(.94);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:var(--d,0s);}
+.rv-scale.in{opacity:1;transform:scale(1);}
+.rv-line{transform:scaleX(0);transform-origin:left;transition:transform 1.1s var(--ease);transition-delay:var(--d,0s);}
+.rv-line.in{transform:scaleX(1);}
 
-/* ── CONTADORES ── */
-const cio=new IntersectionObserver(es=>{
-  es.forEach(e=>{
-    if(!e.isIntersecting)return;
-    cio.unobserve(e.target);
-    const el=e.target, target=parseFloat(el.dataset.count), suf=el.dataset.suffix||'';
-    const dec=String(el.dataset.count).includes('.')?1:0;
-    if(reduced){el.textContent=el.dataset.count+suf;return;}
-    const t0=performance.now(), dur=1400;
-    (function tick(t){
-      const p=Math.min(1,(t-t0)/dur), ease=1-Math.pow(1-p,3);
-      el.textContent=(target*ease).toFixed(dec)+suf;
-      if(p<1)requestAnimationFrame(tick);
-    })(t0);
-  });
-},{threshold:.5});
-document.querySelectorAll('[data-count]').forEach(el=>cio.observe(el));
-
-/* ── O FIO DE OURO (linha que segue o scroll) ── */
-const thread=document.getElementById('thread');
-const tBase=thread.querySelector('.t-base');
-const tDraw=thread.querySelector('.t-draw');
-const tTip=thread.querySelector('.t-tip');
-const tTip2=thread.querySelector('.t-tip2');
-const tNodes=document.getElementById('t-nodes');
-let tLen=0;
-
-function buildThread(){
-  if(window.innerWidth<=960||reduced)return;
-  const W=document.documentElement.clientWidth;
-  const H=document.documentElement.scrollHeight;
-  thread.setAttribute('width',W);thread.setAttribute('height',H);
-  thread.style.height=H+'px';
-  const secs=[...document.querySelectorAll('[data-node]')];
-  const pts=[{x:W*0.5,y:0}];
-  secs.forEach(s=>{
-    const r=s.getBoundingClientRect(), top=r.top+window.scrollY;
-    const side=s.dataset.node==='left'?0.052:0.948;
-    pts.push({x:W*side,y:top+r.height*0.42});
-  });
-  pts.push({x:W*0.5,y:H-40});
-  // curva suave através dos pontos
-  let d=`M ${pts[0].x},${pts[0].y}`;
-  for(let i=1;i<pts.length;i++){
-    const p0=pts[i-1],p1=pts[i],my=(p0.y+p1.y)/2;
-    d+=` C ${p0.x},${my} ${p1.x},${my} ${p1.x},${p1.y}`;
-  }
-  tBase.setAttribute('d',d);tDraw.setAttribute('d',d);
-  tLen=tDraw.getTotalLength();
-  tDraw.style.strokeDasharray=tLen;
-  tDraw.style.strokeDashoffset=tLen;
-  tNodes.innerHTML=pts.slice(1,-1).map(p=>`<circle class="t-node" r="4" cx="${p.x}" cy="${p.y}"/>`).join('');
-  updateThread();
-}
-function updateThread(){
-  if(!tLen)return;
-  const max=document.documentElement.scrollHeight-window.innerHeight;
-  const prog=Math.min(1,Math.max(0,(window.scrollY+window.innerHeight*0.62)/document.documentElement.scrollHeight));
-  const drawn=tLen*prog;
-  tDraw.style.strokeDashoffset=tLen-drawn;
-  const pt=tDraw.getPointAtLength(drawn);
-  tTip.setAttribute('cx',pt.x);tTip.setAttribute('cy',pt.y);
-  tTip2.setAttribute('cx',pt.x);tTip2.setAttribute('cy',pt.y);
-}
-
-/* ── SCROLL LOOP ── */
-let ticking=false;
-function onScroll(){
-  if(ticking)return;ticking=true;
-  requestAnimationFrame(()=>{
-    const y=window.scrollY;
-    navEl.classList.toggle('solid',y>50);
-    const max=document.documentElement.scrollHeight-window.innerHeight;
-    progEl.style.transform=`scaleX(${max>0?y/max:0})`;
-    updateThread();
-    ticking=false;
-  });
-}
-window.addEventListener('scroll',onScroll,{passive:true});
-window.addEventListener('resize',()=>{clearTimeout(window.__rs);window.__rs=setTimeout(buildThread,200);});
-window.addEventListener('load',()=>setTimeout(buildThread,300));
-setTimeout(buildThread,800);
-onScroll();
-
-
-/* ── RESERVA DA UNIDADE (modal) ── */
-function reservarUnidade(){
-  if(!mApt)return;
-  const ci=document.getElementById('m-in').value,
-        co=document.getElementById('m-out').value,
-        g=document.getElementById('m-g').value;
-  const texto=`Olá! Gostaria de reservar o *${mApt.name}* no Valps Residence 🏠%0A%0A`+
-    `*Check-in:* ${fmtData(ci)}%0A*Check-out:* ${fmtData(co)}%0A*Hóspedes:* ${g}%0A%0A`+
-    `Pode me confirmar a disponibilidade e o valor?`;
-  window.open(`https://wa.me/${WA}?text=${texto}`,'_blank');
-  salvarNoFirebase({
-    apartamento: mApt.name, checkin: ci?fmtData(ci):'', checkout: co?fmtData(co):'',
-    hospedes: g||'', canal:'site', formulario:'unidade'
-  });
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;}
+  html{scroll-behavior:auto;}
+  .rv,.rv-l,.rv-r,.rv-scale{opacity:1;transform:none;}
+  .rv-clip{clip-path:none;}
+  .rv-line{transform:none;}
+  .mq-track{animation:none;}
+  #thread{display:none;}
 }
