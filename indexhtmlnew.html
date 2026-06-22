@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valps Residence — Campo Belo · São Paulo</title>
+<meta name="description" content="13 apartamentos mobiliados no Campo Belo, Zona Sul de São Paulo. Reserve direto com o proprietário, sem taxas de intermediários.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400;1,9..144,500&family=Hanken+Grotesk:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Spline+Sans+Mono:wght@300;400;500&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="progress"><i></i></div>
+<svg id="thread" aria-hidden="true">
+  <defs>
+    <linearGradient id="goldgrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#E3C87D"/><stop offset=".5" stop-color="#C9A84C"/><stop offset="1" stop-color="#E3C87D"/>
+    </linearGradient>
+  </defs>
+  <path class="t-base" d=""/>
+  <path class="t-draw" d=""/>
+  <g id="t-nodes"></g>
+  <circle class="t-tip2" r="9" cx="-50" cy="-50"/>
+  <circle class="t-tip" r="3.5" cx="-50" cy="-50"/>
+</svg>
+
+<a href="https://wa.me/5585999696377?text=Olá! Vim pelo site e gostaria de tirar dúvidas sobre o Valps Residence." class="wa-float" target="_blank" aria-label="WhatsApp">
+  <svg width="25" height="25" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<nav id="nav">
+  <a class="nav-logo" onclick="scrollToId('hero')" aria-label="Valps Residence">
+    <svg viewBox="0 0 240 108" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;">
+      <path d="M28,46 L120,6 L212,46" fill="none" stroke="#C9A84C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="120" cy="6" r="2.8" fill="#C9A84C"/>
+      <rect x="94" y="44" width="12" height="12" rx="1.5" fill="none" stroke="#C9A84C" stroke-width="1"/>
+      <rect x="134" y="44" width="12" height="12" rx="1.5" fill="none" stroke="#C9A84C" stroke-width="1"/>
+      <line x1="28" y1="56" x2="212" y2="56" stroke="#C9A84C" stroke-width="0.7"/>
+      <text x="120" y="80" text-anchor="middle" font-family="'Playfair Display',Georgia,serif" font-size="23" fill="#F0EDE8" letter-spacing="7">VALPS</text>
+      <text x="120" y="93" text-anchor="middle" font-family="'Playfair Display',Georgia,serif" font-size="9.5" font-style="italic" fill="#C9A84C" letter-spacing="3">Residence</text>
+    </svg>
+  </a>
+  <ul>
+    <li><a onclick="scrollToId('edificio')">O Edifício</a></li>
+    <li><a onclick="scrollToId('unidades')">Unidades</a></li>
+    <li><a onclick="scrollToId('local')">Localização</a></li>
+    <li><a onclick="scrollToId('ofertas')">Ofertas</a></li>
+    <li><a onclick="scrollToId('calendario')">Calendário</a></li>
+    <li><a onclick="scrollToId('pag')">Pagamentos</a></li>
+    <li><a onclick="scrollToId('faq')">FAQ</a></li>
+    <li><a class="cta" onclick="scrollToId('contato')">Reservar</a></li>
+  </ul>
+  <button class="burger" onclick="abrirMenu()" aria-label="Abrir menu">
+    <i></i><i></i><i></i>
+  </button>
+</nav>
+
+<!-- MENU MOBILE -->
+<div id="mnav" role="dialog" aria-modal="true">
+  <button class="mclose" onclick="fecharMenu()" aria-label="Fechar menu">✕</button>
+  <a onclick="navTo('edificio')">O Edifício</a>
+  <a onclick="navTo('unidades')">Unidades</a>
+  <a onclick="navTo('local')">Localização</a>
+  <a onclick="navTo('ofertas')">Ofertas</a>
+  <a onclick="navTo('calendario')">Calendário</a>
+  <a onclick="navTo('pag')">Pagamentos</a>
+  <a onclick="navTo('faq')">FAQ</a>
+  <a class="cta-m" onclick="navTo('contato')">Reservar</a>
+  <span class="mfoot">Valps Residence · Campo Belo · SP</span>
+</div>
+
+<!-- HERO -->
+<section id="hero" data-node="right">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow rv">Campo Belo · Zona Sul · São Paulo</div>
+    <h1 class="hero-h1 rv" style="--d:.12s">Um edifício,<br>treze maneiras<br>de <em>viver São Paulo</em></h1>
+    <div class="hero-row">
+      <p class="hero-sub rv" style="--d:.26s">Apartamentos mobiliados a 10 minutos de Congonhas e 200 m do metrô. <b>Reserve direto com o proprietário</b> — sem taxas de intermediários, com resposta em até 2 horas.</p>
+      <div class="hero-ctas rv" style="--d:.38s">
+        <a class="btn btn-gold" onclick="scrollToId('edificio')" style="cursor:pointer">Explorar o edifício</a>
+        <a class="btn btn-ghost" href="https://wa.me/5585999696377?text=Olá! Vim pelo site e gostaria de tirar dúvidas sobre o Valps Residence." target="_blank">WhatsApp</a>
+      </div>
+    </div>
+    <div class="hero-stats rv" style="--d:.5s">
+      <div class="hstat"><div class="hstat-n" data-count="13">0</div><div class="hstat-l">Acomodações</div></div>
+      <div class="hstat"><div class="hstat-n" data-count="4.9" data-suffix="★">0</div><div class="hstat-l">Avaliação média</div></div>
+      <div class="hstat"><div class="hstat-n" data-count="100" data-suffix="%">0</div><div class="hstat-l">Taxa de resposta</div></div>
+      <div class="hstat"><div class="hstat-n" data-count="2" data-suffix="h">0</div><div class="hstat-l">Tempo de resposta</div></div>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>Role</span><i></i></div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="mq-track" id="mq-track"></div>
+</div>
+
+<!-- O EDIFÍCIO -->
+<section id="edificio" data-node="left">
+  <div class="sec-top">
+    <div>
+      <div class="sec-kicker rv">O Edifício</div>
+      <h2 class="sec-h rv" style="--d:.1s">Sete pavimentos,<br><em>treze endereços</em></h2>
+    </div>
+    <p class="sec-p rv" style="--d:.2s">Do duplex no topo ao apartamento do térreo, todas as unidades têm cozinha completa, Wi-Fi de fibra e vaga de garagem. Toque em um número para conhecer a unidade.</p>
+  </div>
+  <div class="building rv-scale" id="building"></div>
+</section>
+
+<!-- UNIDADES -->
+<section id="unidades" class="light" data-node="right">
+  <div class="sec-top">
+    <div>
+      <div class="sec-kicker rv">Acomodações</div>
+      <h2 class="sec-h rv" style="--d:.1s">Escolha a sua,<br><em>veja por dentro</em></h2>
+    </div>
+    <p class="sec-p rv" style="--d:.2s">Fotos reais de cada unidade. Filtre por tipo e abra a que combinar com a sua viagem.</p>
+  </div>
+  <div class="filtros rv" style="--d:.25s">
+    <button class="fbtn on" onclick="filtrar('all',this)">Todas</button>
+    <button class="fbtn" onclick="filtrar('2q',this)">2 Quartos</button>
+    <button class="fbtn" onclick="filtrar('3q',this)">3 Quartos</button>
+    <button class="fbtn" onclick="filtrar('duplex',this)">Duplex ✦</button>
+  </div>
+  <div class="ugrid" id="ugrid"></div>
+</section>
+
+<!-- LOCALIZAÇÃO -->
+<section id="local" data-node="left">
+  <div class="sec-top">
+    <div>
+      <div class="sec-kicker rv">Localização</div>
+      <h2 class="sec-h rv" style="--d:.1s">Tudo perto,<br><em>nada faltando</em></h2>
+    </div>
+    <p class="sec-p rv" style="--d:.2s">Os lugares que nossos hóspedes mais perguntam — todos a minutos do Valps Residence.</p>
+  </div>
+  <div class="loc-grid">
+    <div class="rv-l">
+      <div class="loc-addr">📍 Rua Álvaro Luis Roberto de Assumpção, 73 — São Paulo — SP</div>
+      <div class="loc-map">
+        <iframe src="https://www.google.com/maps?q=-23.616923,-46.679839&z=16&output=embed" referrerpolicy="no-referrer-when-downgrade" title="Localização Valps Residence"></iframe>
+      </div>
+      <div class="loc-actions">
+        <a class="btn btn-gold" href="https://maps.app.goo.gl/XikVgN2Us3NKyxiA8" target="_blank">Ver em 360°</a>
+        <a class="btn btn-ghost" href="https://www.google.com/maps/dir/?api=1&destination=-23.616923,-46.679839" target="_blank">Como chegar</a>
+      </div>
+      <ul class="loc-feats">
+        <li class="rv"><b>10 min</b> Aeroporto de Congonhas</li>
+        <li class="rv" style="--d:.06s"><b>200 m</b> Metrô Campo Belo</li>
+        <li class="rv" style="--d:.12s"><b>3 min</b> Farmácia 24h no entorno imediato</li>
+        <li class="rv" style="--d:.18s"><b>5 min</b> Restaurantes e bares a poucos passos</li>
+        <li class="rv" style="--d:.24s"><b>2 min</b> Supermercado a poucos passos</li>
+      </ul>
+    </div>
+    <div class="poi-block rv-r" id="poi-block"></div>
+  </div>
+</section>
+
+<!-- OFERTAS -->
+<section id="ofertas" class="light" data-node="right">
+  <div class="sec-top">
+    <div>
+      <div class="sec-kicker rv">Promoções exclusivas</div>
+      <h2 class="sec-h rv" style="--d:.1s">Fique mais,<br><em>pague menos</em></h2>
+    </div>
+    <p class="sec-p rv" style="--d:.2s">Preços especiais para estadias longas e fins de semana — válidos só na reserva direta.</p>
+  </div>
+  <div class="of-grid">
+    <div class="of-card dk rv" style="--d:.1s">
+      <span class="of-pill">✦ Mais popular</span>
+      <div class="of-name">Estadia Longa</div>
+      <p class="of-desc">Reserve 30 diárias ou mais e ganhe um desconto especial direto com o proprietário.</p>
+      <div class="of-amount">até 25% off<small>em 30+ diárias</small></div>
+      <a class="of-link" href="https://wa.me/5585999696377?text=Olá! Tenho interesse na oferta de Estadia Longa (30+ diárias) do Valps Residence." target="_blank">Reservar agora →</a>
+    </div>
+    <div class="of-card gd rv" style="--d:.22s">
+      <span class="of-pill">Final de semana</span>
+      <div class="of-name">Pacote Weekend</div>
+      <p class="of-desc">3 diárias com desconto para aquela escapada de fim de semana em São Paulo.</p>
+      <div class="of-amount">até 10% off<small>em 3 diárias</small></div>
+      <a class="of-link" href="https://wa.me/5585999696377?text=Olá! Tenho interesse no Pacote Weekend (3 diárias) do Valps Residence." target="_blank">Reservar agora →</a>
+    </div>
+  </div>
+  <div class="avail rv" style="--d:.3s">
+    <p><b>Disponibilidade de datas:</b> consulte direto com o proprietário pelo WhatsApp ou pelo link do Airbnb presente em cada unidade. Respondemos em até 2 horas.</p>
+    <a class="btn btn-wa" href="https://wa.me/5585999696377?text=Olá! Gostaria de verificar a disponibilidade de datas para reserva no Valps Residence." target="_blank">Verificar datas</a>
+  </div>
+</section>
+
+<!-- CALENDÁRIO -->
+<section id="calendario" data-node="left">
+  <div class="sec-top">
+    <div>
+      <div class="sec-kicker rv">Disponibilidade</div>
+      <h2 class="sec-h rv" style="--d:.1s">Datas<br><em>disponíveis</em></h2>
+    </div>
+    <p class="sec-p rv" style="--d:.2s">Entre em contato com o proprietário para verificar as datas e confirmar sua reserva.</p>
+  </div>
+  <div class="cal-wrap">
+    <div class="cal-panel rv" style="--d:.1s" id="cal-p1">
+      <div class="cal-head">
+        <span class="cal-mname" id="cal-n1"></span>
+        <div class="cal-navs">
+          <button class="cal-nv" onclick="calMove(-1)" aria-label="Mês anterior">‹</button>
+          <button class="cal-nv" onclick="calMove(1)" aria-label="Próximo mês">›</button>
+        </div>
+      </div>
+      <div class="cal-dow"><span>D</span><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span></div>
+      <div class="cal-days" id="cal-d1"></div>
+      <div class="cal-legend">
+        <span class="lg-free"><i></i>Disponível</span>
+        <span class="lg-occ"><i></i>Ocupado</span>
+      </div>
+    </div>
+    <div class="cal-panel rv" style="--d:.22s" id="cal-p2">
+      <div class="cal-head"><span class="cal-mname" id="cal-n2"></span></div>
+      <div class="cal-dow"><span>D</span><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span></div>
+      <div class="cal-days" id="cal-d2"></div>
+      <div class="cal-legend">
+        <span class="lg-free"><i></i>Disponível</span>
+        <span class="lg-occ"><i></i>Ocupado</span>
+      </div>
+    </div>
+  </div>
+  <div class="cal-note rv" style="--d:.3s">
+    <p><b>⚠ Este calendário é meramente ilustrativo</b> e não reflete as datas reais de ocupação. Para verificar disponibilidade, fale com o proprietário — você também pode consultar pelo link do Airbnb presente em cada acomodação.</p>
+    <a class="btn btn-wa" href="https://wa.me/5585999696377?text=Olá! Gostaria de verificar a disponibilidade de datas para reserva no Valps Residence." target="_blank">Verificar pelo WhatsApp</a>
+  </div>
+</section>
+
+<!-- PAGAMENTOS -->
+<section id="pag" data-node="right">
+  <div class="sec-top">
+    <div>
+      <div class="sec-kicker rv">Formas de pagamento</div>
+      <h2 class="sec-h rv" style="--d:.1s">Reserve com<br><em>facilidade e segurança</em></h2>
+    </div>
+    <p class="sec-p rv" style="--d:.2s">Pagamento direto ao proprietário, sem burocracia e sem taxas adicionais.</p>
+  </div>
+  <div class="pay-grid">
+    <div class="pay-card rv" style="--d:.05s">
+      <div class="pay-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+      <div class="pay-t">PIX</div>
+      <p class="pay-d">Pagamento instantâneo diretamente para o proprietário, disponível 24h por dia. Confirmação imediata e sem taxas adicionais.</p>
+      <a class="pay-a" href="https://wa.me/5585999696377?text=Ol%C3%A1%21%20Gostaria%20de%20realizar%20uma%20reserva%20no%20Valps%20Residence%20com%20pagamento%20via%20%2APIX%2A.%0A%0APoderia%20me%20informar%20a%20chave%20PIX%20e%20os%20pr%C3%B3ximos%20passos%20para%20confirmar%20a%20reserva%3F" target="_blank">Reservar com PIX →</a>
+    </div>
+    <div class="pay-card rv" style="--d:.15s">
+      <div class="pay-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg></div>
+      <div class="pay-t">Transferência Bancária</div>
+      <p class="pay-d">TED ou DOC diretamente para a conta do proprietário. Confirmação em até 1 dia útil após o envio do comprovante.</p>
+      <a class="pay-a" href="https://wa.me/5585999696377?text=Ol%C3%A1%21%20Gostaria%20de%20realizar%20uma%20reserva%20no%20Valps%20Residence%20com%20pagamento%20via%20%2ATransfer%C3%AAncia%20Banc%C3%A1ria%20%28TED/DOC%29%2A.%0A%0APoderia%20me%20informar%20os%20dados%20banc%C3%A1rios%20e%20os%20pr%C3%B3ximos%20passos%20para%20confirmar%20a%20reserva%3F" target="_blank">Reservar com Transferência →</a>
+    </div>
+    <div class="pay-card rv" style="--d:.25s">
+      <div class="pay-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg></div>
+      <div class="pay-t">Link de Pagamento</div>
+      <p class="pay-d">O proprietário envia um link seguro por WhatsApp e você paga com cartão de crédito ou débito, com ou sem parcelamento — sem intermediários.</p>
+      <a class="pay-a" href="https://wa.me/5585999696377?text=Ol%C3%A1%21%20Gostaria%20de%20realizar%20uma%20reserva%20no%20Valps%20Residence%20com%20pagamento%20via%20%2ALink%20de%20Pagamento%2A%20%28cart%C3%A3o%20de%20cr%C3%A9dito/d%C3%A9bito%29.%0A%0APoderia%20me%20enviar%20o%20link%20de%20pagamento%20e%20os%20pr%C3%B3ximos%20passos%20para%20confirmar%20a%20reserva%3F" target="_blank">Reservar com Link →</a>
+    </div>
+  </div>
+  <div class="crypto rv" style="--d:.2s">
+    <div class="crypto-h">Aceitamos <em>criptomoedas</em></div>
+    <p class="crypto-s">Pague sua reserva diretamente ao proprietário com as principais criptomoedas do mercado. Após o pagamento, envie o comprovante pelo WhatsApp para confirmação.</p>
+    <div class="crypto-g">
+      <div class="c-card">
+        <div class="c-logo" style="background:rgba(247,147,26,.14);"><svg width="40" height="40" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#F7931A"/><text x="16" y="22" text-anchor="middle" font-size="17" font-weight="bold" fill="#fff" font-family="Arial">₿</text></svg></div>
+        <div><div class="c-n">Bitcoin</div><div class="c-tk">BTC</div>
+        <a class="c-a" href="https://wa.me/5585999696377?text=Ol%C3%A1%21%20Tenho%20interesse%20em%20realizar%20uma%20reserva%20no%20Valps%20Residence%20com%20pagamento%20em%20%2ABitcoin%20%28BTC%29%2A.%0A%0APoderia%20me%20informar%20o%20endere%C3%A7o%20da%20carteira%20e%20os%20pr%C3%B3ximos%20passos%20para%20confirmar%20a%20reserva%3F" target="_blank">Reservar →</a></div>
+      </div>
+      <div class="c-card">
+        <div class="c-logo" style="background:rgba(98,126,234,.14);"><svg width="38" height="38" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#627EEA"/><path d="M16 5l-7 11.2 7 4.1 7-4.1L16 5z" fill="#fff" opacity=".8"/><path d="M16 22.2l-7-4.1L16 28l7-9.9-7 4.1z" fill="#fff" opacity=".6"/></svg></div>
+        <div><div class="c-n">Ethereum</div><div class="c-tk">ETH</div>
+        <a class="c-a" href="https://wa.me/5585999696377?text=Ol%C3%A1%21%20Tenho%20interesse%20em%20realizar%20uma%20reserva%20no%20Valps%20Residence%20com%20pagamento%20em%20%2AEthereum%20%28ETH%29%2A.%0A%0APoderia%20me%20informar%20o%20endere%C3%A7o%20da%20carteira%20e%20os%20pr%C3%B3ximos%20passos%20para%20confirmar%20a%20reserva%3F" target="_blank">Reservar →</a></div>
+      </div>
+      <div class="c-card">
+        <div class="c-logo" style="background:rgba(153,69,255,.14);"><svg width="36" height="36" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#131313"/><g fill="none" stroke="url(#solg)" stroke-width="2.6"><defs><linearGradient id="solg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9945FF"/><stop offset="1" stop-color="#14F195"/></linearGradient></defs><path d="M9 11h13M9 16.5h13M9 22h13" stroke-linecap="round"/></g></svg></div>
+        <div><div class="c-n">Solana</div><div class="c-tk">SOL</div>
+        <a class="c-a" href="https://wa.me/5585999696377?text=Ol%C3%A1%21%20Tenho%20interesse%20em%20realizar%20uma%20reserva%20no%20Valps%20Residence%20com%20pagamento%20em%20%2ASolana%20%28SOL%29%2A.%0A%0APoderia%20me%20informar%20o%20endere%C3%A7o%20da%20carteira%20e%20os%20pr%C3%B3ximos%20passos%20para%20confirmar%20a%20reserva%3F" target="_blank">Reservar →</a></div>
+      </div>
+    </div>
+    <div class="crypto-note">Pagamento direto ao proprietário · Sem intermediários · Confirme pelo WhatsApp</div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="light" data-node="left">
+  <div class="sec-top" style="justify-content:center;text-align:center;">
+    <div style="margin:0 auto;">
+      <div class="sec-kicker rv" style="justify-content:center;">Dúvidas frequentes</div>
+      <h2 class="sec-h rv" style="--d:.1s">Perguntas <em>frequentes</em></h2>
+      <p class="sec-p rv" style="--d:.2s;margin:0 auto;">Não encontrou o que procura? Fale direto pelo WhatsApp.</p>
+    </div>
+  </div>
+  <div class="faq-wrap" id="faq-wrap"></div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato" data-node="right">
+  <div class="ct-grid">
+    <div class="ct-side rv-l">
+      <div class="sec-kicker">Reserve agora</div>
+      <h2 class="sec-h">Sem taxas de<br><em>intermediários</em></h2>
+      <p class="sec-p">Preencha o formulário e a mensagem chega pronta no WhatsApp do proprietário. Respondemos em até 2 horas — sem robôs, sem espera.</p>
+      <a class="ct-wa" href="https://wa.me/5585999696377?text=Olá! Vim pelo site e gostaria de tirar dúvidas sobre o Valps Residence." target="_blank" style="margin-top:30px;">
+        <div class="ct-wa-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
+        <div><div class="ct-wa-t">Prefere falar agora?</div><div class="ct-wa-s">Chamar no WhatsApp · resposta em até 2h</div></div>
+      </a>
+    </div>
+    <form class="ct-form rv-r" onsubmit="enviarWA(event)">
+      <div class="fg"><label>Nome completo</label><input type="text" id="f-nome" placeholder="Seu nome" required></div>
+      <div class="fg"><label>Telefone / WhatsApp</label><input type="tel" id="f-tel" placeholder="(11) 99999-9999"></div>
+      <div class="fg full"><label>E-mail</label><input type="email" id="f-email" placeholder="voce@email.com"></div>
+      <div class="fg"><label>Check-in</label><input type="date" id="f-in"></div>
+      <div class="fg"><label>Check-out</label><input type="date" id="f-out"></div>
+      <div class="fg"><label>Acomodação</label><select id="f-apt"><option value="">Selecione uma unidade</option></select></div>
+      <div class="fg"><label>Hóspedes</label><select id="f-g"></select></div>
+      <div class="fg full"><label>Mensagem (opcional)</label><textarea id="f-msg" placeholder="Conte sobre a sua viagem..."></textarea></div>
+      <button type="submit" class="ct-submit">Enviar pelo WhatsApp</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="ft-top">
+    <a class="nav-logo" onclick="scrollToId('hero')" style="cursor:pointer">
+      <svg viewBox="0 0 240 108" height="64" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;">
+        <path d="M28,46 L120,6 L212,46" fill="none" stroke="#C9A84C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="120" cy="6" r="2.8" fill="#C9A84C"/>
+        <rect x="94" y="44" width="12" height="12" rx="1.5" fill="none" stroke="#C9A84C" stroke-width="1"/>
+        <rect x="134" y="44" width="12" height="12" rx="1.5" fill="none" stroke="#C9A84C" stroke-width="1"/>
+        <line x1="28" y1="56" x2="212" y2="56" stroke="#C9A84C" stroke-width="0.7"/>
+        <text x="120" y="80" text-anchor="middle" font-family="'Playfair Display',Georgia,serif" font-size="23" fill="#F0EDE8" letter-spacing="7">VALPS</text>
+        <text x="120" y="93" text-anchor="middle" font-family="'Playfair Display',Georgia,serif" font-size="9.5" font-style="italic" fill="#C9A84C" letter-spacing="3">Residence</text>
+      </svg>
+    </a>
+    <div class="ft-addr">Rua Álvaro Luis Roberto de Assumpção, 73<br>Campo Belo · São Paulo — SP<br>WhatsApp +55 85 99969-6377</div>
+    <div class="ft-links">
+      <a href="#">Privacidade</a><a href="#">Termos</a>
+      <a href="https://wa.me/5585999696377" target="_blank">WhatsApp</a>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <span>© 2025 Valps Residence · Todos os direitos reservados</span>
+    <span style="font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;">Reserva direta · Sem intermediários</span>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div id="modal" role="dialog" aria-modal="true">
+  <div class="m-back" onclick="fecharModal()"></div>
+  <div class="m-panel">
+    <div class="m-close"><b id="m-plq">Nº —</b><button class="m-x" onclick="fecharModal()" aria-label="Fechar">✕</button></div>
+    <div class="m-gal">
+      <img id="m-img" src="" alt="" onerror="this.style.opacity=0" onload="this.style.opacity=1" style="transition:opacity .4s;">
+      <button class="m-gal-nav p" onclick="galNav(-1)">‹</button>
+      <button class="m-gal-nav n" onclick="galNav(1)">›</button>
+      <div class="m-gal-ct" id="m-ct">1 / 1</div>
+      <div class="m-gal-lb" id="m-lb"></div>
+    </div>
+    <div class="m-thumbs" id="m-thumbs"></div>
+    <div class="m-body">
+      <div>
+        <h3 class="m-name" id="m-name"></h3>
+        <div class="m-badges" id="m-badges"></div>
+        <p class="m-desc" id="m-desc"></p>
+        <div id="m-hl-wrap"><div class="m-sub" style="border-top:none;padding-top:0;">Destaques</div><div class="m-hl" id="m-hl"></div></div>
+        <div id="m-rooms-wrap"><div class="m-sub">Onde você vai dormir</div><div class="m-rooms" id="m-rooms"></div></div>
+        <div class="m-sub">Comodidades</div><div class="m-amen" id="m-amen"></div>
+        <div id="m-rev-wrap"><div class="m-sub" id="m-rev-title">Avaliações</div><div id="m-revs"></div></div>
+        <div id="m-fullgal-wrap"><div class="m-sub">Galeria de fotos</div><div class="m-fullgal" id="m-fullgal"></div></div>
+      </div>
+      <aside class="m-aside">
+        <div class="m-rate" id="m-rate"></div>
+        <p class="m-price-note"><b style="color:var(--cream);">Valores sob consulta.</b> O proprietário informa o valor após verificar a disponibilidade das suas datas.</p>
+        <div class="m-bk">
+          <div class="fg"><label>Check-in</label><input type="date" id="m-in"></div>
+          <div class="fg"><label>Check-out</label><input type="date" id="m-out"></div>
+          <div class="fg full"><label>Hóspedes</label><select id="m-g"></select></div>
+        </div>
+        <button class="btn btn-wa" id="m-wa" onclick="reservarUnidade()">Reservar via WhatsApp</button>
+        <a class="btn btn-abnb" id="m-airbnb" target="_blank" style="display:none;">Ver no Airbnb ↗</a>
+        <a class="btn btn-ghost" id="m-ask" target="_blank">Perguntar pelo WhatsApp</a>
+        <div class="m-feats" id="m-feats"></div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lb" style="position:fixed;inset:0;z-index:2300;background:rgba(7,12,9,.97);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;" onclick="if(event.target===this)fecharLb()">
+  <button onclick="fecharLb()" aria-label="Fechar" style="position:absolute;top:22px;right:28px;width:42px;height:42px;border-radius:50%;background:none;border:1px solid var(--line);color:var(--cream);font-size:1.1rem;cursor:pointer;transition:all .25s;" onmouseover="this.style.background='var(--gold)';this.style.color='var(--pine)'" onmouseout="this.style.background='none';this.style.color='var(--cream)'">✕</button>
+  <button onclick="lbNav(-1)" aria-label="Anterior" style="position:absolute;left:24px;top:50%;transform:translateY(-50%);width:50px;height:50px;background:rgba(240,234,217,.05);border:1px solid rgba(240,234,217,.16);color:var(--cream);font-size:1.5rem;cursor:pointer;">‹</button>
+  <img id="lb-img" src="" alt="" style="max-width:90vw;max-height:80vh;object-fit:contain;box-shadow:0 0 90px rgba(0,0,0,.85);">
+  <button onclick="lbNav(1)" aria-label="Próxima" style="position:absolute;right:24px;top:50%;transform:translateY(-50%);width:50px;height:50px;background:rgba(240,234,217,.05);border:1px solid rgba(240,234,217,.16);color:var(--cream);font-size:1.5rem;cursor:pointer;">›</button>
+  <div id="lb-cap" style="position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mut);"></div>
+  <div id="lb-ct" style="position:absolute;top:32px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:.64rem;letter-spacing:.16em;color:var(--mut);"></div>
+</div>
+
+<script src="index.js"></script>
+</body>
+</html>
